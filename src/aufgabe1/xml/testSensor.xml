@@ -1,0 +1,9 @@
+<?xml version="1.0" ?>
+<!DOCTYPE Sensor SYSTEM "sensor.dtd">
+<Sensor id="Temperatur Wohnzimmer">
+	<Messung wert="23,2" zeitstempel="2016-06-23T16:51:40.408"/>
+	<Messung wert="24,5" zeitstempel="2016-06-24T12:12:52.000"/>
+	<Messung wert="22,3" zeitstempel="2016-06-25T14:24:30.100"/>
+	<Messung wert="20,0" zeitstempel="2016-06-26T15:38:52.010"/>
+	<Messung wert="21,593" zeitstempel="2016-06-27T03:05:07.001"/>
+</Sensor>
