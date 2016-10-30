@@ -27,6 +27,7 @@ public class Rechner{
 	public double berechne(Operation opcode, double zahl1, double zahl2){
 		double result = 0d;
 		return result = operationen.get(opcode).apply(zahl1, zahl2);
+		
 		/*
 		switch(opcode){
 		case ADD: result = operationen.get(opcode).apply(zahl1, zahl2);
