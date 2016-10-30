@@ -12,6 +12,11 @@ public class Rechner{
 	private BinaryOperator<Double> div;
 	public enum Operation {ADD, SUB, MUL, DIV};
 	
+	
+	/*
+	 * Erstellt ein Rechnerobject
+	 * Legt eine neue Hashmap an
+	 */
 	public Rechner(){
 		operationen = new HashMap<Operation,BinaryOperator<Double>>();
 		add = (num1, num2) -> {return num1 + num2;};
@@ -24,9 +29,17 @@ public class Rechner{
 		operationen.put(Operation.DIV, div);
 	}
 	
+	/*
+	 * Fuert die vier Grundrechenarten auf zweil Zahlen des Typs "Double" aus
+	 * Berechnung erfolgt nur wenn sinnvoll
+	 * @param opcode - Wahlparameter fuer die Rechenoperation
+	 * @param zahl1 - erster Zahlenwert
+	 * @param zahl2 - zweiter Zahlenwert
+	 * @return result - Rechenergebnis
+	 */
 	public double berechne(Operation opcode, double zahl1, double zahl2){
 		double result;
-		if (zahl1 == 0d && zahl2 == 0d){
+		if (zahl1 == 0d && zahl2 == 0d || opcode == Operation.DIV && zahl2 == 0d){
 			result = 0d;
 		}
 		else{
