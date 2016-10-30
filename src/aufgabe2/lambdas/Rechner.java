@@ -3,7 +3,7 @@ package aufgabe2.lambdas;
 import java.util.HashMap;
 import java.util.function.*;
 
-public class Rechner{
+public class Rechner implements DoubleDoubleZuDouble{
 	
 	private HashMap<Operation, BinaryOperator<Double>> operationen;
 	private BinaryOperator<Double> add;
@@ -38,27 +38,27 @@ public class Rechner{
 	 * @return result - Rechenergebnis
 	 */
 	public double berechne(Operation opcode, double zahl1, double zahl2){
+
 		double result;
+		/*
 		if (zahl1 == 0d && zahl2 == 0d || opcode == Operation.DIV && zahl2 == 0d){
+			result = 0d;
+		}*/ 
+		//Wir brauchen NUR die Division durch 0 auszuschlieﬂen.
+		
+		if(opcode == Operation.DIV && zahl2 == 0d){
 			result = 0d;
 		}
 		else{
 			result = operationen.get(opcode).apply(zahl1, zahl2);
 		}
 		return result;
+	}
+	
+	@Override
+	public double werteAus(double num1, double num2){
+
 		
-		/*
-		switch(opcode){
-		case ADD: result = operationen.get(opcode).apply(zahl1, zahl2);
-			break;
-		case SUB: result = operationen.get(opcode).apply(zahl1, zahl2); 
-			break;
-		case MUL: result = operationen.get(opcode).apply(zahl1, zahl2);
-			break;
-		case DIV: result = operationen.get(opcode).apply(zahl1, zahl2);
-			break;
-		default: break;
-		}
-		*/	
+		return 0d;
 	}
 }
