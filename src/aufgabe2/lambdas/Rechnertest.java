@@ -67,5 +67,4 @@ public class Rechnertest {
 		Rechner rechner = new Rechner();
 		assertEquals(0.0,rechner.berechne(Operation.DIV, num1, num2), result);
 	}
-
 }

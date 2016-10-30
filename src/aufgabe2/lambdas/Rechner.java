@@ -3,7 +3,7 @@ package aufgabe2.lambdas;
 import java.util.HashMap;
 import java.util.function.*;
 
-public class Rechner implements DoubleDoubleZuDouble{
+public class Rechner{
 	
 	private HashMap<Operation, BinaryOperator<Double>> operationen;
 	private BinaryOperator<Double> add;
@@ -55,10 +55,7 @@ public class Rechner implements DoubleDoubleZuDouble{
 		return result;
 	}
 	
-	@Override
-	public double werteAus(double num1, double num2){
-
-		
+	public double berechneDoubleDouble(double num1, double num2){		
 		return 0d;
 	}
 }
