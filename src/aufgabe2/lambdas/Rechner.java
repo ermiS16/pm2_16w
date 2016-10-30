@@ -25,8 +25,14 @@ public class Rechner{
 	}
 	
 	public double berechne(Operation opcode, double zahl1, double zahl2){
-		double result = 0d;
-		return result = operationen.get(opcode).apply(zahl1, zahl2);
+		double result;
+		if (zahl1 == 0d && zahl2 == 0d){
+			result = 0d;
+		}
+		else{
+			result = operationen.get(opcode).apply(zahl1, zahl2);
+		}
+		return result;
 		
 		/*
 		switch(opcode){

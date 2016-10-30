@@ -44,5 +44,15 @@ public class Rechnertest {
 		Rechner rechner = new Rechner();
 		assertEquals(1.5,rechner.berechne(Operation.DIV, num1, num2), result);
 	}
+	
+	@Test
+	public void testeBerechneDivisionDurch0() {
+		double num1 = 0d;
+		double num2 = 0d;
+		double result = num1/num2;
+		
+		Rechner rechner = new Rechner();
+		assertEquals(0.0,rechner.berechne(Operation.DIV, num1, num2), result);
+	}
 
 }
