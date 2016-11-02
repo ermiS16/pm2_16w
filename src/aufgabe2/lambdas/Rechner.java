@@ -3,13 +3,15 @@ package aufgabe2.lambdas;
 import java.util.HashMap;
 import java.util.function.*;
 
-public class Rechner{
+public class Rechner implements DoubleDoubleZuDouble{
 	
 	private HashMap<Operation, BinaryOperator<Double>> operationen;
 	private BinaryOperator<Double> add;
 	private BinaryOperator<Double> sub;
 	private BinaryOperator<Double> mul;
 	private BinaryOperator<Double> div;
+	private DoubleDoubleZuDouble nullstelle;
+	private DoubleDoubleZuDouble multi;
 	public enum Operation {ADD, SUB, MUL, DIV};
 	
 	
@@ -27,6 +29,8 @@ public class Rechner{
 		operationen.put(Operation.SUB, sub);
 		operationen.put(Operation.MUL, mul);
 		operationen.put(Operation.DIV, div);
+		nullstelle = (x,y) -> {return y = (1*x)+0;};
+		multi = (x,y) -> {return x*y;};
 	}
 	
 	/*
@@ -55,7 +59,9 @@ public class Rechner{
 		return result;
 	}
 	
-	public double berechneDoubleDouble(double num1, double num2){		
-		return 0d;
+	@Override
+	public double werteAus(double num1, double num2){		
+		double result = 0d;
+		return result;
 	}
 }
