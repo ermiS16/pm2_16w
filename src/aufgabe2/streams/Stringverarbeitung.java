@@ -37,7 +37,7 @@ public class Stringverarbeitung {
 		nutzerwerte = t1.filter(o -> o!=null).map(e -> e.replace("ß", "ss"))
 		.map(txt -> txt.toUpperCase()).map(e -> e.replace("Ä", "AE"))
 		.map(e -> e.replace("Ö", "OE")).map(e -> e.replace("Ü", "UE"))
-		.map(e -> e.trim()).toArray(String[]::new);
+		.map(e -> e.trim()).map(o -> o.length()> 8 ? o.substring(0, 8) : o.toString()).toArray(String[]::new);
 		speicherliste = Arrays.asList(nutzerwerte);
 	}
 	

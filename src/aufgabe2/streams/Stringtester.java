@@ -15,11 +15,11 @@ public class Stringtester {
 		Stringverarbeitung test1 = new Stringverarbeitung();
 		test1.verarbeite();
 		assertEquals(test1.getListe().contains("EINGABE"), true);
-		//assertEquals(test1.getListe().contains("AEUSSERE"), true);
-		//assertEquals(test1.getListe().contains("STRASSEN"), true);
+		assertEquals(test1.getListe().contains("AEUSSERE"), true);
+		assertEquals(test1.getListe().contains("STRASSEN"), true);
 		assertEquals(test1.getListe().contains("EIN HAUS"), true);
 		assertEquals(test1.getListe().contains(" EIN HAUS"), false);
-		//System.out.println(test1.getListe());
+		System.out.println(test1.getListe());
 	}
 	
 	@Test
@@ -27,7 +27,7 @@ public class Stringtester {
 		Stringverarbeitung test = new Stringverarbeitung();
 		test.verarbeite();
 		assertEquals(test.getListe().contains(null), false);
-		//System.out.println(test.getListe());
+		System.out.println(test.getListe());
 	}
 
 	@Test
@@ -35,7 +35,7 @@ public class Stringtester {
 		Stringverarbeitung test = new Stringverarbeitung(null, null, null);
 		test.verarbeite();
 		assertEquals(test.getListe().contains(null), false);
-		//System.out.println(test.getListe());
+		System.out.println(test.getListe());
 	}
 	
 	@Test
@@ -45,6 +45,6 @@ public class Stringtester {
 		assertEquals(test.getListe().contains("#"), true);
 		assertEquals(test.getListe().contains("ä"), false);
 		assertEquals(test.getListe().contains("UE"), true);
-		//System.out.println(test.getListe());
+		System.out.println(test.getListe());
 	}
 }
