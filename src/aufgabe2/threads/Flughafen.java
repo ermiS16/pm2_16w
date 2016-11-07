@@ -110,13 +110,42 @@ public class Flughafen extends Thread{
 			
 			synchronized(flugzeugListe){
 				System.out.println("Zeit: " + echteZeit);
+				int landeIndex = -1;
+				for(int i = 0; i < flugzeugListe.size(); i++){
+					//System.out.println("Zeit: " + echteZeit + "\n" + flugzeug.toString());
+					System.out.println(flugzeugListe.get(i).toString());
+					flugzeugListe.get(i).setZeit(echteZeit);
+					if(flugzeugListe.get(i).getZeit() >= flugzeugListe.get(i).getFlugdauer() && !landeBahnBelegt){
+					//if(flugzeug.getZeit() <= flugzeug.getFlugdauer() && !landeBahnBelegt){
+						landeBahnBelegt = true;
+						landen(flugzeugListe.get(i));
+						landeIndex = i;
+						if(flugzeugListe.get(i).isGelandet()){
+							landeBahnBelegt = false;
+							System.out.println("Flugzeug gelandet: " + flugzeugListe.get(i).toString());
+							flugzeugListe.get(i).interrupt();
+						}
+					}
+				if (landeIndex != -1){
+					flugzeugListe.remove(landeIndex);
+				}
+				}
+			}
+			
+			/*
+			synchronized(flugzeugListe){
+				System.out.println("Zeit: " + echteZeit);
 				for(Flugzeug flugzeug : flugzeugListe){
 					//System.out.println("Zeit: " + echteZeit + "\n" + flugzeug.toString());
 					//System.out.println(flugzeug.toString());
 					flugzeug.setZeit(echteZeit);
+					////flugzeug.setZeit(1);
 					if(flugzeug.getZeit() >= flugzeug.getFlugdauer() && !landeBahnBelegt){
 					//if(flugzeug.getZeit() <= flugzeug.getFlugdauer() && !landeBahnBelegt){
 						landeBahnBelegt = true;
+						//flugzeug.imLandeAnflug();
+						//System.out.println(flugzeug.toString());
+						//flugzeug.sleep(millis);
 						landen(flugzeug);
 						if(flugzeug.isGelandet()){
 							landeBahnBelegt = false;
@@ -130,17 +159,20 @@ public class Flughafen extends Thread{
 					}
 				}
 				}
-			
+			*/
 		}
 	}
 	
 	public synchronized void landen(Flugzeug fz){
+		fz.imLandeAnflug();
+		System.out.println(fz.toString());
 		while(landeZeit < dauerLandeAnflug){
-			fz.imLandeAnflug();
+			//fz.imLandeAnflug();
+			//System.out.println(fz.toString());
 			landeZeit += warteZeit;
 		}
 		fz.landung();
-		
+		landeZeit = 0;
 	}
 	
 	/*
