@@ -4,9 +4,9 @@ import static org.junit.Assert.*;
 
 import org.junit.Test;
 
-import java.util.Arrays;
-import java.util.stream.*;
-import java.util.*;
+//import java.util.Arrays;
+//import java.util.stream.*;
+//import java.util.*;
 
 public class Stringtester {
 
@@ -50,11 +50,12 @@ public class Stringtester {
 	
 	@Test
 	public void testeLeereStrings(){
-		Stringverarbeitung test = new Stringverarbeitung("", "abcdef", "Ü", "ü", "Ö", "ö", "Straße", "#");
+		Stringverarbeitung test = new Stringverarbeitung("", "abcdef.", " ", "", "  .  ");
 		test.verarbeite();
-		assertEquals(test.getListe().contains("#"), true);
-		assertEquals(test.getListe().contains("ä"), false);
-		assertEquals(test.getListe().contains("UE"), true);
+		assertEquals(test.getListe().contains(""), true);
+		assertEquals(test.getListe().contains("."), true);
+		assertEquals(test.getListe().contains(" "), false);
+		assertEquals(test.getListe().contains("ABCDEF."), true);
 		System.out.println(test.getListe());
 	}
 }

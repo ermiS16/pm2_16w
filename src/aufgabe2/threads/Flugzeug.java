@@ -1,21 +1,28 @@
 package aufgabe2.threads;
 
-import java.util.Comparator;
+//import java.util.Comparator;
 
 public class Flugzeug extends Thread{
 	
 	private Flughafen flughafen;
 	private String id;
 	private int flugdauer;
-	private int startzeit;
+	//private int startzeit;
 	private Status status;
 	private int zeit;
 	
+	/*
+	 * Erstellt ein neues Flugzeug-Objekt
+	 * @param id - ID des Flugzeuges aka. Name des Flugzeuges
+	 * @param flugdauer - Flugdauer
+	 * @param zielort - Zielflughafen fuer das Flugzeug
+	 * @param zeit - Zeit
+	 */
 	public Flugzeug(String id, int flugdauer, Flughafen zielort, int zeit){
 		this.id = id;
 		this.flugdauer = flugdauer;
 		flughafen = zielort;
-		startzeit = zeit;
+		//startzeit = zeit;
 		this.zeit = zeit;
 		status = Status.IM_FLUG;
 	}
@@ -27,13 +34,24 @@ public class Flugzeug extends Thread{
 		}
 	}
 	
+	/*
+	 * Aendert Status
+	 */
 	public void imLandeAnflug(){
 		status = Status.IM_LANDEANFLUG;
 	}
+	
+	/*
+	 * Aendert Status
+	 */
 	public void landung(){
 			status = Status.GELANDET;
 	}
 	
+	/*
+	 * Landevorgang abgeschlossen?
+	 * @return amBoden 
+	 */
 	public boolean isGelandet(){
 		boolean amBoden = false;
 		if(status == Status.GELANDET){
@@ -42,18 +60,39 @@ public class Flugzeug extends Thread{
 		return amBoden;
 	}
 	
+	/*
+	 * Erstellt einen formatierten String mit allen 
+	 * notwendigen FLugzeuginformationen
+	 * @return formatiert
+	 */
 	public String toString(){
 		String formatiert = "";
-		formatiert += "Flugzeug-ID: " + id + " Zielort: " + flughafen + " Flugdauer: " + flugdauer + " Zeit: " + startzeit + " Status: " + status;
+		formatiert += "Flugzeug-ID: " + id 
+				+ " Zielort: " + flughafen.toString() + " Flugdauer: " + flugdauer 
+				+ " Zeit: " + zeit + " Status: " + status;
 		return formatiert;
 	}
 	
+	/*
+	 * Setzt die Zeit
+	 * @parem zeitwert
+	 */
 	public void setZeit(int zeitwert){
 		zeit = zeitwert;
 	}
+	
+	/*
+	 * Gibt die Zeit zurueck
+	 * @return zeit
+	 */
 	public int getZeit(){
 		return zeit;
 	}
+	
+	/*
+	 * Git die Flugdauer zurueck
+	 * @return flugdauer
+	 */
 	public int getFlugdauer(){
 		return flugdauer;
 	}	

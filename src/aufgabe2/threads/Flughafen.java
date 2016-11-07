@@ -1,5 +1,7 @@
 package aufgabe2.threads;
 
+import static org.junit.Assert.assertEquals;
+
 import java.util.*;
 
 public class Flughafen extends Thread{
@@ -14,6 +16,10 @@ public class Flughafen extends Thread{
 	private final List<Flugzeug> puffer;
 	private int pufferElemente;
 	
+	/*
+	 * Erstellt ein Flughafen-Objekt
+	 * @param flugzeuge
+	 */
 	public Flughafen(List<Flugzeug> flugzeuge){
 		flugzeugListe = Collections.synchronizedList( new ArrayList<Flugzeug>());
 		for(Flugzeug fz : flugzeuge){
@@ -30,6 +36,10 @@ public class Flughafen extends Thread{
 			puffer.add(null);
 		}
 	}
+	
+	/*
+	 * Erstellt ein Flughafen-Objekt
+	 */
 	public Flughafen(){
 		flugzeugListe = new ArrayList<Flugzeug>();
 		anzahlFlugzeuge = flugzeugListe.size();
@@ -76,11 +86,15 @@ public class Flughafen extends Thread{
 				neuesFlugzeug.interrupt();
 			}
 			
+			/*
 			synchronized(flugzeugListe){
+			System.out.println("Zeit: " + echteZeit);
 			for(Flugzeug flugzeug : flugzeugListe){
-				System.out.println("Zeit: " + echteZeit + "\n" + flugzeug.toString());
+				//System.out.println("Zeit: " + echteZeit + "\n" + flugzeug.toString());
+				System.out.println(flugzeug.toString());
 				flugzeug.setZeit(echteZeit);
-				if(flugzeug.getZeit() <= flugzeug.getFlugdauer() && !landeBahnBelegt){
+				if(flugzeug.getZeit() >= flugzeug.getFlugdauer() && !landeBahnBelegt){
+				//if(flugzeug.getZeit() <= flugzeug.getFlugdauer() && !landeBahnBelegt){
 					landeBahnBelegt = true;
 					landen(flugzeug);
 					if(flugzeug.isGelandet()){
@@ -92,6 +106,31 @@ public class Flughafen extends Thread{
 				}
 			}
 			}
+			*/
+			
+			synchronized(flugzeugListe){
+				System.out.println("Zeit: " + echteZeit);
+				for(Flugzeug flugzeug : flugzeugListe){
+					//System.out.println("Zeit: " + echteZeit + "\n" + flugzeug.toString());
+					//System.out.println(flugzeug.toString());
+					flugzeug.setZeit(echteZeit);
+					if(flugzeug.getZeit() >= flugzeug.getFlugdauer() && !landeBahnBelegt){
+					//if(flugzeug.getZeit() <= flugzeug.getFlugdauer() && !landeBahnBelegt){
+						landeBahnBelegt = true;
+						landen(flugzeug);
+						if(flugzeug.isGelandet()){
+							landeBahnBelegt = false;
+							System.out.println("Flugzeug gelandet: " + flugzeug.toString());
+							flugzeug.interrupt();
+							flugzeugListe.remove(flugzeug);
+						}
+					}
+					else{
+						System.out.println(flugzeug.toString());
+					}
+				}
+				}
+			
 		}
 	}
 	
@@ -104,13 +143,17 @@ public class Flughafen extends Thread{
 		
 	}
 	
+	/*
+	 * Erstellt ein neues Flugzeug-Objekt
+	 * @return neuesFlugzeug*
+	 */
 	public Flugzeug erzeugeFlugzeug(){
 		int zufall = (int) (Math.random() * 2);
 		String luftHansa = "Lufthansa ";
 		String airBerlin = "Air Berlin ";
 		String germanWings = "German Wings ";
 		int flugId = (int) ((Math.random() + 1) * 1000);
-		int flugdauer = (int) (Math.random() * 20);
+		int flugdauer = (int) (Math.random() * 10) + 1; //flugdauer darf nicht 0 sein
 		Flughafen zielort = this;
 		
 		switch(zufall){
@@ -124,6 +167,10 @@ public class Flughafen extends Thread{
 					= new Flugzeug("Unbekannter Flug", flugdauer, zielort, zeit);
 				return neuesFlugzeugDefault;
 		}
+	}
+	
+	public String toString(){
+		return "Generic International";
 	}
 	
 	public static void main(String[] args){
