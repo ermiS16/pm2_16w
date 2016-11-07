@@ -6,8 +6,8 @@ import java.util.*;
 
 public class Flughafen extends Thread{
 	
-	private final int warteZeit;
-	private final int dauerLandeAnflug;
+	private final int warteZeit = 500;
+	private final int dauerLandeAnflug = 1500;
 	private List<Flugzeug> flugzeugListe;
 	private int anzahlFlugzeuge;
 	private int landeZeit;
@@ -26,8 +26,6 @@ public class Flughafen extends Thread{
 			flugzeugListe.add(fz);
 		}
 		anzahlFlugzeuge = flugzeugListe.size();
-		warteZeit = 500;
-		dauerLandeAnflug = 1500;
 		landeZeit = 0;
 		zeit = 0;
 		pufferElemente = 0;
@@ -43,8 +41,6 @@ public class Flughafen extends Thread{
 	public Flughafen(){
 		flugzeugListe = new ArrayList<Flugzeug>();
 		anzahlFlugzeuge = flugzeugListe.size();
-		warteZeit = 500;
-		dauerLandeAnflug = 1500;
 		landeZeit = 0;
 		zeit = 0;
 		pufferElemente = 0;
@@ -112,11 +108,10 @@ public class Flughafen extends Thread{
 				System.out.println("Zeit: " + echteZeit);
 				int landeIndex = -1;
 				for(int i = 0; i < flugzeugListe.size(); i++){
-					//System.out.println("Zeit: " + echteZeit + "\n" + flugzeug.toString());
-					System.out.println(flugzeugListe.get(i).toString());
 					flugzeugListe.get(i).setZeit(echteZeit);
-					if(flugzeugListe.get(i).getZeit() >= flugzeugListe.get(i).getFlugdauer() && !landeBahnBelegt){
+					//if(flugzeugListe.get(i).getZeit() >= flugzeugListe.get(i).getFlugdauer() && !landeBahnBelegt){
 					//if(flugzeug.getZeit() <= flugzeug.getFlugdauer() && !landeBahnBelegt){
+					if(flugzeugListe.get(i).getZeit() == 0 && !landeBahnBelegt){
 						landeBahnBelegt = true;
 						landen(flugzeugListe.get(i));
 						landeIndex = i;
@@ -125,6 +120,9 @@ public class Flughafen extends Thread{
 							System.out.println("Flugzeug gelandet: " + flugzeugListe.get(i).toString());
 							flugzeugListe.get(i).interrupt();
 						}
+					}
+					else{
+						System.out.println(flugzeugListe.get(i).toString());
 					}
 				if (landeIndex != -1){
 					flugzeugListe.remove(landeIndex);
