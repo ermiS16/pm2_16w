@@ -38,7 +38,7 @@ public class Rechner implements DoubleDoubleZuDouble{
 	
 	/*
 	 * Fuert die vier Grundrechenarten auf zweil Zahlen des Typs "Double" aus
-	 * Berechnung erfolgt nur wenn sinnvoll
+	 * Berechnung erfolgt nur wenn keine Division durch 0
 	 * @param opcode - Wahlparameter fuer die Rechenoperation
 	 * @param zahl1 - erster Zahlenwert
 	 * @param zahl2 - zweiter Zahlenwert
@@ -47,12 +47,6 @@ public class Rechner implements DoubleDoubleZuDouble{
 	public double berechne(Operation opcode, double zahl1, double zahl2){
 
 		double result;
-		/*
-		if (zahl1 == 0d && zahl2 == 0d || opcode == Operation.DIV && zahl2 == 0d){
-			result = 0d;
-		}*/ 
-		//Wir brauchen NUR die Division durch 0 auszuschlieﬂen.
-		
 		if(opcode == Operation.DIV && zahl2 == 0d){
 			result = 0d;
 		}

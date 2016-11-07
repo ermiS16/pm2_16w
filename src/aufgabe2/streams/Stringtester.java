@@ -47,4 +47,14 @@ public class Stringtester {
 		assertEquals(test.getListe().contains("UE"), true);
 		System.out.println(test.getListe());
 	}
+	
+	@Test
+	public void testeLeereStrings(){
+		Stringverarbeitung test = new Stringverarbeitung("", "abcdef", "Ü", "ü", "Ö", "ö", "Straße", "#");
+		test.verarbeite();
+		assertEquals(test.getListe().contains("#"), true);
+		assertEquals(test.getListe().contains("ä"), false);
+		assertEquals(test.getListe().contains("UE"), true);
+		System.out.println(test.getListe());
+	}
 }
