@@ -2,7 +2,7 @@ package aufgabe2.threads;
 
 import java.util.Comparator;
 
-public class Flugzeug extends Thread implements Comparator<Flugzeug>{
+public class Flugzeug extends Thread{
 	
 	private Flughafen flughafen;
 	private String id;
@@ -16,6 +16,7 @@ public class Flugzeug extends Thread implements Comparator<Flugzeug>{
 		this.flugdauer = flugdauer;
 		flughafen = zielort;
 		startzeit = zeit;
+		this.zeit = zeit;
 		status = Status.IM_FLUG;
 	}
 	
@@ -25,11 +26,12 @@ public class Flugzeug extends Thread implements Comparator<Flugzeug>{
 			
 		}
 	}
-
-	public void landeAnflug(int landeZeit){
-		if(landeZeit == 1500){
+	
+	public void imLandeAnflug(){
+		status = Status.IM_LANDEANFLUG;
+	}
+	public void landung(){
 			status = Status.GELANDET;
-		}
 	}
 	
 	public boolean isGelandet(){
@@ -52,21 +54,7 @@ public class Flugzeug extends Thread implements Comparator<Flugzeug>{
 	public int getZeit(){
 		return zeit;
 	}
-
-	@Override
-	public int compare(Flugzeug fz1, Flugzeug fz2) {
-		int result = 0;
-		
-		if(fz1.getZeit() > fz2.getZeit()){
-			result = 1;
-		}
-		if(fz1.getZeit() < fz2.getZeit()){
-			result = -1;
-		}
-		if(fz1.getZeit() == fz2.getZeit()){
-			result = 0;
-		}
-		return result;
-	}
-	
+	public int getFlugdauer(){
+		return flugdauer;
+	}	
 }
