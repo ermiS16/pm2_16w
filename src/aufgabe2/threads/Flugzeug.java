@@ -1,6 +1,8 @@
 package aufgabe2.threads;
 
-public class Flugzeug {
+import java.util.Comparator;
+
+public class Flugzeug extends Thread implements Comparator<Flugzeug>{
 	
 	private Flughafen flughafen;
 	private String id;
@@ -16,9 +18,18 @@ public class Flugzeug {
 		startzeit = zeit;
 		status = Status.IM_FLUG;
 	}
+	
+	@Override
+	public void run(){
+		while(!isInterrupted() && status != Status.GELANDET){
+			
+		}
+	}
 
-	public void istGelandet(){
-		status = Status.GELANDET;
+	public void landeAnflug(int landeZeit){
+		if(landeZeit == 1500){
+			status = Status.GELANDET;
+		}
 	}
 	
 	public boolean isGelandet(){
@@ -36,7 +47,26 @@ public class Flugzeug {
 	}
 	
 	public void setZeit(int zeitwert){
+		zeit = zeitwert;
+	}
+	public int getZeit(){
+		return zeit;
+	}
+
+	@Override
+	public int compare(Flugzeug fz1, Flugzeug fz2) {
+		int result = 0;
 		
+		if(fz1.getZeit() > fz2.getZeit()){
+			result = 1;
+		}
+		if(fz1.getZeit() < fz2.getZeit()){
+			result = -1;
+		}
+		if(fz1.getZeit() == fz2.getZeit()){
+			result = 0;
+		}
+		return result;
 	}
 	
 }
