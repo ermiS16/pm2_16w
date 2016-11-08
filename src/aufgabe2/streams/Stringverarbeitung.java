@@ -5,9 +5,9 @@ import java.util.stream.*;
 
 public class Stringverarbeitung {
 
-	private String[] standardwerte = {"Eingabe ","Äußeres  ", null, "Strassen-Feger", " ein Haus"};
-	private String[] nutzerwerte;
-	private List<String> speicherliste;
+	private String[] standardWerte = {"Eingabe ","Äußeres  ", null, "Strassen-Feger", " ein Haus"};
+	private String[] nutzerWerte;
+	private List<String> speicherListe;
 	
 	/*
 	 * Constructor
@@ -20,9 +20,9 @@ public class Stringverarbeitung {
 	 * @param nutzereingabe - beliebig viele Strings per varargs
 	 */
 	Stringverarbeitung (String... nutzereingabe){
-		standardwerte = new String[nutzereingabe.length];
+		standardWerte = new String[nutzereingabe.length];
 		for (int i = 0; i < nutzereingabe.length; i++){
-			standardwerte[i] = nutzereingabe[i];
+			standardWerte[i] = nutzereingabe[i];
 		}
 	}
 	
@@ -32,14 +32,14 @@ public class Stringverarbeitung {
 	 * und legt sie in einer List ab
 	 */
 	public void verarbeite(){
-		List<String> ph = Arrays.asList(standardwerte);
+		List<String> ph = Arrays.asList(standardWerte);
 		Stream<String> t1 = ph.stream();
-		nutzerwerte = t1.filter(o -> o!=null).map(e -> e.replace("ß", "ss"))
+		nutzerWerte = t1.filter(o -> o!=null).map(e -> e.replace("ß", "ss"))
 		.map(txt -> txt.toUpperCase()).map(e -> e.replace("Ä", "AE"))
 		.map(e -> e.replace("Ö", "OE")).map(e -> e.replace("Ü", "UE"))
 		.map(e -> e.trim()).map(o -> o.length()> 8 ? o.substring(0, 8) : o.toString())
 		.toArray(String[]::new);
-		speicherliste = Arrays.asList(nutzerwerte);
+		speicherListe = Arrays.asList(nutzerWerte);
 	}
 	
 	/*
@@ -47,6 +47,6 @@ public class Stringverarbeitung {
 	 * @return - Liste mit bearbeiteten Werten
 	 */
 	public List<String> getListe(){
-		return speicherliste;
+		return speicherListe;
 	}
 }

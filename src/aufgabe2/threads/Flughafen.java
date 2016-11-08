@@ -102,13 +102,14 @@ public class Flughafen extends Thread{
 							if(flugzeugListe.get(i).isGelandet()){
 								landeBahnBelegt = false;
 								System.out.println("Flugzeug gelandet: " + flugzeugListe.get(i).toString());
-								flugzeugListe.get(i).interrupt();
+								//flugzeugListe.get(i).interrupt();
 							}
 						}
 						else{
 							System.out.println(flugzeugListe.get(i).toString());
 						}
 						if (landeIndex != -1){
+							flugzeugListe.get(i).interrupt();
 							flugzeugListe.remove(landeIndex);
 						}
 					}
@@ -206,7 +207,7 @@ public class Flughafen extends Thread{
 		Flughafen fh = new Flughafen();
 		List<Flugzeug> liste = new ArrayList<Flugzeug>();
 		Flugzeug fz1 = new Flugzeug("Lufthansa 1", 2, fh, 0);
-		Flugzeug fz2 = new Flugzeug("Air Berlin 1", 2, fh, 0);
+		Flugzeug fz2 = new Flugzeug("Air Berlin 1", 3, fh, 0);
 		liste.add(fz1);
 		liste.add(fz2);
 		Thread flughafen = new Flughafen(liste);
