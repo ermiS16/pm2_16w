@@ -25,6 +25,9 @@ public class Flugzeug extends Thread{
 		//restzeit = zeit;
 		restzeit = flugdauer;
 		startzeit = zeit;
+		//System.out.println("Plane start time");
+		//System.out.println(zeit);
+		//System.out.println("--------");
 		//this.zeit = flugdauer;
 		status = Status.IM_FLUG;
 	}
@@ -80,7 +83,8 @@ public class Flugzeug extends Thread{
 	 * @parem zeitwert
 	 */
 	public void setZeit(int zeitwert){
-		restzeit = flugdauer - (Math.abs(zeitwert - startzeit));
+		//System.out.println("Testvalue time: " + (startzeit - zeitwert));
+		restzeit = flugdauer - (Math.abs(startzeit - zeitwert));
 		//if(zeit - zeitwert >= 0){
 		//zeit -= zeitwert;
 		//}

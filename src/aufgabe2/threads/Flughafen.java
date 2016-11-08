@@ -80,7 +80,7 @@ public class Flughafen extends Thread{
 			}
 			
 			if(anzahlFlugzeuge > flugzeugListe.size()){
-				Flugzeug neuesFlugzeug = erzeugeFlugzeug();
+				Flugzeug neuesFlugzeug = erzeugeFlugzeug(echteZeit);
 				flugzeugListe.add(neuesFlugzeug);
 				System.out.println("Flugzeug erzeugt: " + neuesFlugzeug.toString());
 				neuesFlugzeug.start();
@@ -194,7 +194,7 @@ public class Flughafen extends Thread{
 	 * Erstellt ein neues Flugzeug-Objekt
 	 * @return neuesFlugzeug*
 	 */
-	public Flugzeug erzeugeFlugzeug(){
+	public Flugzeug erzeugeFlugzeug(int currentTime){
 		int zufall = (int) (Math.random() * 2);
 		String luftHansa = "Lufthansa ";
 		String airBerlin = "Air Berlin ";
@@ -204,14 +204,14 @@ public class Flughafen extends Thread{
 		Flughafen zielort = this;
 		
 		switch(zufall){
-		case 0:	Flugzeug neuesFlugzeug = new Flugzeug(luftHansa+flugId, flugdauer, zielort, zeit);
+		case 0:	Flugzeug neuesFlugzeug = new Flugzeug(luftHansa+flugId, flugdauer, zielort, currentTime);
 				return neuesFlugzeug;
-		case 1: Flugzeug neuesFlugzeug2 = new Flugzeug(airBerlin+flugId, flugdauer, zielort, zeit);
+		case 1: Flugzeug neuesFlugzeug2 = new Flugzeug(airBerlin+flugId, flugdauer, zielort, currentTime);
 				return neuesFlugzeug2;
-		case 2: Flugzeug neuesFlugzeug3 = new Flugzeug(germanWings+flugId, flugdauer, zielort, zeit);
+		case 2: Flugzeug neuesFlugzeug3 = new Flugzeug(germanWings+flugId, flugdauer, zielort, currentTime);
 				return neuesFlugzeug3;
 		default: Flugzeug neuesFlugzeugDefault 
-					= new Flugzeug("Unbekannter Flug", flugdauer, zielort, zeit);
+					= new Flugzeug("Unbekannter Flug", flugdauer, zielort, currentTime);
 				return neuesFlugzeugDefault;
 		}
 	}
