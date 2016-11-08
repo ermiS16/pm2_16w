@@ -1,6 +1,11 @@
 package aufgabe2.threads;
 
-//import java.util.Comparator;
+/**
+ * Repraesentiert ein Flugzeug, dass als Thread ueber den Flughafen gestartet wird.
+ * @author Eric Misfeld, Simon Felske
+ * @version 08.11.2016
+ *
+ */
 
 public class Flugzeug extends Thread{
 	

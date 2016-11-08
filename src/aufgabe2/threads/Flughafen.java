@@ -1,19 +1,23 @@
 package aufgabe2.threads;
 
-import static org.junit.Assert.assertEquals;
-
 import java.util.*;
+
+/**
+ * 
+ * Repraesentiert einen Flughafen-Thread, der mehrere Flugzeuge verwalten kann.
+ * 
+ * @author Eric Misfeld, Simon Felske
+ * @version 08.11.2016
+ *
+ */
 
 public class Flughafen extends Thread{
 	
 	private final int warteZeit = 500;
-	private final long dauerLandeAnflug = 1500;
 	private List<Flugzeug> flugzeugListe;
 	private int anzahlFlugzeuge;
 	private int landeZeit;
-	private int zeit;
-	private String flughafenID;
-	
+
 	/*
 	 * Erstellt ein Flughafen-Objekt
 	 * @param flugzeuge
@@ -25,7 +29,6 @@ public class Flughafen extends Thread{
 		}
 		anzahlFlugzeuge = flugzeugListe.size();
 		landeZeit = 0;
-		zeit = 0;
 	}
 	
 	/*
@@ -35,7 +38,6 @@ public class Flughafen extends Thread{
 		flugzeugListe = new ArrayList<Flugzeug>();
 		anzahlFlugzeuge = flugzeugListe.size();
 		landeZeit = 0;
-		zeit = 0;
 	}
 	
 	@Override
@@ -51,7 +53,6 @@ public class Flughafen extends Thread{
 			try {
 				Flughafen.sleep(warteZeit);
 				zeit += warteZeit;
-				//if(zeit%umrechnungsFaktor == 0){ //smoothing time
 				landeZeit += warteZeit;
 				if(zeit%umrechnungsFaktor == 0){ //smoothing time
 					echteZeit = zeit/umrechnungsFaktor;
@@ -61,6 +62,10 @@ public class Flughafen extends Thread{
 				interrupt();
 			}
 			
+			/*
+			 * Ueberpruefung, ob inzwischen ein Flugzeug gelandet ist.
+			 * Wenn ja, dann wird ein neues Flugzeug erzeugt.
+			 */
 			if(anzahlFlugzeuge > flugzeugListe.size()){
 				Flugzeug neuesFlugzeug = erzeugeFlugzeug(echteZeit);
 				flugzeugListe.add(neuesFlugzeug);
@@ -76,7 +81,11 @@ public class Flughafen extends Thread{
 					System.out.println("\nZeit: " + echteZeit);
 					System.out.println("RealeZeit: " + zeit);
 					for(int i = 0; i < flugzeugListe.size(); i++){
+						
+						//Jedes Flugzeug erhaelt die echte Zeit
 						flugzeugListe.get(i).setZeit(echteZeit);
+						
+						//Abfrage ob ein Flugzeug landebereit ist.
 						if(flugzeugListe.get(i).getZeit() == 0 && !landeBahnBelegt){
 							landeBahnBelegt = true;
 							try {
@@ -91,6 +100,8 @@ public class Flughafen extends Thread{
 							System.out.println(flugzeugListe.get(i).toString());
 						}//END ELSE
 					}//END FOR
+					
+					//Flugzeug ist solange im Landeanflug, bis es fertig gelandet ist.
 					if(landeIndex != -1 && landeZeit >= 1500){
 						landeBahnBelegt = false;
 						flugzeugListe.get(landeIndex).landung();
@@ -106,56 +117,10 @@ public class Flughafen extends Thread{
 	}//END RUN
 	
 	
-/*<<<<<<< HEAD
-					}
-					if (landeIndex != -1){
->>>>>>> c20f9165613378bea36a5418eb266ad1d19af073
-						flugzeugListe.get(landeIndex).interrupt();
-						flugzeugListe.remove(landeIndex);
-					}
-					
-				}
-			}
-			
-			synchronized(flugzeugListe){
-				System.out.println("Zeit: " + echteZeit);
-				for(Flugzeug flugzeug : flugzeugListe){
-					//System.out.println("Zeit: " + echteZeit + "\n" + flugzeug.toString());
-					//System.out.println(flugzeug.toString());
-					flugzeug.setZeit(echteZeit);
-					////flugzeug.setZeit(1);
-					if(flugzeug.getZeit() >= flugzeug.getFlugdauer() && !landeBahnBelegt){
-					//if(flugzeug.getZeit() <= flugzeug.getFlugdauer() && !landeBahnBelegt){
-						landeBahnBelegt = true;
-						//flugzeug.imLandeAnflug();
-						//System.out.println(flugzeug.toString());
-						//flugzeug.sleep(millis);
-						landen(flugzeug);
-						if(flugzeug.isGelandet()){
-							landeBahnBelegt = false;
-							System.out.println("Flugzeug gelandet: " + flugzeug.toString());
-							flugzeug.interrupt();
-							flugzeugListe.remove(flugzeug);
-						}
-					}
-					else{
-						System.out.println(flugzeug.toString());
-					}
-				}
-				}
-		}
-	}
-=======
-						if (landeIndex != -1){
-							flugzeugListe.remove(landeIndex);
-						}//ENDIF
-					}//ENDFOR
-				}//ENDIF
-			}//ENDSYNC
-		}//ENDWHILE
-	}//ENDRUN
->>>>>>> dev*/
-	
+
+	/*
+	 * Versetzt das FLugzeug in den Landeanflug
+	 */
 	public synchronized void landen(Flugzeug fz) throws InterruptedException{
 		fz.imLandeAnflug();
 		System.out.println(fz.toString());
@@ -163,7 +128,7 @@ public class Flughafen extends Thread{
 		}
 	
 	/*
-	 * Erstellt ein neues Flugzeug-Objekt
+	 * Erstellt ein neues Flugzeug-Objekt mit einer zufaelligen Flugzeug-ID
 	 * @param currentTime - Startzeitpunkt
 	 * @return neuesFlugzeug*
 	 */
@@ -198,6 +163,9 @@ public class Flughafen extends Thread{
 		return "Generic International";
 	}
 	
+	/*
+	 * Simulation des FLughafens.
+	 */
 	public static void main(String[] args){
 		Flughafen fh = new Flughafen();
 		List<Flugzeug> liste = new ArrayList<Flugzeug>();
