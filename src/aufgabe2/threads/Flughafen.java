@@ -69,7 +69,7 @@ public class Flughafen extends Thread{
 			try {
 				Flughafen.sleep(warteZeit);
 				zeit += warteZeit;
-				if(zeit%umrechnungsFaktor == 0){
+				if(zeit%umrechnungsFaktor == 0){ //smoothing time
 					echteZeit = zeit/umrechnungsFaktor;
 				}
 			} catch (InterruptedException e) {
@@ -88,7 +88,7 @@ public class Flughafen extends Thread{
 			synchronized(flugzeugListe){
 				int syncroTimer = echteZeit;
 				int landeIndex = -1;
-				if(syncroTimer > syncroZeit){
+				if(syncroTimer > syncroZeit){ //eine Aktion alle 2 Zyklen
 					syncroZeit++;
 					System.out.println("\nZeit: " + echteZeit);
 					for(int i = 0; i < flugzeugListe.size(); i++){
@@ -108,11 +108,12 @@ public class Flughafen extends Thread{
 						else{
 							System.out.println(flugzeugListe.get(i).toString());
 						}
-						if (landeIndex != -1){
-							flugzeugListe.get(i).interrupt();
-							flugzeugListe.remove(landeIndex);
-						}
 					}
+					if (landeIndex != -1){
+						flugzeugListe.get(landeIndex).interrupt();
+						flugzeugListe.remove(landeIndex);
+					}
+					
 				}
 			}
 			

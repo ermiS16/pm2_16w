@@ -31,7 +31,8 @@ public class Flugzeug extends Thread{
 	
 	@Override
 	public void run(){
-		while(!isInterrupted() && status != Status.GELANDET){
+		while(!isInterrupted()){
+		//while(!isInterrupted() && status != Status.GELANDET){
 			if(status == Status.IM_LANDEANFLUG){
 				try {
 					Flugzeug.sleep(1500);
