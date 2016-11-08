@@ -7,29 +7,26 @@ public class Flugzeug extends Thread{
 	private Flughafen flughafen;
 	private String id;
 	private int flugdauer;
-	private int restzeit;
+	private int restZeit;
 	private Status status;
-	private int startzeit;
+	private int startZeit;
 	
 	/*
 	 * Erstellt ein neues Flugzeug-Objekt
 	 * @param id - ID des Flugzeuges aka. Name des Flugzeuges
-	 * @param flugdauer - Flugdauer
+	 * @param flugdauer - Flugdauer. Muss groesser als 1 sein
 	 * @param zielort - Zielflughafen fuer das Flugzeug
-	 * @param zeit - Zeit
+	 * @param startZeit - Zeitpunkt des Flugbegins. Muss >= 0 sein
 	 */
-	public Flugzeug(String id, int flugdauer, Flughafen zielort, int zeit){
-		this.id = id;
-		this.flugdauer = flugdauer;
-		flughafen = zielort;
-		//restzeit = zeit;
-		restzeit = flugdauer;
-		startzeit = zeit;
-		//System.out.println("Plane start time");
-		//System.out.println(zeit);
-		//System.out.println("--------");
-		//this.zeit = flugdauer;
-		status = Status.IM_FLUG;
+	public Flugzeug(String id, int flugdauer, Flughafen zielort, int startZeit){
+		if(flugdauer >= 1 && startZeit >= 0){
+			this.id = id;
+			this.flugdauer = flugdauer;
+			flughafen = zielort;
+			restZeit = flugdauer;
+			this.startZeit = startZeit;
+			status = Status.IM_FLUG;
+		}
 	}
 	
 	@Override
@@ -74,7 +71,7 @@ public class Flugzeug extends Thread{
 		String formatiert = "";
 		formatiert += "Flugzeug-ID: " + id 
 				+ " | Zielort: " + flughafen.toString() + " | Flugdauer: " + flugdauer 
-				+ " | Restzeit: " + restzeit + " | Status: " + status;
+				+ " | Restzeit: " + restZeit + " | Status: " + status;
 		return formatiert;
 	}
 	
@@ -82,18 +79,10 @@ public class Flugzeug extends Thread{
 	 * Setzt die Zeit
 	 * @parem zeitwert
 	 */
-	public void setZeit(int zeitwert){
-		//System.out.println("Testvalue time: " + (startzeit - zeitwert));
-		restzeit = flugdauer - (Math.abs(startzeit - zeitwert));
-		//if(zeit - zeitwert >= 0){
-		//zeit -= zeitwert;
-		//}
-		//zeit = flugdauer - zeitwert;
-		//if( restzeit > 0){
-		//int x = zeitwert - startzeit;
-			//restzeit = flugdauer - x;
-		//restzeit -= x;
-		//}
+	public void setZeit(int zeitWert){
+		if(status != Status.IM_LANDEANFLUG){
+			restZeit = flugdauer - (Math.abs(startZeit - zeitWert));
+		}
 	}
 	
 	/*
@@ -101,7 +90,7 @@ public class Flugzeug extends Thread{
 	 * @return zeit
 	 */
 	public int getZeit(){
-		return restzeit;
+		return restZeit;
 	}
 	
 	/*

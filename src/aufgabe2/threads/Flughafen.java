@@ -69,8 +69,6 @@ public class Flughafen extends Thread{
 			try {
 				Flughafen.sleep(warteZeit);
 				zeit += warteZeit;
-				//System.out.println(zeit);
-				//System.out.println(zeit%umrechnungsFaktor);
 				if(zeit%umrechnungsFaktor == 0){
 					echteZeit = zeit/umrechnungsFaktor;
 				}
@@ -86,28 +84,6 @@ public class Flughafen extends Thread{
 				neuesFlugzeug.start();
 				neuesFlugzeug.interrupt();
 			}
-			
-			/*
-			synchronized(flugzeugListe){
-			System.out.println("Zeit: " + echteZeit);
-			for(Flugzeug flugzeug : flugzeugListe){
-				//System.out.println("Zeit: " + echteZeit + "\n" + flugzeug.toString());
-				System.out.println(flugzeug.toString());
-				flugzeug.setZeit(echteZeit);
-				if(flugzeug.getZeit() >= flugzeug.getFlugdauer() && !landeBahnBelegt){
-				//if(flugzeug.getZeit() <= flugzeug.getFlugdauer() && !landeBahnBelegt){
-					landeBahnBelegt = true;
-					landen(flugzeug);
-					if(flugzeug.isGelandet()){
-						landeBahnBelegt = false;
-						System.out.println("Flugzeug gelandet: " + flugzeug.toString());
-						flugzeug.interrupt();
-						flugzeugListe.remove(flugzeug);
-					}
-				}
-			}
-			}
-			*/
 			
 			synchronized(flugzeugListe){
 				int syncroTimer = echteZeit;
@@ -192,6 +168,7 @@ public class Flughafen extends Thread{
 	
 	/*
 	 * Erstellt ein neues Flugzeug-Objekt
+	 * @param currentTime - Startzeitpunkt
 	 * @return neuesFlugzeug*
 	 */
 	public Flugzeug erzeugeFlugzeug(int currentTime){
@@ -216,6 +193,11 @@ public class Flughafen extends Thread{
 		}
 	}
 	
+	/*
+	 * Erstellt einen String mit dem
+	 * Namen des Flughafens
+	 * @return - Name des Flughafens
+	 */
 	public String toString(){
 		return "Generic International";
 	}
