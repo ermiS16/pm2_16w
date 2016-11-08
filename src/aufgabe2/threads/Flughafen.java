@@ -40,6 +40,7 @@ public class Flughafen extends Thread{
 	
 	@Override
 	public void run(){
+		int landeIndex = -1;
 		int retarder = 0;
 		int zeit = 0;
 		int umrechnungsFaktor = 1000;
@@ -51,14 +52,11 @@ public class Flughafen extends Thread{
 			try {
 				Flughafen.sleep(warteZeit);
 				zeit += warteZeit;
-/*<<<<<<< HEAD
-				if(zeit%umrechnungsFaktor == 0){ //smoothing time
-=======
+				//if(zeit%umrechnungsFaktor == 0){ //smoothing time
 				landeZeit += warteZeit;
-				//if(zeit%umrechnungsFaktor == 0){
->>>>>>> dev*/
+				if(zeit%umrechnungsFaktor == 0){ //smoothing time
 					echteZeit = zeit/umrechnungsFaktor;
-				//}
+				}
 			} catch (InterruptedException e) {
 				e.printStackTrace();
 				interrupt();
@@ -73,8 +71,10 @@ public class Flughafen extends Thread{
 			}//ENDIF
 			
 			synchronized(flugzeugListe){
+				System.out.println("LandeZeit: " + landeZeit);
 				int syncroTimer = echteZeit;
-				int landeIndex = -1;
+				//int landeIndex = -1;
+				System.out.println("Landeindex: " + landeIndex);
 				//retarder += warteZeit;
 				if(syncroTimer > syncroZeit){ //eine Aktion alle 2 Zyklen
 					syncroZeit++;
@@ -102,18 +102,22 @@ public class Flughafen extends Thread{
 							System.out.println(flugzeugListe.get(i).toString());
 						}
 					}
-<<<<<<< HEAD
-					if(landeIndex != -1 && flugzeugListe.get(landeIndex).isGelandet()){
+					if(landeIndex != -1 && landeZeit >= 1500){
+					//if(landeIndex != -1 && flugzeugListe.get(landeIndex).isGelandet()){
 						//retarder = 0;
 						landeBahnBelegt = false;
+						flugzeugListe.get(landeIndex).landung();
 						System.out.println("Flugzeug gelandet: " + flugzeugListe.get(landeIndex).toString());
+						flugzeugListe.get(landeIndex).interrupt();
+						flugzeugListe.remove(landeIndex);
+						landeZeit = 0;
+						landeIndex = -1;
 						//flugzeugListe.get(i).interrupt();
 					}
 					if (landeIndex != -1 && flugzeugListe.get(landeIndex).isGelandet()){
-=======
 				}
 			}
-		}
+		}}
 	}
 /*<<<<<<< HEAD
 					}
@@ -180,10 +184,9 @@ public class Flughafen extends Thread{
 			//System.out.println(fz.toString());
 			//landeZeit += warteZeit;
 			//}
-		fz.landung();
-		fz.interrupt();
+		//fz.landung();
+		//fz.interrupt();
 		landeZeit = 0;
-		
 		}
 	//}
 	

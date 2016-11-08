@@ -32,15 +32,7 @@ public class Flugzeug extends Thread{
 	@Override
 	public void run(){
 		while(!isInterrupted()){
-		//while(!isInterrupted() && status != Status.GELANDET){
-			if(status == Status.IM_LANDEANFLUG){
-				try {
-					Flugzeug.sleep(1500);
-				} catch (InterruptedException e) {
-					e.printStackTrace();
-					interrupt();
-				}
-			}
+			
 		}
 	}
 	
