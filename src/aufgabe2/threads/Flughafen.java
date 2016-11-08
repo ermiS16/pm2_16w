@@ -52,6 +52,7 @@ public class Flughafen extends Thread{
 	
 	@Override
 	public void run(){
+		int retarder = 0;
 		int zeit = 0;
 		int umrechnungsFaktor = 1000;
 		int echteZeit = 0;
@@ -88,8 +89,10 @@ public class Flughafen extends Thread{
 			synchronized(flugzeugListe){
 				int syncroTimer = echteZeit;
 				int landeIndex = -1;
+				//retarder += warteZeit;
 				if(syncroTimer > syncroZeit){ //eine Aktion alle 2 Zyklen
 					syncroZeit++;
+					retarder += warteZeit;
 					System.out.println("\nZeit: " + echteZeit);
 					for(int i = 0; i < flugzeugListe.size(); i++){
 						flugzeugListe.get(i).setZeit(echteZeit);
@@ -99,17 +102,23 @@ public class Flughafen extends Thread{
 							landeBahnBelegt = true;
 							landen(flugzeugListe.get(i));
 							landeIndex = i;
-							if(flugzeugListe.get(i).isGelandet()){
-								landeBahnBelegt = false;
-								System.out.println("Flugzeug gelandet: " + flugzeugListe.get(i).toString());
+							//if(flugzeugListe.get(i).isGelandet()){
+								//landeBahnBelegt = false;
+								//System.out.println("Flugzeug gelandet: " + flugzeugListe.get(i).toString());
 								//flugzeugListe.get(i).interrupt();
-							}
+								//}
 						}
 						else{
 							System.out.println(flugzeugListe.get(i).toString());
 						}
 					}
-					if (landeIndex != -1){
+					if(landeIndex != -1 && flugzeugListe.get(landeIndex).isGelandet()){
+						//retarder = 0;
+						landeBahnBelegt = false;
+						System.out.println("Flugzeug gelandet: " + flugzeugListe.get(landeIndex).toString());
+						//flugzeugListe.get(i).interrupt();
+					}
+					if (landeIndex != -1 && flugzeugListe.get(landeIndex).isGelandet()){
 						flugzeugListe.get(landeIndex).interrupt();
 						flugzeugListe.remove(landeIndex);
 					}
@@ -153,11 +162,11 @@ public class Flughafen extends Thread{
 		System.out.println(fz.toString());
 		//while(!isInterrupted() && true){
 		//try {
-				//	fz.sleep(dauerLandeAnflug);
-				//} catch (InterruptedException e) {
-					//	e.printStackTrace();
-					//	interrupt();
-					//}
+			//fz.sleep(dauerLandeAnflug);
+					//} catch (InterruptedException e) {
+					//e.printStackTrace();
+						//interrupt();
+						//}
 		//while(landeZeit < dauerLandeAnflug){
 			//fz.imLandeAnflug();
 			//System.out.println(fz.toString());
