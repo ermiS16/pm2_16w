@@ -41,7 +41,6 @@ public class Flughafen extends Thread{
 	@Override
 	public void run(){
 		int landeIndex = -1;
-		int retarder = 0;
 		int zeit = 0;
 		int umrechnungsFaktor = 1000;
 		int echteZeit = 0;
@@ -68,17 +67,12 @@ public class Flughafen extends Thread{
 				System.out.println("Flugzeug erzeugt: " + neuesFlugzeug.toString());
 				neuesFlugzeug.start();
 				neuesFlugzeug.interrupt();
-			}//ENDIF
+			}//END IF
 			
 			synchronized(flugzeugListe){
-				System.out.println("LandeZeit: " + landeZeit);
 				int syncroTimer = echteZeit;
-				//int landeIndex = -1;
-				System.out.println("Landeindex: " + landeIndex);
-				//retarder += warteZeit;
 				if(syncroTimer > syncroZeit){ //eine Aktion alle 2 Zyklen
 					syncroZeit++;
-					retarder += warteZeit;
 					System.out.println("\nZeit: " + echteZeit);
 					System.out.println("RealeZeit: " + zeit);
 					for(int i = 0; i < flugzeugListe.size(); i++){
@@ -92,19 +86,12 @@ public class Flughafen extends Thread{
 								flugzeugListe.get(i).interrupt();
 							}
 							landeIndex = i;
-							//if(flugzeugListe.get(i).isGelandet()){
-								//landeBahnBelegt = false;
-								//System.out.println("Flugzeug gelandet: " + flugzeugListe.get(i).toString());
-								//flugzeugListe.get(i).interrupt();
-								//}
-						}
+						}//END IF
 						else{
 							System.out.println(flugzeugListe.get(i).toString());
-						}
-					}
+						}//END ELSE
+					}//END FOR
 					if(landeIndex != -1 && landeZeit >= 1500){
-					//if(landeIndex != -1 && flugzeugListe.get(landeIndex).isGelandet()){
-						//retarder = 0;
 						landeBahnBelegt = false;
 						flugzeugListe.get(landeIndex).landung();
 						System.out.println("Flugzeug gelandet: " + flugzeugListe.get(landeIndex).toString());
@@ -112,13 +99,13 @@ public class Flughafen extends Thread{
 						flugzeugListe.remove(landeIndex);
 						landeZeit = 0;
 						landeIndex = -1;
-						//flugzeugListe.get(i).interrupt();
-					}
-					if (landeIndex != -1 && flugzeugListe.get(landeIndex).isGelandet()){
-				}
-			}
-		}}
-	}
+					}//END IF
+				}//END IF SYNCROTIME
+			}//END synced thing
+		}// END WHILE
+	}//END RUN
+	
+	
 /*<<<<<<< HEAD
 					}
 					if (landeIndex != -1){
@@ -172,23 +159,8 @@ public class Flughafen extends Thread{
 	public synchronized void landen(Flugzeug fz) throws InterruptedException{
 		fz.imLandeAnflug();
 		System.out.println(fz.toString());
-		//while(!isInterrupted() && true){
-		//try {
-			//fz.sleep(dauerLandeAnflug);
-					//} catch (InterruptedException e) {
-					//e.printStackTrace();
-						//interrupt();
-						//}
-		//while(landeZeit < dauerLandeAnflug){
-			//fz.imLandeAnflug();
-			//System.out.println(fz.toString());
-			//landeZeit += warteZeit;
-			//}
-		//fz.landung();
-		//fz.interrupt();
 		landeZeit = 0;
 		}
-	//}
 	
 	/*
 	 * Erstellt ein neues Flugzeug-Objekt
@@ -214,8 +186,8 @@ public class Flughafen extends Thread{
 		default: Flugzeug neuesFlugzeugDefault 
 					= new Flugzeug("Unbekannter Flug", flugdauer, zielort, currentTime);
 				return neuesFlugzeugDefault;
-		}
-	}
+		}// END SWITCH
+	}// END METHOD
 	
 	/*
 	 * Erstellt einen String mit dem
@@ -230,7 +202,7 @@ public class Flughafen extends Thread{
 		Flughafen fh = new Flughafen();
 		List<Flugzeug> liste = new ArrayList<Flugzeug>();
 		Flugzeug fz1 = new Flugzeug("Lufthansa 1", 2, fh, 0);
-		Flugzeug fz2 = new Flugzeug("Air Berlin 1", 3, fh, 0);
+		Flugzeug fz2 = new Flugzeug("Air Berlin 1", 2, fh, 0);
 		liste.add(fz1);
 		liste.add(fz2);
 		Thread flughafen = new Flughafen(liste);
