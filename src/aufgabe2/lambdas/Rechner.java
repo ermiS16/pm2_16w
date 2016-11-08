@@ -45,7 +45,6 @@ public class Rechner implements DoubleDoubleZuDouble{
 	 * @return result - Rechenergebnis
 	 */
 	public double berechne(Operation opcode, double zahl1, double zahl2){
-
 		double result;
 		if(opcode == Operation.DIV && zahl2 == 0d){
 			result = 0d;
@@ -56,6 +55,13 @@ public class Rechner implements DoubleDoubleZuDouble{
 		return result;
 	}
 	
+	/*
+	 * Nimmt zwei Zahlen oder zwei
+	 * Lambda-Ausdruecke entgegen
+	 * @param num1 - erster Wert / Ausdruck
+	 * @param num2 - zweiter Wert / Ausdruck
+	 * @return result - Ergebnis
+	 */
 	@Override
 	public double werteAus(double num1, double num2){		
 		double result = 0d;
