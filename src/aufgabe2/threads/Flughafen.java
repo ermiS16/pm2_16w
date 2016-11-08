@@ -7,14 +7,12 @@ import java.util.*;
 public class Flughafen extends Thread{
 	
 	private final int warteZeit = 500;
-	private final int dauerLandeAnflug = 1500;
+	private final long dauerLandeAnflug = 1500;
 	private List<Flugzeug> flugzeugListe;
 	private int anzahlFlugzeuge;
 	private int landeZeit;
 	private int zeit;
 	private String flughafenID;
-	private final List<Flugzeug> puffer;
-	private int pufferElemente;
 	
 	/*
 	 * Erstellt ein Flughafen-Objekt
@@ -28,11 +26,6 @@ public class Flughafen extends Thread{
 		anzahlFlugzeuge = flugzeugListe.size();
 		landeZeit = 0;
 		zeit = 0;
-		pufferElemente = 0;
-		puffer = new ArrayList<Flugzeug>();
-		for(int i=0; i<flugzeugListe.size();i++){
-			puffer.add(null);
-		}
 	}
 	
 	/*
@@ -43,11 +36,6 @@ public class Flughafen extends Thread{
 		anzahlFlugzeuge = flugzeugListe.size();
 		landeZeit = 0;
 		zeit = 0;
-		pufferElemente = 0;
-		puffer = new ArrayList<Flugzeug>();
-		for(int i=0; i<flugzeugListe.size();i++){
-			puffer.add(null);
-		}
 	}
 	
 	@Override
@@ -57,21 +45,15 @@ public class Flughafen extends Thread{
 		int echteZeit = 0;
 		int syncroZeit = 0;
 		boolean landeBahnBelegt = false;
-		while(pufferElemente == puffer.size()){
-			try{
-				this.wait();
-			}catch(InterruptedException e){
-				Thread.currentThread().interrupt();
-				return;
-			}
-		}
+
 		while(!isInterrupted() && true){
 			try {
 				Flughafen.sleep(warteZeit);
 				zeit += warteZeit;
-				if(zeit%umrechnungsFaktor == 0){
+				landeZeit += warteZeit;
+				//if(zeit%umrechnungsFaktor == 0){
 					echteZeit = zeit/umrechnungsFaktor;
-				}
+				//}
 			} catch (InterruptedException e) {
 				e.printStackTrace();
 				interrupt();
@@ -83,7 +65,7 @@ public class Flughafen extends Thread{
 				System.out.println("Flugzeug erzeugt: " + neuesFlugzeug.toString());
 				neuesFlugzeug.start();
 				neuesFlugzeug.interrupt();
-			}
+			}//ENDIF
 			
 			synchronized(flugzeugListe){
 				int syncroTimer = echteZeit;
@@ -91,13 +73,17 @@ public class Flughafen extends Thread{
 				if(syncroTimer > syncroZeit){
 					syncroZeit++;
 					System.out.println("\nZeit: " + echteZeit);
+					System.out.println("RealeZeit: " + zeit);
 					for(int i = 0; i < flugzeugListe.size(); i++){
 						flugzeugListe.get(i).setZeit(echteZeit);
-						//if(flugzeugListe.get(i).getZeit() >= flugzeugListe.get(i).getFlugdauer() && !landeBahnBelegt){
-						//if(flugzeug.getZeit() <= flugzeug.getFlugdauer() && !landeBahnBelegt){
 						if(flugzeugListe.get(i).getZeit() == 0 && !landeBahnBelegt){
 							landeBahnBelegt = true;
-							landen(flugzeugListe.get(i));
+							try {
+								landen(flugzeugListe.get(i));
+							} catch (InterruptedException e) {
+								e.printStackTrace();
+								flugzeugListe.get(i).interrupt();
+							}
 							landeIndex = i;
 							if(flugzeugListe.get(i).isGelandet()){
 								landeBahnBelegt = false;
@@ -110,43 +96,14 @@ public class Flughafen extends Thread{
 						}
 						if (landeIndex != -1){
 							flugzeugListe.remove(landeIndex);
-						}
-					}
-				}
-			}
-			
-			/*
-			synchronized(flugzeugListe){
-				System.out.println("Zeit: " + echteZeit);
-				for(Flugzeug flugzeug : flugzeugListe){
-					//System.out.println("Zeit: " + echteZeit + "\n" + flugzeug.toString());
-					//System.out.println(flugzeug.toString());
-					flugzeug.setZeit(echteZeit);
-					////flugzeug.setZeit(1);
-					if(flugzeug.getZeit() >= flugzeug.getFlugdauer() && !landeBahnBelegt){
-					//if(flugzeug.getZeit() <= flugzeug.getFlugdauer() && !landeBahnBelegt){
-						landeBahnBelegt = true;
-						//flugzeug.imLandeAnflug();
-						//System.out.println(flugzeug.toString());
-						//flugzeug.sleep(millis);
-						landen(flugzeug);
-						if(flugzeug.isGelandet()){
-							landeBahnBelegt = false;
-							System.out.println("Flugzeug gelandet: " + flugzeug.toString());
-							flugzeug.interrupt();
-							flugzeugListe.remove(flugzeug);
-						}
-					}
-					else{
-						System.out.println(flugzeug.toString());
-					}
-				}
-				}
-			*/
-		}
-	}
+						}//ENDIF
+					}//ENDFOR
+				}//ENDIF
+			}//ENDSYNC
+		}//ENDWHILE
+	}//ENDRUN
 	
-	public synchronized void landen(Flugzeug fz){
+	public synchronized void landen(Flugzeug fz) throws InterruptedException{
 		fz.imLandeAnflug();
 		System.out.println(fz.toString());
 		//while(!isInterrupted() && true){
@@ -162,7 +119,9 @@ public class Flughafen extends Thread{
 			//landeZeit += warteZeit;
 			//}
 		fz.landung();
-		//landeZeit = 0;
+		fz.interrupt();
+		landeZeit = 0;
+		
 		}
 	//}
 	
