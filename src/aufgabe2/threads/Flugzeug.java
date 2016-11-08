@@ -22,8 +22,8 @@ public class Flugzeug extends Thread{
 		this.id = id;
 		this.flugdauer = flugdauer;
 		flughafen = zielort;
-		restzeit = zeit;
-		//restzeit = flugdauer;
+		//restzeit = zeit;
+		restzeit = flugdauer;
 		startzeit = zeit;
 		//this.zeit = flugdauer;
 		status = Status.IM_FLUG;
@@ -70,7 +70,7 @@ public class Flugzeug extends Thread{
 	public String toString(){
 		String formatiert = "";
 		formatiert += "Flugzeug-ID: " + id 
-				+ " Zielort: " + flughafen.toString() + " | Flugdauer: " + flugdauer 
+				+ " | Zielort: " + flughafen.toString() + " | Flugdauer: " + flugdauer 
 				+ " | Restzeit: " + restzeit + " | Status: " + status;
 		return formatiert;
 	}
@@ -80,15 +80,16 @@ public class Flugzeug extends Thread{
 	 * @parem zeitwert
 	 */
 	public void setZeit(int zeitwert){
+		restzeit = flugdauer - (Math.abs(zeitwert - startzeit));
 		//if(zeit - zeitwert >= 0){
 		//zeit -= zeitwert;
 		//}
 		//zeit = flugdauer - zeitwert;
-		if( restzeit > 0){
-			int x = zeitwert - startzeit;
-			restzeit = flugdauer - x;
-			//restzeit -= x;
-		}
+		//if( restzeit > 0){
+		//int x = zeitwert - startzeit;
+			//restzeit = flugdauer - x;
+		//restzeit -= x;
+		//}
 	}
 	
 	/*

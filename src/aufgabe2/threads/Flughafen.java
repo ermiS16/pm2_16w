@@ -55,6 +55,7 @@ public class Flughafen extends Thread{
 		int zeit = 0;
 		int umrechnungsFaktor = 1000;
 		int echteZeit = 0;
+		int syncroZeit = 0;
 		boolean landeBahnBelegt = false;
 		while(pufferElemente == puffer.size()){
 			try{
@@ -68,7 +69,11 @@ public class Flughafen extends Thread{
 			try {
 				Flughafen.sleep(warteZeit);
 				zeit += warteZeit;
-				echteZeit = zeit/umrechnungsFaktor;
+				//System.out.println(zeit);
+				//System.out.println(zeit%umrechnungsFaktor);
+				if(zeit%umrechnungsFaktor == 0){
+					echteZeit = zeit/umrechnungsFaktor;
+				}
 			} catch (InterruptedException e) {
 				e.printStackTrace();
 				interrupt();
@@ -105,28 +110,32 @@ public class Flughafen extends Thread{
 			*/
 			
 			synchronized(flugzeugListe){
-				System.out.println("Zeit: " + echteZeit);
+				int syncroTimer = echteZeit;
 				int landeIndex = -1;
-				for(int i = 0; i < flugzeugListe.size(); i++){
-					flugzeugListe.get(i).setZeit(echteZeit);
-					//if(flugzeugListe.get(i).getZeit() >= flugzeugListe.get(i).getFlugdauer() && !landeBahnBelegt){
-					//if(flugzeug.getZeit() <= flugzeug.getFlugdauer() && !landeBahnBelegt){
-					if(flugzeugListe.get(i).getZeit() == 0 && !landeBahnBelegt){
-						landeBahnBelegt = true;
-						landen(flugzeugListe.get(i));
-						landeIndex = i;
-						if(flugzeugListe.get(i).isGelandet()){
-							landeBahnBelegt = false;
-							System.out.println("Flugzeug gelandet: " + flugzeugListe.get(i).toString());
-							flugzeugListe.get(i).interrupt();
+				if(syncroTimer > syncroZeit){
+					syncroZeit++;
+					System.out.println("Zeit: " + echteZeit);
+					for(int i = 0; i < flugzeugListe.size(); i++){
+						flugzeugListe.get(i).setZeit(echteZeit);
+						//if(flugzeugListe.get(i).getZeit() >= flugzeugListe.get(i).getFlugdauer() && !landeBahnBelegt){
+						//if(flugzeug.getZeit() <= flugzeug.getFlugdauer() && !landeBahnBelegt){
+						if(flugzeugListe.get(i).getZeit() == 0 && !landeBahnBelegt){
+							landeBahnBelegt = true;
+							landen(flugzeugListe.get(i));
+							landeIndex = i;
+							if(flugzeugListe.get(i).isGelandet()){
+								landeBahnBelegt = false;
+								System.out.println("Flugzeug gelandet: " + flugzeugListe.get(i).toString());
+								flugzeugListe.get(i).interrupt();
+							}
+						}
+						else{
+							System.out.println(flugzeugListe.get(i).toString());
+						}
+						if (landeIndex != -1){
+							flugzeugListe.remove(landeIndex);
 						}
 					}
-					else{
-						System.out.println(flugzeugListe.get(i).toString());
-					}
-				if (landeIndex != -1){
-					flugzeugListe.remove(landeIndex);
-				}
 				}
 			}
 			
@@ -164,14 +173,22 @@ public class Flughafen extends Thread{
 	public synchronized void landen(Flugzeug fz){
 		fz.imLandeAnflug();
 		System.out.println(fz.toString());
-		while(landeZeit < dauerLandeAnflug){
+		//while(!isInterrupted() && true){
+			try {
+				fz.sleep(dauerLandeAnflug);
+				} catch (InterruptedException e) {
+					e.printStackTrace();
+					interrupt();
+				}
+		//while(landeZeit < dauerLandeAnflug){
 			//fz.imLandeAnflug();
 			//System.out.println(fz.toString());
-			landeZeit += warteZeit;
-		}
+			//landeZeit += warteZeit;
+			//}
 		fz.landung();
-		landeZeit = 0;
-	}
+		//landeZeit = 0;
+		}
+	//}
 	
 	/*
 	 * Erstellt ein neues Flugzeug-Objekt
@@ -206,13 +223,16 @@ public class Flughafen extends Thread{
 	public static void main(String[] args){
 		Flughafen fh = new Flughafen();
 		List<Flugzeug> liste = new ArrayList<Flugzeug>();
-		Flugzeug fz1 = new Flugzeug("Lufthansa 1", 2, fh, 3);
-		Flugzeug fz2 = new Flugzeug("Air Berlin", 4, fh, 5);
+		Flugzeug fz1 = new Flugzeug("Lufthansa 1", 2, fh, 0);
+		Flugzeug fz2 = new Flugzeug("Air Berlin", 4, fh, 0);
 		liste.add(fz1);
 		liste.add(fz2);
 		Thread flughafen = new Flughafen(liste);
 		flughafen.start();
 		System.out.println("Flughafen hat Betrieb aufgenommen");
+		System.out.println("Zeit: 0");
+		System.out.println("Flugzeug gestartet: " + fz1.toString());
+		System.out.println("Flugzeug gestartet: " + fz2.toString());
 		if(!flughafen.isAlive()){
 			flughafen.interrupt();
 			System.out.println("Flughafen hat den Betrieb eingestellt.");
