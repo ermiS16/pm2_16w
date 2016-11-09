@@ -12,8 +12,6 @@ public class Rechner {
 	private BinaryOperator<Double> div;
 	
 	public enum Operation {ADD, SUB, MUL, DIV};
-//	private int linearFactor;
-//	private int konstante;
 	
 	
 	/*
@@ -30,9 +28,6 @@ public class Rechner {
 		operationen.put(Operation.SUB, sub);
 		operationen.put(Operation.MUL, mul);
 		operationen.put(Operation.DIV, div);
-		//nullstelle = (x,y) -> {return y = (1*x)+0;};
-//		nullstelle = (x,y) -> {return y = (y-(konstante)) / (x*linearFactor);};
-//		multi = (x,y) -> {return x*y;};
 	}
 	
 	/*
@@ -53,17 +48,4 @@ public class Rechner {
 		}
 		return result;
 	}
-	
-	/*
-	 * Nimmt zwei Zahlen oder zwei
-	 * Lambda-Ausdruecke entgegen
-	 * @param num1 - erster Wert / Ausdruck
-	 * @param num2 - zweiter Wert / Ausdruck
-	 * @return result - Ergebnis
-	 */
-//	@Override
-//	public double werteAus(double num1, double num2){		
-//		double result = 0d;
-//		return result;
-//	}
 }
