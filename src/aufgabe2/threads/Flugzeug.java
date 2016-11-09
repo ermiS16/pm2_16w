@@ -9,7 +9,7 @@ package aufgabe2.threads;
 
 public class Flugzeug extends Thread{
 	
-	private Flughafen flughafen;
+	private Flughafen2 flughafen;
 	private String id;
 	private int flugdauer;
 	private int restZeit;
@@ -23,7 +23,7 @@ public class Flugzeug extends Thread{
 	 * @param zielort - Zielflughafen fuer das Flugzeug
 	 * @param startZeit - Zeitpunkt des Flugbegins. Muss >= 0 sein
 	 */
-	public Flugzeug(String id, int flugdauer, Flughafen zielort, int startZeit){
+	public Flugzeug(String id, int flugdauer, Flughafen2 zielort, int startZeit){
 		if(flugdauer >= 1 && startZeit >= 0){
 			this.id = id;
 			this.flugdauer = flugdauer;

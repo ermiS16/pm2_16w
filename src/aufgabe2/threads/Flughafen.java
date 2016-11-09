@@ -132,6 +132,7 @@ public class Flughafen extends Thread{
 	 * @param currentTime - Startzeitpunkt
 	 * @return neuesFlugzeug*
 	 */
+	
 	public Flugzeug erzeugeFlugzeug(int currentTime){
 		int zufall = (int) (Math.random() * 2);
 		String luftHansa = "Lufthansa ";
@@ -140,7 +141,7 @@ public class Flughafen extends Thread{
 		int flugId = (int) ((Math.random() + 1) * 1000);
 		int flugdauer = (int) (Math.random() * 10) + 1; //flugdauer darf nicht 0 sein
 		Flughafen zielort = this;
-		
+	
 		switch(zufall){
 		case 0:	Flugzeug neuesFlugzeug = new Flugzeug(luftHansa+flugId, flugdauer, zielort, currentTime);
 				return neuesFlugzeug;
