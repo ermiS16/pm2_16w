@@ -1,5 +1,4 @@
 package aufgabe2.lambdas;
-import java.util.function.*;;
 
 @FunctionalInterface
 public interface DoubleDoubleZuDouble {

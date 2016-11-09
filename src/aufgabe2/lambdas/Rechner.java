@@ -3,18 +3,17 @@ package aufgabe2.lambdas;
 import java.util.HashMap;
 import java.util.function.*;
 
-public class Rechner implements DoubleDoubleZuDouble{
+public class Rechner {
 	
 	private HashMap<Operation, BinaryOperator<Double>> operationen;
 	private BinaryOperator<Double> add;
 	private BinaryOperator<Double> sub;
 	private BinaryOperator<Double> mul;
 	private BinaryOperator<Double> div;
-	private DoubleDoubleZuDouble nullstelle;
-	private DoubleDoubleZuDouble multi;
+	
 	public enum Operation {ADD, SUB, MUL, DIV};
-	private int linearFactor;
-	private int konstante;
+//	private int linearFactor;
+//	private int konstante;
 	
 	
 	/*
@@ -32,8 +31,8 @@ public class Rechner implements DoubleDoubleZuDouble{
 		operationen.put(Operation.MUL, mul);
 		operationen.put(Operation.DIV, div);
 		//nullstelle = (x,y) -> {return y = (1*x)+0;};
-		nullstelle = (x,y) -> {return y = (y-(konstante)) / (x*linearFactor);};
-		multi = (x,y) -> {return x*y;};
+//		nullstelle = (x,y) -> {return y = (y-(konstante)) / (x*linearFactor);};
+//		multi = (x,y) -> {return x*y;};
 	}
 	
 	/*
@@ -62,9 +61,9 @@ public class Rechner implements DoubleDoubleZuDouble{
 	 * @param num2 - zweiter Wert / Ausdruck
 	 * @return result - Ergebnis
 	 */
-	@Override
-	public double werteAus(double num1, double num2){		
-		double result = 0d;
-		return result;
-	}
+//	@Override
+//	public double werteAus(double num1, double num2){		
+//		double result = 0d;
+//		return result;
+//	}
 }
