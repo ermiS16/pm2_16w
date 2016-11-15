@@ -35,7 +35,7 @@ public class Flughafen2 extends Thread{
 	 */
 	public Flughafen2(List<Flugzeug> inputFlugzeugListe){
 		flugzeugListe = inputFlugzeugListe;
-		anzahlFlugzeuge = 0;
+		anzahlFlugzeuge = inputFlugzeugListe.size();
 	}
 	
 	/*
@@ -43,10 +43,25 @@ public class Flughafen2 extends Thread{
 	 * @param fz - das zu landende Flugzeug
 	 */
 	public synchronized void landen(Flugzeug fz) throws InterruptedException{
-		//flugzeug set status auf imLandeanflug
-		//sleep fz LANDE_DAUER_ZEIT
+		System.out.println("test");
+		fz.setStatus(Status.IM_LANDEANFLUG);
+		Thread.sleep(LANDE_DAUER_ZEIT);
+		fz.setStatus(Status.GELANDET);
+		fz.interrupt();
+		flugzeugListe.remove(fz);
+		System.out.println("----");
+		System.out.println(flugzeugListe.size());
+		System.out.println("----");
 		//flugzeug set status auf gelandet
 		//entferne fz aus flugzeugListe
+	}
+	
+	/*
+	 * Liefert den Namen des Flughafens zurueck
+	 * @return - Name des Flughafens
+	 */
+	public String toString(){
+		return "Generic International";
 	}
 	
 	@Override
@@ -54,11 +69,15 @@ public class Flughafen2 extends Thread{
 		int zeit = 0;
 		int umrechnungsFaktor = 1000;
 		int echteZeit = 0;
+		int syncroZeit = 0;
 		
 		while(!isInterrupted() && true){
 			try {
 				Flughafen2.sleep(WARTE_ZEIT);
 				zeit += WARTE_ZEIT;
+				System.out.println("----");
+				System.out.println(flugzeugListe.size());
+				System.out.println("----");
 				if(zeit%umrechnungsFaktor == 0){ //smoothing time
 					echteZeit = zeit/umrechnungsFaktor;
 					System.out.println("\nZeit: " + echteZeit);
@@ -73,8 +92,12 @@ public class Flughafen2 extends Thread{
 				System.out.println("Flugzeug erzeugt: " + neuesFlugzeug.toString());
 				neuesFlugzeug.start();
 			}//END IF
-			for(int i = 0; i<flugzeugListe.size();i++){
-				flugzeugListe.get(i).setZeit(echteZeit);
+			if(echteZeit > syncroZeit){
+				syncroZeit = echteZeit;
+				for(int i = 0; i < flugzeugListe.size(); i++){
+					flugzeugListe.get(i).setZeit(echteZeit);
+					System.out.println(flugzeugListe.get(i).toString());
+				}
 			}
 			
 		}
@@ -107,8 +130,20 @@ public class Flughafen2 extends Thread{
 	}// END METHOD
 
 	public static void main(String[] args){
-		Thread flughafen = new Thread(new Flughafen2());
+		Flughafen2 fh = new Flughafen2();
+		List<Flugzeug> liste = new ArrayList<Flugzeug>();
+		Flugzeug fz1 = new Flugzeug("Lufthansa 1", 2, fh, 0);
+		Flugzeug fz2 = new Flugzeug("Air Berlin 1", 2, fh, 0);
+		liste.add(fz1);
+		liste.add(fz2);
+		Thread flughafen = new Flughafen2(liste);
 		flughafen.start();
+		fz1.start();
+		fz2.start();
+		System.out.println("Flughafen hat Betrieb aufgenommen");
+		System.out.println("Zeit: 0");
+		System.out.println(fz1.toString());
+		System.out.println(fz2.toString());
 	}
 	
 }

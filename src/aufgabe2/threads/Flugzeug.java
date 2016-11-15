@@ -38,7 +38,14 @@ public class Flugzeug extends Thread{
 	@Override
 	public void run(){
 		while(!isInterrupted()){
-			
+			try{
+				if(restZeit == 0){
+					System.out.println("test");
+					flughafen.landen(this);
+				}
+			}catch(InterruptedException e){
+				e.printStackTrace();
+			}
 		}
 	}
 	
