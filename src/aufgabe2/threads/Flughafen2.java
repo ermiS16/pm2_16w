@@ -3,21 +3,50 @@ package aufgabe2.threads;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+* Repraesentiert einen Flughafen.
+* Es wird der Betrieb eines Flughafens simuliert,
+* mit landenden und startenden Flugzeugen, die
+* sich eine Landebahn "teilen" muessen 
+* 
+* @author Eric Misfeld, Simon Felske
+* @version 15.11.2016
+*
+*/
+
 public class Flughafen2 extends Thread{
-	private final int warteZeit;
+	private final int WARTE_ZEIT = 500;
+	private final int LANDE_DAUER_ZEIT = 1500;
+	
 	private List<Flugzeug> flugzeugListe;
 	private int anzahlFlugzeuge;
 	
+	/*
+	 * Konstruktor
+	 */
+	public Flughafen2(){
+		flugzeugListe = new ArrayList<Flugzeug>();
+		anzahlFlugzeuge = 0;
+	}
+	
+	/*
+	 * Konstruktor mit Nutzereingabe
+	 * @param inputFlugzeugListe
+	 */
 	public Flughafen2(List<Flugzeug> inputFlugzeugListe){
-		warteZeit = 500;
 		flugzeugListe = inputFlugzeugListe;
 		anzahlFlugzeuge = 0;
 	}
 	
-	public Flughafen2(){
-		warteZeit = 500;
-		flugzeugListe = new ArrayList<Flugzeug>();
-		anzahlFlugzeuge = 0;
+	/*
+	 * Landet ein Flugzeug
+	 * @param fz - das zu landende Flugzeug
+	 */
+	public synchronized void landen(Flugzeug fz) throws InterruptedException{
+		//flugzeug set status auf imLandeanflug
+		//sleep fz LANDE_DAUER_ZEIT
+		//flugzeug set status auf gelandet
+		//entferne fz aus flugzeugListe
 	}
 	
 	@Override
@@ -31,8 +60,8 @@ public class Flughafen2 extends Thread{
 		
 		while(!isInterrupted() && true){
 			try {
-				Flughafen.sleep(warteZeit);
-				zeit += warteZeit;
+				Flughafen2.sleep(WARTE_ZEIT);
+				zeit += WARTE_ZEIT;
 				if(zeit%umrechnungsFaktor == 0){ //smoothing time
 					echteZeit = zeit/umrechnungsFaktor;
 					System.out.println("\nZeit: " + echteZeit);
@@ -54,6 +83,10 @@ public class Flughafen2 extends Thread{
 		}
 	}
 	
+	/*
+	 * Erzeugt ein neues Flugzeug
+	 * @param currentTime
+	 */
 	public Flugzeug erzeugeFlugzeug(int currentTime){
 		int zufall = (int) (Math.random() * 2);
 		String luftHansa = "Lufthansa ";
@@ -77,7 +110,7 @@ public class Flughafen2 extends Thread{
 	}// END METHOD
 
 	public static void main(String[] args){
-		Thread flughafen = new Thread(new Flughafen());
+		Thread flughafen = new Thread(new Flughafen2());
 		flughafen.start();
 	}
 	

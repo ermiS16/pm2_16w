@@ -1,7 +1,8 @@
 package aufgabe2.threads;
 
 /**
- * Repraesentiert ein Flugzeug, dass als Thread ueber den Flughafen gestartet wird.
+ * Repraesentiert ein Flugzeug, dass als 
+ * Thread ueber den Flughafen gestartet wird
  * @author Eric Misfeld, Simon Felske
  * @version 08.11.2016
  *
@@ -42,18 +43,42 @@ public class Flugzeug extends Thread{
 	}
 	
 	/*
-	 * Aendert Status
+	 * Aendert den Status des Flugzeuges
+	 * @param statusAenderung
 	 */
-	public void imLandeAnflug(){
-		status = Status.IM_LANDEANFLUG;
+	public void setStatus(Status statusAenderung){
+		switch(statusAenderung){
+		case IM_FLUG:
+			status = Status.IM_FLUG;
+			break;
+		case IM_LANDEANFLUG:
+			status = Status.IM_LANDEANFLUG;
+			break;
+		case IN_WARTESCHLEIFE:
+			status = Status.IN_WARTESCHLEIFE;
+			break;
+		case GELANDET:
+			status = Status.GELANDET;
+			break;
+		default:
+			//this.status = status;
+			break;
+		}
 	}
 	
 	/*
 	 * Aendert Status
 	 */
-	public void landung(){
-			status = Status.GELANDET;
-	}
+	//public void imLandeAnflug(){
+	//status = Status.IM_LANDEANFLUG;
+	//}
+	
+	/*
+	 * Aendert Status
+	 */
+	//public void landung(){
+	//	status = Status.GELANDET;
+	//}
 	
 	/*
 	 * Landevorgang abgeschlossen?
@@ -69,7 +94,7 @@ public class Flugzeug extends Thread{
 	
 	/*
 	 * Erstellt einen formatierten String mit allen 
-	 * notwendigen FLugzeuginformationen
+	 * notwendigen Flugzeuginformationen
 	 * @return formatiert
 	 */
 	public String toString(){
@@ -81,8 +106,9 @@ public class Flugzeug extends Thread{
 	}
 	
 	/*
-	 * Setzt die Zeit
-	 * @parem zeitwert
+	 * Setzt die aktuelle Zeit und
+	 * aktualisiert die verbleibende Flugzeit
+	 * @parem zeitWert
 	 */
 	public void setZeit(int zeitWert){
 		if(status != Status.IM_LANDEANFLUG && (flugdauer - (Math.abs(startZeit - zeitWert))) >= 0){
@@ -94,8 +120,8 @@ public class Flugzeug extends Thread{
 	}
 	
 	/*
-	 * Gibt die Zeit zurueck
-	 * @return zeit
+	 * Gibt die verbleibende Flugzeit zurueck
+	 * @return restZeit
 	 */
 	public int getZeit(){
 		return restZeit;

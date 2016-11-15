@@ -3,6 +3,14 @@ package aufgabe2.lambdas;
 import java.util.HashMap;
 import java.util.function.*;
 
+/**
+ * Repraesentiert einen Rechner fuer
+ * die vier Grundrechenarten
+ * 
+ * @author Eric Misfeld, Simon Felske
+ * @version 15.11.2016
+ */
+
 public class Rechner {
 	
 	private HashMap<Operation, BinaryOperator<Double>> operationen;
@@ -15,7 +23,7 @@ public class Rechner {
 	
 	
 	/*
-	 * Erstellt ein Rechnerobject
+	 * Erstellt ein Rechnerobjekt
 	 * Legt eine neue Hashmap an
 	 */
 	public Rechner(){

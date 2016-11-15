@@ -4,6 +4,14 @@ import static org.junit.Assert.*;
 import org.junit.Test;
 import aufgabe2.lambdas.Rechner.Operation;
 
+/**
+ * Testklasse fuer "Rechner" und "DoubleDoubleZuDouble"
+ * 
+ * @author Eric Misfeld, Simon Felske
+ * @version 15.11.2016
+ *
+ */
+
 public class Rechnertest {
 
 	@Test
