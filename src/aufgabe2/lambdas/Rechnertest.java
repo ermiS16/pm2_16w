@@ -1,9 +1,7 @@
 package aufgabe2.lambdas;
 
 import static org.junit.Assert.*;
-
 import org.junit.Test;
-
 import aufgabe2.lambdas.Rechner.Operation;
 
 public class Rechnertest {

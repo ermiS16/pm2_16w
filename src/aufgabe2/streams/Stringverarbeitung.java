@@ -3,6 +3,15 @@ package aufgabe2.streams;
 import java.util.*;
 import java.util.stream.*;
 
+/**
+* Verarbeitet Text in Form von Strings
+* nach Vorgabe(n)
+* 
+* @author Eric Misfeld, Simon Felske
+* @version 15.11.2016
+*
+*/
+
 public class Stringverarbeitung {
 
 	private String[] standardWerte = { "Eingabe ", "Äußeres  ", null, "Strassen-Feger", " ein Haus" };
@@ -32,8 +41,7 @@ public class Stringverarbeitung {
 	 * Vorgaben und legt sie in einer List ab
 	 */
 	public void verarbeite() {
-		List<String> ph = Arrays.asList(standardWerte);
-		Stream<String> t1 = ph.stream();
+		Stream<String> t1 = Arrays.stream(standardWerte);
 		nutzerWerte = t1.filter(o -> o != null).map(e -> e.replace("ß", "ss")).map(txt -> txt.toUpperCase())
 				.map(e -> e.replace("Ä", "AE")).map(e -> e.replace("Ö", "OE")).map(e -> e.replace("Ü", "UE"))
 				.map(e -> e.trim()).map(o -> o.length() > 8 ? o.substring(0, 8) : o.toString()).toArray(String[]::new);
