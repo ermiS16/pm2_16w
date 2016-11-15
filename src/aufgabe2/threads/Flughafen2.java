@@ -26,7 +26,7 @@ public class Flughafen2 extends Thread{
 	 */
 	public Flughafen2(){
 		flugzeugListe = new ArrayList<Flugzeug>();
-		anzahlFlugzeuge = 0;
+		anzahlFlugzeuge = flugzeugListe.size();
 	}
 	
 	/*
@@ -48,6 +48,9 @@ public class Flughafen2 extends Thread{
 		fz.setStatus(Status.GELANDET);
 		fz.interrupt();
 		flugzeugListe.remove(fz);
+		System.out.println("XXXX");
+		System.out.println(flugzeugListe.size());
+		System.out.println(anzahlFlugzeuge);
 	}
 	
 	/*
@@ -67,11 +70,12 @@ public class Flughafen2 extends Thread{
 		
 		while(!isInterrupted() && true){
 			try {
-				Flughafen2.sleep(WARTE_ZEIT);
+				Thread.sleep(WARTE_ZEIT);
 				zeit += WARTE_ZEIT;
-				System.out.println("----");
-				System.out.println(flugzeugListe.size());
-				System.out.println("----");
+				//System.out.println("----");
+				//System.out.println(flugzeugListe.size());
+				//System.out.println("aF: " + anzahlFlugzeuge);
+				//System.out.println("----");
 				if(zeit%1000 == 0){ //smoothing time
 					echteZeit = zeit/1000;
 					System.out.println("\nZeit: " + echteZeit);
