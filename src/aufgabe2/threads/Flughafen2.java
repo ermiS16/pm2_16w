@@ -51,12 +51,9 @@ public class Flughafen2 extends Thread{
 	
 	@Override
 	public void run(){
-		int landeIndex = -1;
 		int zeit = 0;
 		int umrechnungsFaktor = 1000;
 		int echteZeit = 0;
-		int syncroZeit = 0;
-		boolean landeBahnBelegt = false;
 		
 		while(!isInterrupted() && true){
 			try {
@@ -84,7 +81,7 @@ public class Flughafen2 extends Thread{
 	}
 	
 	/*
-	 * Erzeugt ein neues Flugzeug
+	 * Erzeugt ein zufaelliges neues Flugzeug
 	 * @param currentTime
 	 */
 	public Flugzeug erzeugeFlugzeug(int currentTime){
