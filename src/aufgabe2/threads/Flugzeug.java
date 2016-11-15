@@ -40,7 +40,7 @@ public class Flugzeug extends Thread{
 		while(!isInterrupted()){
 			try{
 				if(restZeit == 0){
-					System.out.println("test");
+					System.out.println("lande " + id);
 					flughafen.landen(this);
 				}
 			}catch(InterruptedException e){
@@ -123,6 +123,9 @@ public class Flugzeug extends Thread{
 		}
 		else{
 			restZeit = 0;
+			if(status == Status.IM_FLUG){
+				status = Status.IN_WARTESCHLEIFE;
+			}
 		}
 	}
 	

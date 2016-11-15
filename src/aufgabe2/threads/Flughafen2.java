@@ -43,17 +43,11 @@ public class Flughafen2 extends Thread{
 	 * @param fz - das zu landende Flugzeug
 	 */
 	public synchronized void landen(Flugzeug fz) throws InterruptedException{
-		System.out.println("test");
 		fz.setStatus(Status.IM_LANDEANFLUG);
 		Thread.sleep(LANDE_DAUER_ZEIT);
 		fz.setStatus(Status.GELANDET);
 		fz.interrupt();
 		flugzeugListe.remove(fz);
-		System.out.println("----");
-		System.out.println(flugzeugListe.size());
-		System.out.println("----");
-		//flugzeug set status auf gelandet
-		//entferne fz aus flugzeugListe
 	}
 	
 	/*
@@ -67,7 +61,7 @@ public class Flughafen2 extends Thread{
 	@Override
 	public void run(){
 		int zeit = 0;
-		int umrechnungsFaktor = 1000;
+		//int umrechnungsFaktor = 1000;
 		int echteZeit = 0;
 		int syncroZeit = 0;
 		
@@ -78,27 +72,30 @@ public class Flughafen2 extends Thread{
 				System.out.println("----");
 				System.out.println(flugzeugListe.size());
 				System.out.println("----");
-				if(zeit%umrechnungsFaktor == 0){ //smoothing time
-					echteZeit = zeit/umrechnungsFaktor;
+				if(zeit%1000 == 0){ //smoothing time
+					echteZeit = zeit/1000;
 					System.out.println("\nZeit: " + echteZeit);
 				}
 			} catch (InterruptedException e) {
 				e.printStackTrace();
 				interrupt();
 			}
-			if(anzahlFlugzeuge > flugzeugListe.size()){
-				Flugzeug neuesFlugzeug = erzeugeFlugzeug(echteZeit);
-				flugzeugListe.add(neuesFlugzeug);
-				System.out.println("Flugzeug erzeugt: " + neuesFlugzeug.toString());
-				neuesFlugzeug.start();
-			}//END IF
-			if(echteZeit > syncroZeit){
-				syncroZeit = echteZeit;
-				for(int i = 0; i < flugzeugListe.size(); i++){
-					flugzeugListe.get(i).setZeit(echteZeit);
-					System.out.println(flugzeugListe.get(i).toString());
-				}
+			synchronized(flugzeugListe){
+				if(anzahlFlugzeuge > flugzeugListe.size()){
+					Flugzeug neuesFlugzeug = erzeugeFlugzeug(echteZeit);
+					flugzeugListe.add(neuesFlugzeug);
+					//flugzeugListe.add(erzeugeFlugzeug(echteZeit));
+					System.out.println("Flugzeug erzeugt: " + neuesFlugzeug.toString());
+					neuesFlugzeug.start();
+				}//END IF
 			}
+				if(echteZeit > syncroZeit){
+					syncroZeit = echteZeit;
+					for(int i = 0; i < flugzeugListe.size(); i++){
+						flugzeugListe.get(i).setZeit(echteZeit);
+						System.out.println(flugzeugListe.get(i).toString());
+					}
+				}
 			
 		}
 	}
@@ -132,14 +129,20 @@ public class Flughafen2 extends Thread{
 	public static void main(String[] args){
 		Flughafen2 fh = new Flughafen2();
 		List<Flugzeug> liste = new ArrayList<Flugzeug>();
-		Flugzeug fz1 = new Flugzeug("Lufthansa 1", 2, fh, 0);
+		Flugzeug fz1 = new Flugzeug("Lufthansa 1", 1, fh, 0);
 		Flugzeug fz2 = new Flugzeug("Air Berlin 1", 2, fh, 0);
+		Flugzeug fz3 = new Flugzeug("Air Berlin 1", 3, fh, 0);
+		Flugzeug fz4 = new Flugzeug("Air Berlin 1", 4, fh, 0);
 		liste.add(fz1);
 		liste.add(fz2);
+		liste.add(fz3);
+		liste.add(fz4);
 		Thread flughafen = new Flughafen2(liste);
 		flughafen.start();
 		fz1.start();
 		fz2.start();
+		fz3.start();
+		fz4.start();
 		System.out.println("Flughafen hat Betrieb aufgenommen");
 		System.out.println("Zeit: 0");
 		System.out.println(fz1.toString());

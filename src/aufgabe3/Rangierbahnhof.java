@@ -31,5 +31,28 @@ public class Rangierbahnhof {
 			gleisAnzahl = new Zug[anzahlGleise];
 		}
 	}
+	
+	/*
+	 * Faehrt einen Zug auf das gegebene Rangiergleis ein
+	 * Rangiergleis muss vorhanden und frei sein
+	 * @param gleisNummer
+	 */
+	public void zugEinfahren(int gleisNummer){
+		if(gleisNummer >= 0 && gleisNummer < gleisAnzahl.length && gleisAnzahl[gleisNummer] == null){
+			
+		}
+	}
+	
+	/*
+	 * Faehrt einen Zug aus dem gegebenen Rangiergleis aus
+	 * Rangiergleis muss vorhanden und belegt sein
+	 * @param gleisNummer
+	 */
+	public void zugAusfahren(int gleisNummer){
+		if(gleisNummer >= 0 && gleisNummer < gleisAnzahl.length && gleisAnzahl[gleisNummer] != null){
+			
+		}
+		gleisAnzahl[gleisNummer] = null;
+	}
 
 }
