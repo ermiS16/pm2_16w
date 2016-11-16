@@ -31,7 +31,7 @@ public class Flughafen2 extends Thread{
 		
 		while(!isInterrupted() && true){
 			try {
-				Flughafen.sleep(warteZeit);
+				Flughafen2.sleep(warteZeit);
 				zeit += warteZeit;
 				if(zeit%umrechnungsFaktor == 0){ //smoothing time
 					echteZeit = zeit/umrechnungsFaktor;
@@ -75,9 +75,13 @@ public class Flughafen2 extends Thread{
 				return neuesFlugzeugDefault;
 		}// END SWITCH
 	}// END METHOD
+	
+	public synchronized void landen(Flugzeug fz){
+		
+	}
 
 	public static void main(String[] args){
-		Thread flughafen = new Thread(new Flughafen());
+		Thread flughafen = new Thread(new Flughafen2());
 		flughafen.start();
 	}
 	
