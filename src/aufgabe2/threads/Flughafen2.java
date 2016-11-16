@@ -16,7 +16,7 @@ import java.util.List;
 
 public class Flughafen2 extends Thread{
 	private final int WARTE_ZEIT = 500;
-	private final int LANDE_DAUER_ZEIT = 1500;
+	private final int LANDE_DAUER_ZEIT = 3000; //must be 1500
 	
 	private List<Flugzeug> flugzeugListe;
 	private int anzahlFlugzeuge;
@@ -26,16 +26,24 @@ public class Flughafen2 extends Thread{
 	 */
 	public Flughafen2(){
 		flugzeugListe = new ArrayList<Flugzeug>();
-		anzahlFlugzeuge = flugzeugListe.size();
+		anzahlFlugzeuge = 0;
 	}
 	
 	/*
 	 * Konstruktor mit Nutzereingabe
 	 * @param inputFlugzeugListe
 	 */
-	public Flughafen2(List<Flugzeug> inputFlugzeugListe){
-		flugzeugListe = inputFlugzeugListe;
-		anzahlFlugzeuge = inputFlugzeugListe.size();
+	//public Flughafen2(List<Flugzeug> inputFlugzeugListe){
+	//flugzeugListe = inputFlugzeugListe;
+	//anzahlFlugzeuge = inputFlugzeugListe.size();
+	//}
+	
+	/*
+	 * NEEDED
+	 */
+	public void setFlugzeuge(Flugzeug flugzeug){
+		flugzeugListe.add(flugzeug);
+		anzahlFlugzeuge++;
 	}
 	
 	/*
@@ -46,11 +54,9 @@ public class Flughafen2 extends Thread{
 		fz.setStatus(Status.IM_LANDEANFLUG);
 		Thread.sleep(LANDE_DAUER_ZEIT);
 		fz.setStatus(Status.GELANDET);
+		System.out.println(fz.toString()); //nicht ideal, woanders hin
 		fz.interrupt();
 		flugzeugListe.remove(fz);
-		System.out.println("XXXX");
-		System.out.println(flugzeugListe.size());
-		System.out.println(anzahlFlugzeuge);
 	}
 	
 	/*
@@ -71,11 +77,7 @@ public class Flughafen2 extends Thread{
 		while(!isInterrupted() && true){
 			try {
 				Thread.sleep(WARTE_ZEIT);
-				zeit += WARTE_ZEIT;
-				//System.out.println("----");
-				//System.out.println(flugzeugListe.size());
-				//System.out.println("aF: " + anzahlFlugzeuge);
-				//System.out.println("----");
+				zeit += WARTE_ZEIT;               // <- Problem. Flugzeug Threads schlafen "zu kurz" relativ zu echteZeit. Deswegen oben auf 3000 gesetzt
 				if(zeit%1000 == 0){ //smoothing time
 					echteZeit = zeit/1000;
 					System.out.println("\nZeit: " + echteZeit);
@@ -88,7 +90,6 @@ public class Flughafen2 extends Thread{
 				if(anzahlFlugzeuge > flugzeugListe.size()){
 					Flugzeug neuesFlugzeug = erzeugeFlugzeug(echteZeit);
 					flugzeugListe.add(neuesFlugzeug);
-					//flugzeugListe.add(erzeugeFlugzeug(echteZeit));
 					System.out.println("Flugzeug erzeugt: " + neuesFlugzeug.toString());
 					neuesFlugzeug.start();
 				}//END IF
@@ -98,11 +99,9 @@ public class Flughafen2 extends Thread{
 					for(int i = 0; i < flugzeugListe.size(); i++){
 						flugzeugListe.get(i).setZeit(echteZeit);
 						System.out.println(flugzeugListe.get(i).toString());
-						if(!flugzeugListe.get(i).isInterrupted() && !flugzeugListe.get(i).isAlive()){
-							flugzeugListe.remove(i);
 						}
 					}
-				}
+				
 			
 		}
 	}
@@ -135,25 +134,22 @@ public class Flughafen2 extends Thread{
 
 	public static void main(String[] args){
 		Flughafen2 fh = new Flughafen2();
-		List<Flugzeug> liste = new ArrayList<Flugzeug>();
+		//List<Flugzeug> liste = new ArrayList<Flugzeug>();
 		Flugzeug fz1 = new Flugzeug("Lufthansa 1", 1, fh, 0);
 		Flugzeug fz2 = new Flugzeug("Air Berlin 1", 2, fh, 0);
-		Flugzeug fz3 = new Flugzeug("Air Berlin 2", 3, fh, 0);
-		Flugzeug fz4 = new Flugzeug("Air Berlin 3", 4, fh, 0);
-		liste.add(fz1);
-		liste.add(fz2);
-		liste.add(fz3);
-		liste.add(fz4);
-		Thread flughafen = new Flughafen2(liste);
-		flughafen.start();
+		//Flugzeug fz3 = new Flugzeug("Air Berlin 2", 3, fh, 0);
+		//Flugzeug fz4 = new Flugzeug("Air Berlin 3", 4, fh, 0);
+		fh.setFlugzeuge(fz1);
+		fh.setFlugzeuge(fz2);
+		fh.start();
 		fz1.start();
 		fz2.start();
-		fz3.start();
-		fz4.start();
+		//fz3.start();
+		//fz4.start();
 		System.out.println("Flughafen 2 hat Betrieb aufgenommen");
 		System.out.println("Zeit: 0");
-		//System.out.println(fz1.toString());
-		//System.out.println(fz2.toString());
+		System.out.println(fz1.toString());
+		System.out.println(fz2.toString());
 	}
 	
 }

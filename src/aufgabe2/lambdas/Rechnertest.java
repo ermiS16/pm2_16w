@@ -77,6 +77,7 @@ public class Rechnertest {
 	@Test
 	public void testeDoubleDoubleZuDoubleMulti(){
 		double num1 = 2d;
+		//int num1 = 2;
 		double num2 = 3d;
 		double num3 = 5d;
 		double num4 = 6d;

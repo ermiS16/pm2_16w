@@ -3,6 +3,7 @@ package aufgabe2.threads;
 /**
  * Repraesentiert ein Flugzeug, dass als 
  * Thread ueber den Flughafen gestartet wird
+ * 
  * @author Eric Misfeld, Simon Felske
  * @version 08.11.2016
  *
@@ -40,11 +41,7 @@ public class Flugzeug extends Thread{
 		while(!isInterrupted()){
 			try{
 				if(restZeit == 0){
-					System.out.println("lande " + id);
 					flughafen.landen(this);
-					if(this.isGelandet()){
-						this.interrupt();
-					}
 				}
 			}catch(InterruptedException e){
 				e.printStackTrace();
@@ -59,7 +56,7 @@ public class Flugzeug extends Thread{
 	public void setStatus(Status statusAenderung){
 		switch(statusAenderung){
 		case IM_FLUG:
-			status = Status.IM_FLUG;
+			status = Status.IM_FLUG; // unnötig
 			break;
 		case IM_LANDEANFLUG:
 			status = Status.IM_LANDEANFLUG;
@@ -71,24 +68,10 @@ public class Flugzeug extends Thread{
 			status = Status.GELANDET;
 			break;
 		default:
-			//this.status = status;
+			this.status = status; // unnötig
 			break;
 		}
 	}
-	
-	/*
-	 * Aendert Status
-	 */
-	//public void imLandeAnflug(){
-	//status = Status.IM_LANDEANFLUG;
-	//}
-	
-	/*
-	 * Aendert Status
-	 */
-	//public void landung(){
-	//	status = Status.GELANDET;
-	//}
 	
 	/*
 	 * Landevorgang abgeschlossen?
