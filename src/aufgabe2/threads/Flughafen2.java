@@ -98,6 +98,9 @@ public class Flughafen2 extends Thread{
 					for(int i = 0; i < flugzeugListe.size(); i++){
 						flugzeugListe.get(i).setZeit(echteZeit);
 						System.out.println(flugzeugListe.get(i).toString());
+						if(!flugzeugListe.get(i).isInterrupted() && !flugzeugListe.get(i).isAlive()){
+							flugzeugListe.remove(i);
+						}
 					}
 				}
 			
@@ -109,7 +112,7 @@ public class Flughafen2 extends Thread{
 	 * @param currentTime
 	 */
 	public Flugzeug erzeugeFlugzeug(int currentTime){
-		int zufall = (int) (Math.random() * 2);
+		int zufall = (int) (Math.random() * 3);
 		String luftHansa = "Lufthansa ";
 		String airBerlin = "Air Berlin ";
 		String germanWings = "German Wings ";
@@ -135,8 +138,8 @@ public class Flughafen2 extends Thread{
 		List<Flugzeug> liste = new ArrayList<Flugzeug>();
 		Flugzeug fz1 = new Flugzeug("Lufthansa 1", 1, fh, 0);
 		Flugzeug fz2 = new Flugzeug("Air Berlin 1", 2, fh, 0);
-		Flugzeug fz3 = new Flugzeug("Air Berlin 1", 3, fh, 0);
-		Flugzeug fz4 = new Flugzeug("Air Berlin 1", 4, fh, 0);
+		Flugzeug fz3 = new Flugzeug("Air Berlin 2", 3, fh, 0);
+		Flugzeug fz4 = new Flugzeug("Air Berlin 3", 4, fh, 0);
 		liste.add(fz1);
 		liste.add(fz2);
 		liste.add(fz3);
@@ -147,10 +150,10 @@ public class Flughafen2 extends Thread{
 		fz2.start();
 		fz3.start();
 		fz4.start();
-		System.out.println("Flughafen hat Betrieb aufgenommen");
+		System.out.println("Flughafen 2 hat Betrieb aufgenommen");
 		System.out.println("Zeit: 0");
-		System.out.println(fz1.toString());
-		System.out.println(fz2.toString());
+		//System.out.println(fz1.toString());
+		//System.out.println(fz2.toString());
 	}
 	
 }

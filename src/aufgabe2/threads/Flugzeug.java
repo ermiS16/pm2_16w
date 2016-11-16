@@ -42,6 +42,9 @@ public class Flugzeug extends Thread{
 				if(restZeit == 0){
 					System.out.println("lande " + id);
 					flughafen.landen(this);
+					if(this.isGelandet()){
+						this.interrupt();
+					}
 				}
 			}catch(InterruptedException e){
 				e.printStackTrace();
