@@ -115,19 +115,5 @@ public class Flugzeug extends Thread{
 		}
 	}
 	
-	/*
-	 * Gibt die verbleibende Flugzeit zurueck
-	 * @return restZeit
-	 */
-	public int getZeit(){
-		return restZeit;
-	}
-	
-	/*
-	 * Git die Flugdauer zurueck
-	 * @return flugdauer
-	 */
-	public int getFlugdauer(){
-		return flugdauer;
-	}	
+	// Methoden nicht gebraucht
 }
