@@ -4,9 +4,11 @@ package aufgabe2.threads;
  * Repraesentiert ein Flugzeug, dass als 
  * Thread ueber den Flughafen gestartet wird
  * 
+ * Praktikum TIPR2, WS2016/2017
+ * Praktikumsgruppe Nr. 4
  * @author Eric Misfeld, Simon Felske
  * @version 18.11.2016
- *
+ * Aufgabenblatt 2 | Aufgabe 3
  */
 
 public class Flugzeug extends Thread{
@@ -33,7 +35,7 @@ public class Flugzeug extends Thread{
 			restZeit = flugdauer;
 			this.startZeit = startZeit;
 			status = Status.IM_FLUG;
-		}
+		}// END IF
 	}
 	
 	@Override
@@ -46,8 +48,8 @@ public class Flugzeug extends Thread{
 			}catch(InterruptedException e){
 				e.printStackTrace();
 			}
-		}
-	}
+		}// END WHILE
+	}// END METHOD
 	
 	/*
 	 * Aendert den Status des Flugzeuges
@@ -66,8 +68,8 @@ public class Flugzeug extends Thread{
 			break;
 		default:
 			break;
-		}
-	}
+		}// END SWITCH
+	}// END METHOD
 	
 	/*
 	 * Erstellt einen formatierten String mit allen 
@@ -89,7 +91,7 @@ public class Flugzeug extends Thread{
 	 * nicht zeitgerecht eingeleitet werden kann
 	 * @parem zeitWert
 	 */
-	public void setZeit(int zeitWert){
+	public synchronized void setZeit(int zeitWert){
 		if(status != Status.IM_LANDEANFLUG && (flugdauer - (Math.abs(startZeit - zeitWert))) >= 0){
 			restZeit = flugdauer - (Math.abs(startZeit - zeitWert));
 		}
@@ -97,7 +99,7 @@ public class Flugzeug extends Thread{
 			restZeit = 0;
 			if(status == Status.IM_FLUG){
 				status = Status.IN_WARTESCHLEIFE;
-			}
-		}
-	}
+			}// END IF
+		}// END ELSE
+	}// END METHOD
 }

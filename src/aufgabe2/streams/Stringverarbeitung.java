@@ -7,10 +7,12 @@ import java.util.stream.*;
 * Verarbeitet Text in Form von Strings
 * nach Vorgabe(n)
 * 
-* @author Eric Misfeld, Simon Felske
-* @version 15.11.2016
-*
-*/
+* Praktikum TIPR2, WS2016/2017
+ * Praktikumsgruppe Nr. 4
+ * @author Eric Misfeld, Simon Felske
+ * @version 18.11.2016
+ * Aufgabenblatt 2 | Aufgabe 2
+ */
 
 public class Stringverarbeitung {
 
@@ -19,13 +21,13 @@ public class Stringverarbeitung {
 	private List<String> speicherListe;
 
 	/*
-	 * Constructor
+	 * Konstruktor
 	 */
 	Stringverarbeitung() {
 	}
 
 	/*
-	 * Constructor mit Nutzereingabe
+	 * Konstruktor mit Nutzereingabe
 	 * 
 	 * @param nutzereingabe - beliebig viele Strings per varargs
 	 */
@@ -37,8 +39,9 @@ public class Stringverarbeitung {
 	}
 
 	/*
-	 * Verarbeitet die im Array gegebenen Strings in einem Stream nach den
-	 * Vorgaben und legt sie in einer List ab
+	 * Verarbeitet die im Array gegebenen Strings 
+	 * in einem Stream nach den Vorgaben und
+	 * legt sie in einer List ab
 	 */
 	public void verarbeite() {
 		Stream<String> t1 = Arrays.stream(standardWerte);

@@ -6,8 +6,11 @@ import org.junit.Test;
 /**
  * Testklasse zu "Stringverarbeitung"
  * 
+* Praktikum TIPR2, WS2016/2017
+ * Praktikumsgruppe Nr. 4
  * @author Eric Misfeld, Simon Felske
- * @version 15.11.2016
+ * @version 18.11.2016
+ * Aufgabenblatt 2 | Aufgabe 2
  */
 
 public class Stringtester {
@@ -51,7 +54,7 @@ public class Stringtester {
 	}
 	
 	/*
-	 * Test auf Umlaute und ß
+	 * Test auf dt. Umlaute und ß
 	 */
 	@Test
 	public void testeUmlaute(){

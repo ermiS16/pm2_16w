@@ -7,8 +7,11 @@ import java.util.function.*;
  * Repraesentiert einen Rechner fuer
  * die vier Grundrechenarten
  * 
+ * Praktikum TIPR2, WS2016/2017
+ * Praktikumsgruppe Nr. 4
  * @author Eric Misfeld, Simon Felske
- * @version 15.11.2016
+ * @version 18.11.2016
+ * Aufgabenblatt 2 | Aufgabe 1
  */
 
 public class Rechner {
