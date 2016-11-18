@@ -5,7 +5,7 @@ package aufgabe2.threads;
  * Thread ueber den Flughafen gestartet wird
  * 
  * @author Eric Misfeld, Simon Felske
- * @version 08.11.2016
+ * @version 18.11.2016
  *
  */
 
@@ -51,13 +51,10 @@ public class Flugzeug extends Thread{
 	
 	/*
 	 * Aendert den Status des Flugzeuges
-	 * @param statusAenderung
+	 * @param statusAenderung - darf nicht Status.IM_FLUG sein
 	 */
 	public void setStatus(Status statusAenderung){
 		switch(statusAenderung){
-		case IM_FLUG:
-			status = Status.IM_FLUG; // unnötig
-			break;
 		case IM_LANDEANFLUG:
 			status = Status.IM_LANDEANFLUG;
 			break;
@@ -68,26 +65,13 @@ public class Flugzeug extends Thread{
 			status = Status.GELANDET;
 			break;
 		default:
-			this.status = status; // unnötig
 			break;
 		}
 	}
 	
 	/*
-	 * Landevorgang abgeschlossen?
-	 * @return amBoden 
-	 */
-	public boolean isGelandet(){
-		boolean amBoden = false;
-		if(status == Status.GELANDET){
-			amBoden = true;
-		}
-		return amBoden;
-	}
-	
-	/*
 	 * Erstellt einen formatierten String mit allen 
-	 * notwendigen Flugzeuginformationen
+	 * vorhandenen Flugzeuginformationen
 	 * @return formatiert
 	 */
 	public String toString(){
@@ -100,7 +84,9 @@ public class Flugzeug extends Thread{
 	
 	/*
 	 * Setzt die aktuelle Zeit und
-	 * aktualisiert die verbleibende Flugzeit
+	 * aktualisiert die verbleibende Flugzeit.
+	 * Aendert den Status wenn die Landung
+	 * nicht zeitgerecht eingeleitet werden kann
 	 * @parem zeitWert
 	 */
 	public void setZeit(int zeitWert){
@@ -114,6 +100,4 @@ public class Flugzeug extends Thread{
 			}
 		}
 	}
-	
-	// Methoden nicht gebraucht
 }

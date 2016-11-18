@@ -10,13 +10,20 @@ import java.util.List;
 * sich eine Landebahn "teilen" muessen 
 * 
 * @author Eric Misfeld, Simon Felske
-* @version 15.11.2016
+* @version 18.11.2016
 *
 */
 
 public class Flughafen2 extends Thread{
 	private final int WARTE_ZEIT = 500;
-	private final int LANDE_DAUER_ZEIT = 3000; //must be 1500
+	private final int LANDE_DAUER_ZEIT = 3500;
+	
+	/*
+	 * Alternative
+	 */
+	//private final int LANDE_DAUER_ZEIT = 1500;
+	
+	private final String FLUGHAFEN_NAME = "Generic International";
 	
 	private List<Flugzeug> flugzeugListe;
 	private int anzahlFlugzeuge;
@@ -28,21 +35,14 @@ public class Flughafen2 extends Thread{
 		flugzeugListe = new ArrayList<Flugzeug>();
 		anzahlFlugzeuge = 0;
 	}
-	
+
 	/*
-	 * Konstruktor mit Nutzereingabe
-	 * @param inputFlugzeugListe
+	 * Fuegt dem Flughafen ein zusaetzliches
+	 * Flugzeug hinzu
+	 * @param fz - das hinzuzufuegende Flugzeug
 	 */
-	//public Flughafen2(List<Flugzeug> inputFlugzeugListe){
-	//flugzeugListe = inputFlugzeugListe;
-	//anzahlFlugzeuge = inputFlugzeugListe.size();
-	//}
-	
-	/*
-	 * NEEDED
-	 */
-	public void setFlugzeuge(Flugzeug flugzeug){
-		flugzeugListe.add(flugzeug);
+	public void ergaenzeFlugzeug(Flugzeug fz){
+		flugzeugListe.add(fz);
 		anzahlFlugzeuge++;
 	}
 	
@@ -54,7 +54,7 @@ public class Flughafen2 extends Thread{
 		fz.setStatus(Status.IM_LANDEANFLUG);
 		Thread.sleep(LANDE_DAUER_ZEIT);
 		fz.setStatus(Status.GELANDET);
-		System.out.println(fz.toString()); //nicht ideal, woanders hin
+		System.out.println(fz.toString());
 		fz.interrupt();
 		flugzeugListe.remove(fz);
 	}
@@ -64,21 +64,20 @@ public class Flughafen2 extends Thread{
 	 * @return - Name des Flughafens
 	 */
 	public String toString(){
-		return "Generic International";
+		return FLUGHAFEN_NAME;
 	}
 	
 	@Override
 	public void run(){
 		int zeit = 0;
-		//int umrechnungsFaktor = 1000;
 		int echteZeit = 0;
 		int syncroZeit = 0;
 		
 		while(!isInterrupted() && true){
 			try {
 				Thread.sleep(WARTE_ZEIT);
-				zeit += WARTE_ZEIT;               // <- Problem. Flugzeug Threads schlafen "zu kurz" relativ zu echteZeit. Deswegen oben auf 3000 gesetzt
-				if(zeit%1000 == 0){ //smoothing time
+				zeit += WARTE_ZEIT;
+				if(zeit%1000 == 0){ //Zeitglaettung
 					echteZeit = zeit/1000;
 					System.out.println("\nZeit: " + echteZeit);
 				}
@@ -86,29 +85,28 @@ public class Flughafen2 extends Thread{
 				e.printStackTrace();
 				interrupt();
 			}
-			synchronized(flugzeugListe){
 				if(anzahlFlugzeuge > flugzeugListe.size()){
 					Flugzeug neuesFlugzeug = erzeugeFlugzeug(echteZeit);
 					flugzeugListe.add(neuesFlugzeug);
 					System.out.println("Flugzeug erzeugt: " + neuesFlugzeug.toString());
 					neuesFlugzeug.start();
-				}//END IF
-			}
+				}
+			synchronized(flugzeugListe){
 				if(echteZeit > syncroZeit){
 					syncroZeit = echteZeit;
 					for(int i = 0; i < flugzeugListe.size(); i++){
 						flugzeugListe.get(i).setZeit(echteZeit);
 						System.out.println(flugzeugListe.get(i).toString());
-						}
-					}
-				
-			
-		}
-	}
+					}// END FOR
+				}// END IF
+			}// END SYNCHRONIZED
+		}// END WHILE
+	}// END METHOD
 	
 	/*
-	 * Erzeugt ein zufaelliges neues Flugzeug
-	 * @param currentTime
+	 * Erzeugt ein neues Flugzeug-Objekt,
+	 * mit zufaelliger ID und Flugdauer
+	 * @param currentTime - aktuelle "Ganzzeit"
 	 */
 	public Flugzeug erzeugeFlugzeug(int currentTime){
 		int zufall = (int) (Math.random() * 3);
@@ -116,7 +114,7 @@ public class Flughafen2 extends Thread{
 		String airBerlin = "Air Berlin ";
 		String germanWings = "German Wings ";
 		int flugId = (int) ((Math.random() + 1) * 1000);
-		int flugdauer = (int) (Math.random() * 10) + 1; //flugdauer darf nicht 0 sein
+		int flugdauer = (int) (Math.random() * 10) + 1; //flugdauer muss >0 sein
 		Flughafen2 zielort = this;
 		
 		switch(zufall){
@@ -134,22 +132,18 @@ public class Flughafen2 extends Thread{
 
 	public static void main(String[] args){
 		Flughafen2 fh = new Flughafen2();
-		//List<Flugzeug> liste = new ArrayList<Flugzeug>();
 		Flugzeug fz1 = new Flugzeug("Lufthansa 1", 1, fh, 0);
 		Flugzeug fz2 = new Flugzeug("Air Berlin 1", 2, fh, 0);
 		//Flugzeug fz3 = new Flugzeug("Air Berlin 2", 3, fh, 0);
 		//Flugzeug fz4 = new Flugzeug("Air Berlin 3", 4, fh, 0);
-		fh.setFlugzeuge(fz1);
-		fh.setFlugzeuge(fz2);
+		fh.ergaenzeFlugzeug(fz1);
+		fh.ergaenzeFlugzeug(fz2);
 		fh.start();
 		fz1.start();
 		fz2.start();
-		//fz3.start();
-		//fz4.start();
 		System.out.println("Flughafen 2 hat Betrieb aufgenommen");
 		System.out.println("Zeit: 0");
 		System.out.println(fz1.toString());
 		System.out.println(fz2.toString());
 	}
-	
 }
