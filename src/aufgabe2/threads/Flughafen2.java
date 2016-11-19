@@ -18,7 +18,7 @@ import java.util.List;
 
 public class Flughafen2 extends Thread{
 	private final int WARTE_ZEIT = 500;
-	private final int LANDE_DAUER_ZEIT = 3500;
+	private final int LANDE_DAUER_ZEIT = 3100;
 	
 	/*
 	 * Alternativer Wert fuer 2. Implementation
