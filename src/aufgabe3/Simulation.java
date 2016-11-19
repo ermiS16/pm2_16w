@@ -14,13 +14,22 @@ package aufgabe3;
 
 public class Simulation implements Runnable{
 	
+	private final int INTERVALL = 500;
+	
 	/*
 	 * Erstellt einen neuen Lokfuehrer
 	 * oder eine neue Lokfuehrerin
-	 * @param aufgabe
-	 * @param gleis
 	 */
-	public Lokfuehrer erzeugeLokfuehrer(int aufgabe, int gleis){
+	public Lokfuehrer erzeugeLokfuehrer(){
+		int aufgabe = 0;
+		int gleis = 0;
+		int x = (int) (Math.random() * 10) + 1;
+		if(x > 5){
+			aufgabe = 1;
+		}
+		else{
+			aufgabe = -1;
+		}
 		Lokfuehrer neuerLokfuehrer = new Lokfuehrer(aufgabe,gleis);
 		return neuerLokfuehrer;
 	}// END METHOD
@@ -28,6 +37,13 @@ public class Simulation implements Runnable{
 	@Override
 	public void run(){
 		//sinnvolle dinge
+		while(true){
+			try {
+				Thread.sleep(INTERVALL);
+			} catch (InterruptedException e) {
+				e.printStackTrace();
+			}
+		}
 	}
 	
 }
