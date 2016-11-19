@@ -1,18 +1,21 @@
 package aufgabe3;
 
-public class Rangierbahnhof {
-	
 /**
 * Repraesentiert einen Rangierbahnhof 
 * mit beliebig vielen Rangiergleisen
 * fuer Zuege
 * 
+* Praktikum TIPR2, WS2016/2017
+* Praktikumsgruppe Nr. 4
 * @author Eric Misfeld, Simon Felske
-* @version 15.11.2016
-*
+* @version 19.11.2016
+* Aufgabenblatt 3 | Aufgabe 1
 */
+
+public class Rangierbahnhof extends Thread{
 	
 	private Zug[] gleisAnzahl;
+	private int zugAnzahl = 0;
 	
 	/*
 	 * Konstruktor
@@ -33,26 +36,74 @@ public class Rangierbahnhof {
 	}
 	
 	/*
+	 * Gibt die Anzahl der Rangiergleis zurueck
+	 * @return gleisAnzahl.length
+	 */
+	public int getGleisAnzahl(){
+		return gleisAnzahl.length;
+	}
+	
+	/*
 	 * Faehrt einen Zug auf das gegebene Rangiergleis ein
 	 * Rangiergleis muss vorhanden und frei sein
+	 * @param zug
 	 * @param gleisNummer
 	 */
-	public void zugEinfahren(int gleisNummer){
-		if(gleisNummer >= 0 && gleisNummer < gleisAnzahl.length && gleisAnzahl[gleisNummer] == null){
-			
-		}
-	}
+	public synchronized void zugEinfahrenAuf(Zug zug, int gleisNummer){
+		if(gleisNummer >= 0 && gleisNummer < gleisAnzahl.length 
+				&& gleisAnzahl[gleisNummer] == null){
+			gleisAnzahl[gleisNummer] = zug;
+			zugAnzahl++;
+		}// END IF
+	}// END METHOD
+	
+	/*
+	 * Faehrt einen Zug in den Bahnhof ein
+	 * und stellt den Zug auf einem freien
+	 * Rangiergleis ab, sofern vorhanden
+	 * @param zug
+	 */
+	public synchronized void zugEinfahren(Zug zug){
+		if(zug != null && zugAnzahl < gleisAnzahl.length){
+			for(int i = 0; i < gleisAnzahl.length; i++){
+				if(gleisAnzahl[i] == null){
+					gleisAnzahl[i] = zug;
+					break;
+				}// END IF
+			}// END FOR
+		}// END IF
+	}// END METHOD
 	
 	/*
 	 * Faehrt einen Zug aus dem gegebenen Rangiergleis aus
 	 * Rangiergleis muss vorhanden und belegt sein
 	 * @param gleisNummer
 	 */
-	public void zugAusfahren(int gleisNummer){
-		if(gleisNummer >= 0 && gleisNummer < gleisAnzahl.length && gleisAnzahl[gleisNummer] != null){
-			
-		}
-		gleisAnzahl[gleisNummer] = null;
+	public synchronized void zugAusfahrenAuf(int gleisNummer){
+		if(gleisNummer >= 0 && gleisNummer < gleisAnzahl.length 
+				&& gleisAnzahl[gleisNummer] != null){
+			gleisAnzahl[gleisNummer] = null;
+			zugAnzahl--;
+		}// END IF
+	}// END METHOD
+	
+	/*
+	 * Faehrt einen Zug von dem ersten belegten Rangiergleis
+	 * aus dem Bahnhof aus
+	 */
+	public synchronized void zugAusfahrenAuf(){
+		for(int i = 0; i < gleisAnzahl.length; i++){
+			if(gleisAnzahl[i] != null){
+				gleisAnzahl[i] = null;
+				zugAnzahl--;
+				break;
+			}// END IF
+		}// END FOR
+	}// END METHOD
+	
+	@Override
+	public void run(){
+		// do many things - J.C.
 	}
 
 }

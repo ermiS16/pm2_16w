@@ -1,14 +1,16 @@
 package aufgabe3;
 
-public class Zug {
-	
 /**
-* Repraesentiert eien Zug 
+* Repraesentiert einen Zug 
 * 
+* Praktikum TIPR2, WS2016/2017
+* Praktikumsgruppe Nr. 4
 * @author Eric Misfeld, Simon Felske
-* @version 15.11.2016
-*
+* @version 19.11.2016
+* Aufgabenblatt 3 | Aufgabe 1
 */
+
+public class Zug {
 	
 	/*
 	 * Konstruktor
@@ -16,5 +18,4 @@ public class Zug {
 	Zug(){
 		
 	}
-
 }
