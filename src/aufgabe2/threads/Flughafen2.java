@@ -125,15 +125,13 @@ public class Flughafen2 extends Thread{
 				neuesFlugzeug.start();
 			}
 			
-			synchronized(flugzeugListe){
-				if(echteZeit > syncroZeit){
-					syncroZeit = echteZeit;
-					for(int i = 0; i < flugzeugListe.size(); i++){
-						flugzeugListe.get(i).setZeit(echteZeit);
-						System.out.println(flugzeugListe.get(i).toString());
-					}// END FOR
-				}// END IF
-			}// END SYNCHRONIZED
+			if(echteZeit > syncroZeit){
+				syncroZeit = echteZeit;
+				for(int i = 0; i < flugzeugListe.size(); i++){
+					flugzeugListe.get(i).setZeit(echteZeit);
+					System.out.println(flugzeugListe.get(i).toString());
+				}// END FOR
+			}// END IF
 		}// END WHILE
 	}// END METHOD
 
