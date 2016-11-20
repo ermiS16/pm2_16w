@@ -47,7 +47,7 @@ public class Stringverarbeitung {
 		speicherListe = t1.filter(o -> o != null).map(e -> e.replace("ß", "ss"))
 				.map(txt -> txt.toUpperCase()).map(e -> e.replace("Ä", "AE"))
 				.map(e -> e.replace("Ö", "OE")).map(e -> e.replace("Ü", "UE"))
-				.map(e -> e.trim()).map(o -> o.length() > 8 ? o.substring(0, 8) : o.toString())
+				.map(e -> e.trim()).map(o -> o.length() > 8 ? o.substring(0, 8) : o)
 				.collect(Collectors.toList());
 	}
 

@@ -18,7 +18,7 @@ import java.util.List;
 
 public class Flughafen2 extends Thread{
 	private final int WARTE_ZEIT = 500;
-	private final int LANDE_DAUER_ZEIT = 3100;
+	private final int LANDE_DAUER_ZEIT = 3000;
 	
 	/*
 	 * Alternativer Wert fuer 2. Implementation
@@ -179,7 +179,7 @@ public class Flughafen2 extends Thread{
 	
 	public static void main(String[] args){
 		Flughafen2 fh = new Flughafen2();
-		Flugzeug fz1 = new Flugzeug("Lufthansa 1", 1, fh, 0);
+		Flugzeug fz1 = new Flugzeug("Lufthansa 1", 2, fh, 0);
 		Flugzeug fz2 = new Flugzeug("Air Berlin 1", 2, fh, 0);
 		//Flugzeug fz3 = new Flugzeug("Air Berlin 2", 3, fh, 0);
 		//Flugzeug fz4 = new Flugzeug("Air Berlin 3", 4, fh, 0);
@@ -188,8 +188,9 @@ public class Flughafen2 extends Thread{
 		//fh.ergaenzeFlugzeug(fz3);
 		//fh.ergaenzeFlugzeug(fz4);
 		fh.start();
-		fz1.start();
 		fz2.start();
+		fz1.start();
+		//fz2.start();
 		//fz3.start();
 		//fz4.start();
 		System.out.println("Flughafen 2 hat Betrieb aufgenommen");
