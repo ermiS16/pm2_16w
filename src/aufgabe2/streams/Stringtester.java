@@ -101,7 +101,7 @@ public class Stringtester {
 	
 	@Test
 	public void testeStringGroesserAcht(){
-		Stringverarbeitung test = new Stringverarbeitung("Acht Zeichen");
+		Stringverarbeitung test = new Stringverarbeitung("1234567890");
 		test.verarbeite();
 		assertEquals(test.getListe().get(0).length(), 8);
 		System.out.println("SA" + test.getListe());
