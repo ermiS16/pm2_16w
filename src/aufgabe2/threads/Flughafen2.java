@@ -12,7 +12,7 @@ import java.util.List;
  * Praktikum TIPR2, WS2016/2017
  * Praktikumsgruppe Nr. 4
  * @author Eric Misfeld, Simon Felske
- * @version 19.11.2016
+ * @version 21.11.2016
  * Aufgabenblatt 2 | Aufgabe 3
  */
 
@@ -54,7 +54,7 @@ public class Flughafen2 extends Thread{
 	 * @param currentTime - aktuelle "Ganzzeit"
 	 */
 	public Flugzeug erzeugeFlugzeug(int currentTime){
-		int zufall = (int) (Math.random() * 3);
+		int airline = (int) (Math.random() * 3);
 		String luftHansa = "Lufthansa ";
 		String airBerlin = "Air Berlin ";
 		String germanWings = "German Wings ";
@@ -62,7 +62,7 @@ public class Flughafen2 extends Thread{
 		int flugdauer = (int) (Math.random() * 10) + 1; //flugdauer muss >0 sein
 		Flughafen2 zielort = this;
 		
-		switch(zufall){
+		switch(airline){
 		case 0:	Flugzeug neuesFlugzeug = new Flugzeug(luftHansa+flugId, flugdauer, zielort, currentTime);
 				return neuesFlugzeug;
 		case 1: Flugzeug neuesFlugzeug2 = new Flugzeug(airBerlin+flugId, flugdauer, zielort, currentTime);
@@ -186,9 +186,8 @@ public class Flughafen2 extends Thread{
 		//fh.ergaenzeFlugzeug(fz3);
 		//fh.ergaenzeFlugzeug(fz4);
 		fh.start();
-		fz2.start();
 		fz1.start();
-		//fz2.start();
+		fz2.start();
 		//fz3.start();
 		//fz4.start();
 		System.out.println("Flughafen 2 hat Betrieb aufgenommen");
