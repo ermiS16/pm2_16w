@@ -104,6 +104,6 @@ public class Stringtester {
 		Stringverarbeitung test = new Stringverarbeitung("1234567890");
 		test.verarbeite();
 		assertEquals(test.getListe().get(0).length(), 8);
-		System.out.println("SA" + test.getListe());
+		System.out.println("SA: " + test.getListe());
 	}
 }
