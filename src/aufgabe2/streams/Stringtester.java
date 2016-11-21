@@ -9,7 +9,7 @@ import org.junit.Test;
 * Praktikum TIPR2, WS2016/2017
  * Praktikumsgruppe Nr. 4
  * @author Eric Misfeld, Simon Felske
- * @version 18.11.2016
+ * @version 21.11.2016
  * Aufgabenblatt 2 | Aufgabe 2
  */
 
@@ -97,5 +97,13 @@ public class Stringtester {
 		assertEquals(test.getListe().contains("#*@"), true);
 		assertTrue(test.getListe().size() == 6);
 		System.out.println("SZ: " + test.getListe());
+	}
+	
+	@Test
+	public void testeStringGroesserAcht(){
+		Stringverarbeitung test = new Stringverarbeitung("Acht Zeichen");
+		test.verarbeite();
+		assertEquals(test.getListe().get(0).length(), 8);
+		System.out.println("SA" + test.getListe());
 	}
 }

@@ -87,10 +87,10 @@ public class Rechnertest {
 		double result2 = num3*num4;
 		
 		assertEquals(result, multi.werteAus(num1, num2), result);
-		System.out.println(multi.werteAus(num1, num2));
+		System.out.println("Multiplikation: " + multi.werteAus(num1, num2));
 		
 		assertEquals(result2, multi.werteAus(num3, num4), result2);
-		System.out.println(multi.werteAus(num3, num4));
+		System.out.println("Multiplikation: " + multi.werteAus(num3, num4));
 	}
 	
 	@Test
@@ -112,10 +112,10 @@ public class Rechnertest {
 		
 		
 		assertEquals(result, nullstelle.werteAus(num1, num2), num2);
-		System.out.println(nullstelle.werteAus(num1, num2));
+		System.out.println("Nullstelle: " + nullstelle.werteAus(num1, num2));
 		
 		assertEquals(result2, nullstelle2.werteAus(num3, num4), num3);
-		System.out.println(nullstelle2.werteAus(num3, num4));
+		System.out.println("Nullstelle: " + nullstelle2.werteAus(num3, num4));
 		
 	}
 }
