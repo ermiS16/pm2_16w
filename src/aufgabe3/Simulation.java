@@ -18,18 +18,10 @@ public class Simulation implements Runnable{
 	
 	/*
 	 * Erstellt einen neuen Lokfuehrer
-	 * oder eine neue Lokfuehrerin
 	 */
 	public Lokfuehrer erzeugeLokfuehrer(){
-		int aufgabe = 0;
-		int gleis = 0;
-		int x = (int) (Math.random() * 10) + 1;
-		if(x > 5){
-			aufgabe = 1;
-		}
-		else{
-			aufgabe = -1;
-		}
+		int gleis = (int) (Math.random() * 5);
+		int aufgabe = (int) (Math.random() * 2);
 		Lokfuehrer neuerLokfuehrer = new Lokfuehrer(aufgabe,gleis);
 		return neuerLokfuehrer;
 	}// END METHOD
@@ -45,5 +37,7 @@ public class Simulation implements Runnable{
 			}
 		}
 	}
-	
+	public static void main(String args[]){
+		
+	}
 }

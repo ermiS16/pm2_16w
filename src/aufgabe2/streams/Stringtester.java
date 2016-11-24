@@ -87,7 +87,7 @@ public class Stringtester {
 	 * Test auf Zahlen und Sonderzeichen
 	 */
 	@Test
-	public void testeonderZeichen(){
+	public void testeSonderZeichen(){
 		Stringverarbeitung test = new Stringverarbeitung("1", "22", "#*@", "null", null, "\"", "\\");
 		test.verarbeite();
 		assertEquals(test.getListe().contains("\""), true);
@@ -104,6 +104,6 @@ public class Stringtester {
 		Stringverarbeitung test = new Stringverarbeitung("1234567890");
 		test.verarbeite();
 		assertEquals(test.getListe().get(0).length(), 8);
-		System.out.println("SA: " + test.getListe());
+		System.out.println("SGA: " + test.getListe());
 	}
 }

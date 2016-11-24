@@ -16,6 +16,7 @@ public class Lokfuehrer extends Thread{
 	
 	private int aufgabe;
 	private int gleis;
+	private Zug zug;
 	
 	/*
 	 * Konstruktor
@@ -26,14 +27,17 @@ public class Lokfuehrer extends Thread{
 	
 	/*
 	 * Konstruktor
-	 * @param aufgabe - was der Lokfuehrer machen soll
-	 * muss 1 oder -1 sein
+	 * @param aufgabe - muss 0 (einfahren) oder 1 (ausfahren) sein
 	 * @param gleis - welches Gleis gemeint ist
 	 */
 	Lokfuehrer(int aufgabe, int gleis){
-		if((aufgabe == 1 || aufgabe == -1) && gleis >= 0){
+		if((aufgabe == 0 || aufgabe == 1) && gleis >= 0){
 			this.aufgabe = aufgabe;
 			this.gleis = gleis;
+		}// END IF
+		//Zug erzeugen wenn ein Zug eingefahren werden soll
+		if(aufgabe == 0){
+			this.zug = new Zug();
 		}// END IF
 	}// END METHOD
 	
@@ -46,17 +50,24 @@ public class Lokfuehrer extends Thread{
 	}
 	
 	/*
-	 * Erstellt einen schoenen String
+	 * @param zug
+	 */
+	public Zug getZug(){
+		return zug;
+	}
+	
+	/*
+	 * Erstellt einen formatierten String
 	 * mit allen notwendigen
 	 * Informationen
 	 */
-	public String toSting(){
+	public String toString(){
 		String formatiert = "Lokführer ";
-		if(aufgabe == 1){
-			formatiert += "fährt einen Zug auf Gleis " + gleis + " ein.";
+		if(aufgabe == 0){
+			formatiert += "hat einen Zug auf Gleis " + gleis + " eingefahren.";
 		}
 		else{
-			formatiert += "fährt einen Zug aus Gleis " + gleis + " aus";
+			formatiert += "hat einen Zug aus Gleis " + gleis + " ausgefahren.";
 		}
 		return formatiert;
 	}// END METHOD

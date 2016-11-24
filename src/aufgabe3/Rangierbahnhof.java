@@ -35,8 +35,9 @@ public class Rangierbahnhof extends Thread{
 		}
 	}
 	
+	
 	/*
-	 * Gibt die Anzahl der Rangiergleis zurueck
+	 * Gibt die Anzahl der Rangiergleise zurueck
 	 * @return gleisAnzahl.length
 	 */
 	public int getGleisAnzahl(){
@@ -49,7 +50,7 @@ public class Rangierbahnhof extends Thread{
 	 * @param zug
 	 * @param gleisNummer
 	 */
-	public synchronized void zugEinfahrenAuf(Zug zug, int gleisNummer){
+	public void zugEinfahrenAuf(Zug zug, int gleisNummer){
 		if(gleisNummer >= 0 && gleisNummer < gleisAnzahl.length 
 				&& gleisAnzahl[gleisNummer] == null){
 			gleisAnzahl[gleisNummer] = zug;
@@ -58,28 +59,11 @@ public class Rangierbahnhof extends Thread{
 	}// END METHOD
 	
 	/*
-	 * Faehrt einen Zug in den Bahnhof ein
-	 * und stellt den Zug auf einem freien
-	 * Rangiergleis ab, sofern vorhanden
-	 * @param zug
-	 */
-	public synchronized void zugEinfahren(Zug zug){
-		if(zug != null && zugAnzahl < gleisAnzahl.length){
-			for(int i = 0; i < gleisAnzahl.length; i++){
-				if(gleisAnzahl[i] == null){
-					gleisAnzahl[i] = zug;
-					break;
-				}// END IF
-			}// END FOR
-		}// END IF
-	}// END METHOD
-	
-	/*
 	 * Faehrt einen Zug aus dem gegebenen Rangiergleis aus
 	 * Rangiergleis muss vorhanden und belegt sein
 	 * @param gleisNummer
 	 */
-	public synchronized void zugAusfahrenAuf(int gleisNummer){
+	public void zugAusfahrenAuf(int gleisNummer){
 		if(gleisNummer >= 0 && gleisNummer < gleisAnzahl.length 
 				&& gleisAnzahl[gleisNummer] != null){
 			gleisAnzahl[gleisNummer] = null;
@@ -87,19 +71,6 @@ public class Rangierbahnhof extends Thread{
 		}// END IF
 	}// END METHOD
 	
-	/*
-	 * Faehrt einen Zug von dem ersten belegten Rangiergleis
-	 * aus dem Bahnhof aus
-	 */
-	public synchronized void zugAusfahrenAuf(){
-		for(int i = 0; i < gleisAnzahl.length; i++){
-			if(gleisAnzahl[i] != null){
-				gleisAnzahl[i] = null;
-				zugAnzahl--;
-				break;
-			}// END IF
-		}// END FOR
-	}// END METHOD
 	
 	@Override
 	public void run(){
