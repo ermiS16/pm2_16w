@@ -17,6 +17,7 @@ public class Lokfuehrer extends Thread{
 	private int aufgabe;
 	private int gleis;
 	private Zug zug;
+	private Rangierbahnhof bahnhof;
 	
 	/*
 	 * Konstruktor
@@ -30,10 +31,11 @@ public class Lokfuehrer extends Thread{
 	 * @param aufgabe - muss 0 (einfahren) oder 1 (ausfahren) sein
 	 * @param gleis - welches Gleis gemeint ist
 	 */
-	Lokfuehrer(int aufgabe, int gleis){
+	Lokfuehrer(int aufgabe, int gleis, Rangierbahnhof bahnhof){
 		if((aufgabe == 0 || aufgabe == 1) && gleis >= 0){
 			this.aufgabe = aufgabe;
 			this.gleis = gleis;
+			this.bahnhof = bahnhof;
 		}// END IF
 		//Zug erzeugen wenn ein Zug eingefahren werden soll
 		if(aufgabe == 0){
@@ -46,7 +48,16 @@ public class Lokfuehrer extends Thread{
 	 * Arbeiten
 	 */
 	public void arbeiten(){
-		//do things
+		switch(aufgabe){
+		case 0: bahnhof.zugEinfahrenAuf(gleis);
+			System.out.println(toString());
+			break;
+		case 1: bahnhof.zugEinfahrenAuf(gleis);
+			System.out.println(toString());
+			break;
+		default: System.out.println("Error");
+			break;
+		}
 	}
 	
 	/*

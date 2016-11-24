@@ -17,6 +17,8 @@ public class Rangierbahnhof extends Thread{
 	private Zug[] gleisAnzahl;
 	private int zugAnzahl = 0;
 	
+	private Object monitorX = new Object();
+	
 	/*
 	 * Konstruktor
 	 */
@@ -45,17 +47,29 @@ public class Rangierbahnhof extends Thread{
 	}
 	
 	/*
+	 * Gibt die Anzahl der Zuege im
+	 * Bahnhof zurueck
+	 * @return zugAnzahl
+	 */
+	public int getZugAnzahl(){
+		return zugAnzahl;
+	}
+	
+	/*
 	 * Faehrt einen Zug auf das gegebene Rangiergleis ein
 	 * Rangiergleis muss vorhanden und frei sein
 	 * @param zug
 	 * @param gleisNummer
 	 */
-	public void zugEinfahrenAuf(Zug zug, int gleisNummer){
-		if(gleisNummer >= 0 && gleisNummer < gleisAnzahl.length 
-				&& gleisAnzahl[gleisNummer] == null){
-			gleisAnzahl[gleisNummer] = zug;
-			zugAnzahl++;
-		}// END IF
+	//Zug zug, mit oder ohne?
+	public void zugEinfahrenAuf(int gleisNummer){
+		synchronized(gleisAnzahl){
+			if(gleisNummer >= 0 && gleisNummer < gleisAnzahl.length 
+					&& gleisAnzahl[gleisNummer] == null){
+				//gleisAnzahl[gleisNummer] = zug;
+				zugAnzahl++;
+			}// END IF
+		}// END SYNCRO
 	}// END METHOD
 	
 	/*
@@ -64,11 +78,13 @@ public class Rangierbahnhof extends Thread{
 	 * @param gleisNummer
 	 */
 	public void zugAusfahrenAuf(int gleisNummer){
-		if(gleisNummer >= 0 && gleisNummer < gleisAnzahl.length 
-				&& gleisAnzahl[gleisNummer] != null){
-			gleisAnzahl[gleisNummer] = null;
-			zugAnzahl--;
-		}// END IF
+		synchronized(gleisAnzahl){
+			if(gleisNummer >= 0 && gleisNummer < gleisAnzahl.length 
+					&& gleisAnzahl[gleisNummer] != null){
+				gleisAnzahl[gleisNummer] = null;
+				zugAnzahl--;
+			}// END IF
+		}// END SYNCRO
 	}// END METHOD
 	
 	

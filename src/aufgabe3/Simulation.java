@@ -22,7 +22,8 @@ public class Simulation implements Runnable{
 	public Lokfuehrer erzeugeLokfuehrer(){
 		int gleis = (int) (Math.random() * 5);
 		int aufgabe = (int) (Math.random() * 2);
-		Lokfuehrer neuerLokfuehrer = new Lokfuehrer(aufgabe,gleis);
+		Rangierbahnhof bahnhof = null;
+		Lokfuehrer neuerLokfuehrer = new Lokfuehrer(aufgabe, gleis, bahnhof);
 		return neuerLokfuehrer;
 	}// END METHOD
 
