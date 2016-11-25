@@ -17,7 +17,7 @@ public class Rangierbahnhof extends Thread{
 	private Zug[] gleisAnzahl;
 	private int zugAnzahl = 0;
 	
-	private Object monitorX = new Object();
+	//private Object monitorX = new Object();
 	
 	/*
 	 * Konstruktor
@@ -62,7 +62,7 @@ public class Rangierbahnhof extends Thread{
 	 * @param gleisNummer
 	 */
 	//Zug zug, mit oder ohne?
-	public void zugEinfahrenAuf(int gleisNummer){
+	public void zugEinfahrenAuf(Zug zug, int gleisNummer){
 		synchronized(gleisAnzahl){
 			if(gleisNummer >= 0 && gleisNummer < gleisAnzahl.length 
 					&& gleisAnzahl[gleisNummer] == null){
@@ -88,9 +88,21 @@ public class Rangierbahnhof extends Thread{
 	}// END METHOD
 	
 	
+	public void arbeiten(Lokfuehrer lf) throws InterruptedException{
+		switch(lf.getAufgabe()){
+		case 0: zugEinfahrenAuf(lf.getZug(), lf.getGleis());
+			System.out.println(lf.toString());
+			break;
+		case 1:zugAusfahrenAuf(lf.getGleis());
+			System.out.println(lf.toString());
+			break;
+		default: System.out.println("Error");
+			break;
+		}
+	}
+	
 	@Override
 	public void run(){
-		// do many things - J.C.
 	}
 
 }

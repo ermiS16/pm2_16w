@@ -19,12 +19,6 @@ public class Lokfuehrer extends Thread{
 	private Zug zug;
 	private Rangierbahnhof bahnhof;
 	
-	/*
-	 * Konstruktor
-	 */
-	Lokfuehrer(){
-		
-	}
 	
 	/*
 	 * Konstruktor
@@ -41,30 +35,31 @@ public class Lokfuehrer extends Thread{
 		if(aufgabe == 0){
 			this.zug = new Zug();
 		}// END IF
+		System.out.println("test");
 	}// END METHOD
 	
 	
 	/*
-	 * Arbeiten
-	 */
-	public void arbeiten(){
-		switch(aufgabe){
-		case 0: bahnhof.zugEinfahrenAuf(gleis);
-			System.out.println(toString());
-			break;
-		case 1: bahnhof.zugEinfahrenAuf(gleis);
-			System.out.println(toString());
-			break;
-		default: System.out.println("Error");
-			break;
-		}
-	}
-	
-	/*
-	 * @param zug
+	 * @return zug
 	 */
 	public Zug getZug(){
 		return zug;
+	}
+	
+	
+	/*
+	 * @return aufgabe
+	 */
+	public int getAufgabe(){
+		return aufgabe;
+	}
+	
+	
+	/*
+	 * @return gleis
+	 */
+	public int getGleis(){
+		return gleis;
 	}
 	
 	/*
@@ -85,7 +80,11 @@ public class Lokfuehrer extends Thread{
 	
 	@Override
 	public void run(){
-		//do things
+		try{
+			bahnhof.arbeiten(this);
+		}catch(InterruptedException e){
+			e.printStackTrace();
+		}
 	}
 
 }
