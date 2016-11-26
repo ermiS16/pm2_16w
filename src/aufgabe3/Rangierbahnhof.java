@@ -46,32 +46,36 @@ public class Rangierbahnhof{
 	
 	
 	/*
+	 * Nimmt einen Lokfuehrer entgegen,
+	 * der je nach Aufgabe weitergereicht wird
 	 * @param lf
 	 */
-	public synchronized void arbeiten(Lokfuehrer lf)throws InterruptedException{
+	// TODO: WO NOTIFY VERWENDEN?
+	public void arbeiten(Lokfuehrer lf)throws InterruptedException{
 		synchronized(monitorX){
-		switch(lf.getAufgabe()){
-		case 0: zugEinfahrenAuf(lf);
-			System.out.println(lf.toString());
-			break;
-		case 1:zugAusfahrenAuf(lf);
-			System.out.println(lf.toString());
-			break;
-		default: System.out.println("Error");
-			lf.interrupt();
-			break;
-		}
-		}
-	}
+			//monitorX.notify();
+			switch(lf.getAufgabe()){
+			case 0: zugEinfahrenAuf(lf);
+				System.out.println(lf.toString());
+				break;
+			case 1:zugAusfahrenAuf(lf);
+				System.out.println(lf.toString());
+				break;
+			default: System.out.println("Error");
+				lf.interrupt();
+				break;
+			}// END SWITCH
+		}// END SYNCRO
+	}// END METHOD
 	
 	
 	/*
-	 * Faehrt einen Zug auf ein Rangiergleis ein
-	 * Rangiergleis muss vorhanden und frei sein,
+	 * Nimmt einen Lokfuehrer entgegen, der
+	 * einen Zug auf ein Rangiergleis einfaehrt.
+	 * Rangiergleis muss frei sein,
 	 * sonst wird der Lokfuehrer pausiert
 	 * @param lf
 	 */
-	//Zug zug, mit oder ohne?
 	public void zugEinfahrenAuf(Lokfuehrer lf)throws InterruptedException{
 		synchronized(monitorX){
 			if(zugAufGleis[lf.getGleis()] == null){
@@ -79,15 +83,18 @@ public class Rangierbahnhof{
 				zugAnzahl++;
 			}// END IF
 			else{
-				lf.wait();
-			}
+				monitorX.wait();
+			}// END ELSE
 		}// END SYNCRO
 	}// END METHOD
 	
+	
 	/*
-	 * Faehrt einen Zug aus dem gegebenen Rangiergleis aus
-	 * Rangiergleis muss vorhanden und belegt sein
-	 * @param gleisNummer
+	 * Nimmt einen Lokfuehrer entgegen, der
+	 * einen Zug aus einem Rangiergleis ausfaehrt.
+	 * Rangiergleis muss belegt sein,
+	 * sonst wird der Lokfuehrer pausiert
+	 * @param lf
 	 */
 	public void zugAusfahrenAuf(Lokfuehrer lf) throws InterruptedException{
 		synchronized(monitorX){
@@ -97,10 +104,8 @@ public class Rangierbahnhof{
 				zugAnzahl--;
 			}// END IF
 			else{
-				//monitor.
-				
-				lf.wait();
-			}
+				monitorX.wait();
+			}// END ELSE
 		}// END SYNCRO
 	}// END METHOD
 	

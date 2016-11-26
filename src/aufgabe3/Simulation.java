@@ -42,17 +42,14 @@ public class Simulation extends Application implements Runnable{
 	@Override
 	public void run(){
 		Rangierbahnhof tbhf = new Rangierbahnhof();
-		//tbhf.start();
 		int q = 0;
-		//sinnvolle dinge
+		
 		while(true){
 			try {
 				q++;
-				if(1 > 0){
-					Lokfuehrer x = erzeugeLokfuehrer(tbhf);
-					x.start();
-					}
-				System.out.println("Zeit " + q);
+				System.out.println("Zeit: " + q);
+				Lokfuehrer x = erzeugeLokfuehrer(tbhf);
+				x.start();
 				Thread.sleep(INTERVALL);
 			} catch (InterruptedException e) {
 				e.printStackTrace();
@@ -72,7 +69,7 @@ public class Simulation extends Application implements Runnable{
 		//tlf4.start();
 		//wait(20);
 		//System.out.println(tbhf.getZugAnzahl());
-		Application.launch();
+		//Application.launch();
 		Thread test = new Thread(new Simulation());
 		test.start();
 	}
