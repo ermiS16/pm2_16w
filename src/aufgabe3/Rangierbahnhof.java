@@ -1,5 +1,7 @@
 package aufgabe3;
 
+
+
 /**
 * Repraesentiert einen Rangierbahnhof 
 * mit beliebig vielen Rangiergleisen
@@ -26,7 +28,6 @@ public class Rangierbahnhof{
 		gleisAnzahl = new Zug[3];
 		zugAnzahl = 0;
 	}
-	
 	
 	/*
 	 * Gibt die Anzahl der Rangiergleise zurueck
@@ -102,5 +103,23 @@ public class Rangierbahnhof{
 			}
 		}// END SYNCRO
 	}// END METHOD
-
 }
+//<<<<<<< HEAD
+//
+//=======
+//	
+//	
+//	public void arbeiten(Lokfuehrer lf) throws InterruptedException{
+//		switch(lf.getAufgabe()){
+//		case 0: zugEinfahrenAuf(lf.getZug(), lf.getGleis());
+//			System.out.println(lf.toString());
+//			break;
+//		case 1:zugAusfahrenAuf(lf.getGleis());
+//			System.out.println(lf.toString());
+//			break;
+//		default: System.out.println("Error");
+//			break;
+//		}
+//	}
+//>>>>>>> df2bc248e55b8a8e45039ceb57d69e7da6fafc43
+//}
