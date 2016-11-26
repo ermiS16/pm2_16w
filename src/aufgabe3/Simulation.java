@@ -69,6 +69,7 @@ public class Simulation extends Application implements Runnable{
 		//tlf4.start();
 		//wait(20);
 		//System.out.println(tbhf.getZugAnzahl());
+		// ACHTUNG AUSKOMMENTIERT
 		//Application.launch();
 		Thread test = new Thread(new Simulation());
 		test.start();

@@ -1,5 +1,8 @@
 package aufgabe3;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
 * Repraesentiert einen Rangierbahnhof 
 * mit beliebig vielen Rangiergleisen
@@ -16,6 +19,7 @@ public class Rangierbahnhof{
 	
 	private Zug[] zugAufGleis;
 	private int zugAnzahl;
+	private List<Lokfuehrer> lfspeicher;
 	
 	private static Object monitorX = new Object();
 	
@@ -25,6 +29,7 @@ public class Rangierbahnhof{
 	Rangierbahnhof(){
 		zugAufGleis = new Zug[3];
 		zugAnzahl = 0;
+		lfspeicher = new ArrayList<Lokfuehrer>();
 	}
 	
 	/*
@@ -51,15 +56,19 @@ public class Rangierbahnhof{
 	 * @param lf
 	 */
 	// TODO: WO NOTIFY VERWENDEN?
+	// TODO: BESSERES ZWISCHENSPEICHERN, RICHTIG ENTFERNEN, RICHTIG PRÜFEN
 	public void arbeiten(Lokfuehrer lf)throws InterruptedException{
 		synchronized(monitorX){
-			//monitorX.notify();
+			//if(lfspeicher.size() != 0){
+				//monitorX.notify();
+				//System.out.println(lfspeicher.size());
+				//}
 			switch(lf.getAufgabe()){
 			case 0: zugEinfahrenAuf(lf);
-				System.out.println(lf.toString());
+				//System.out.println(lf.toString());
 				break;
 			case 1:zugAusfahrenAuf(lf);
-				System.out.println(lf.toString());
+				//System.out.println(lf.toString());
 				break;
 			default: System.out.println("Error");
 				lf.interrupt();
@@ -81,8 +90,10 @@ public class Rangierbahnhof{
 			if(zugAufGleis[lf.getGleis()] == null){
 				zugAufGleis[lf.getGleis()] = lf.getZug();
 				zugAnzahl++;
+				System.out.println(lf.toString());
 			}// END IF
 			else{
+				lfspeicher.add(lf);
 				monitorX.wait();
 			}// END ELSE
 		}// END SYNCRO
@@ -102,8 +113,10 @@ public class Rangierbahnhof{
 				lf.setZug(zugAufGleis[lf.getGleis()]);
 				zugAufGleis[lf.getGleis()] = null;
 				zugAnzahl--;
+				System.out.println(lf.toString());
 			}// END IF
 			else{
+				lfspeicher.add(lf);
 				monitorX.wait();
 			}// END ELSE
 		}// END SYNCRO
