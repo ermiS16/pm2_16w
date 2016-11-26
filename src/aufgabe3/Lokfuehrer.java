@@ -35,7 +35,7 @@ public class Lokfuehrer extends Thread{
 		if(aufgabe == 0){
 			this.zug = new Zug();
 		}// END IF
-		System.out.println("LF :" + "A" + aufgabe + " G" + gleis);
+		System.out.println("LF: " + "A" + aufgabe + " G" + gleis);
 	}// END METHOD
 	
 	

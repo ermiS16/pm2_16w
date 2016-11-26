@@ -1,7 +1,5 @@
 package aufgabe3;
 
-
-
 /**
 * Repraesentiert einen Rangierbahnhof 
 * mit beliebig vielen Rangiergleisen
@@ -16,16 +14,16 @@ package aufgabe3;
 
 public class Rangierbahnhof{
 	
-	private Zug[] gleisAnzahl;
+	private Zug[] zugAufGleis;
 	private int zugAnzahl;
 	
-	public Object monitorX = new Object();
+	private static Object monitorX = new Object();
 	
 	/*
 	 * Konstruktor
 	 */
 	Rangierbahnhof(){
-		gleisAnzahl = new Zug[3];
+		zugAufGleis = new Zug[3];
 		zugAnzahl = 0;
 	}
 	
@@ -34,7 +32,7 @@ public class Rangierbahnhof{
 	 * @return gleisAnzahl.length
 	 */
 	public int getGleisAnzahl(){
-		return gleisAnzahl.length;
+		return zugAufGleis.length;
 	}
 	
 	/*
@@ -50,7 +48,7 @@ public class Rangierbahnhof{
 	/*
 	 * @param lf
 	 */
-	public void arbeiten(Lokfuehrer lf)throws InterruptedException{
+	public synchronized void arbeiten(Lokfuehrer lf)throws InterruptedException{
 		synchronized(monitorX){
 		switch(lf.getAufgabe()){
 		case 0: zugEinfahrenAuf(lf);
@@ -76,8 +74,8 @@ public class Rangierbahnhof{
 	//Zug zug, mit oder ohne?
 	public void zugEinfahrenAuf(Lokfuehrer lf)throws InterruptedException{
 		synchronized(monitorX){
-			if(gleisAnzahl[lf.getGleis()] == null){
-				gleisAnzahl[lf.getGleis()] = lf.getZug();
+			if(zugAufGleis[lf.getGleis()] == null){
+				zugAufGleis[lf.getGleis()] = lf.getZug();
 				zugAnzahl++;
 			}// END IF
 			else{
@@ -93,33 +91,17 @@ public class Rangierbahnhof{
 	 */
 	public void zugAusfahrenAuf(Lokfuehrer lf) throws InterruptedException{
 		synchronized(monitorX){
-			if(gleisAnzahl[lf.getGleis()] != null){
-				lf.setZug(gleisAnzahl[lf.getGleis()]);
-				gleisAnzahl[lf.getGleis()] = null;
+			if(zugAufGleis[lf.getGleis()] != null){
+				lf.setZug(zugAufGleis[lf.getGleis()]);
+				zugAufGleis[lf.getGleis()] = null;
 				zugAnzahl--;
 			}// END IF
 			else{
+				//monitor.
+				
 				lf.wait();
 			}
 		}// END SYNCRO
 	}// END METHOD
+	
 }
-//<<<<<<< HEAD
-//
-//=======
-//	
-//	
-//	public void arbeiten(Lokfuehrer lf) throws InterruptedException{
-//		switch(lf.getAufgabe()){
-//		case 0: zugEinfahrenAuf(lf.getZug(), lf.getGleis());
-//			System.out.println(lf.toString());
-//			break;
-//		case 1:zugAusfahrenAuf(lf.getGleis());
-//			System.out.println(lf.toString());
-//			break;
-//		default: System.out.println("Error");
-//			break;
-//		}
-//	}
-//>>>>>>> df2bc248e55b8a8e45039ceb57d69e7da6fafc43
-//}
