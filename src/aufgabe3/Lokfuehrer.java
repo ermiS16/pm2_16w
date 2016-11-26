@@ -8,7 +8,7 @@ package aufgabe3;
 * Praktikum TIPR2, WS2016/2017
 * Praktikumsgruppe Nr. 4
 * @author Eric Misfeld, Simon Felske
-* @version 19.11.2016
+* @version 26.11.2016
 * Aufgabenblatt 3 | Aufgabe 2
 */
 
@@ -16,7 +16,7 @@ public class Lokfuehrer extends Thread{
 	
 	private int aufgabe;
 	private int gleis;
-	private Zug zug;
+	private Zug zug = null;
 	private Rangierbahnhof bahnhof;
 	
 	
@@ -35,8 +35,16 @@ public class Lokfuehrer extends Thread{
 		if(aufgabe == 0){
 			this.zug = new Zug();
 		}// END IF
-		System.out.println("test");
+		System.out.println("LF :" + "A" + aufgabe + " G" + gleis);
 	}// END METHOD
+	
+	
+	/*
+	 * @param abholZug
+	 */
+	public void setZug(Zug abholZug){
+		zug = abholZug;
+	}
 	
 	
 	/*
@@ -61,6 +69,7 @@ public class Lokfuehrer extends Thread{
 	public int getGleis(){
 		return gleis;
 	}
+	
 	
 	/*
 	 * Erstellt einen formatierten String

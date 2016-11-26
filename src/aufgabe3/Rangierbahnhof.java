@@ -8,33 +8,23 @@ package aufgabe3;
 * Praktikum TIPR2, WS2016/2017
 * Praktikumsgruppe Nr. 4
 * @author Eric Misfeld, Simon Felske
-* @version 19.11.2016
+* @version 26.11.2016
 * Aufgabenblatt 3 | Aufgabe 1
 */
 
-public class Rangierbahnhof extends Thread{
+public class Rangierbahnhof{
 	
 	private Zug[] gleisAnzahl;
-	private int zugAnzahl = 0;
+	private int zugAnzahl;
 	
-	//private Object monitorX = new Object();
+	public Object monitorX = new Object();
 	
 	/*
 	 * Konstruktor
 	 */
 	Rangierbahnhof(){
-		gleisAnzahl = new Zug[5];
-	}
-	
-	/*
-	 * Konstruktor mit Nutzereingabe
-	 * @param anzahlGleise - wie viele Rangiergleise 
-	 * es gibt. Muss >= 1 sein
-	 */
-	Rangierbahnhof(int anzahlGleise){
-		if(anzahlGleise >= 1 && anzahlGleise < Integer.MAX_VALUE){
-			gleisAnzahl = new Zug[anzahlGleise];
-		}
+		gleisAnzahl = new Zug[3];
+		zugAnzahl = 0;
 	}
 	
 	
@@ -55,20 +45,43 @@ public class Rangierbahnhof extends Thread{
 		return zugAnzahl;
 	}
 	
+	
 	/*
-	 * Faehrt einen Zug auf das gegebene Rangiergleis ein
-	 * Rangiergleis muss vorhanden und frei sein
-	 * @param zug
-	 * @param gleisNummer
+	 * @param lf
+	 */
+	public void arbeiten(Lokfuehrer lf)throws InterruptedException{
+		synchronized(monitorX){
+		switch(lf.getAufgabe()){
+		case 0: zugEinfahrenAuf(lf);
+			System.out.println(lf.toString());
+			break;
+		case 1:zugAusfahrenAuf(lf);
+			System.out.println(lf.toString());
+			break;
+		default: System.out.println("Error");
+			lf.interrupt();
+			break;
+		}
+		}
+	}
+	
+	
+	/*
+	 * Faehrt einen Zug auf ein Rangiergleis ein
+	 * Rangiergleis muss vorhanden und frei sein,
+	 * sonst wird der Lokfuehrer pausiert
+	 * @param lf
 	 */
 	//Zug zug, mit oder ohne?
-	public void zugEinfahrenAuf(Zug zug, int gleisNummer){
-		synchronized(gleisAnzahl){
-			if(gleisNummer >= 0 && gleisNummer < gleisAnzahl.length 
-					&& gleisAnzahl[gleisNummer] == null){
-				//gleisAnzahl[gleisNummer] = zug;
+	public void zugEinfahrenAuf(Lokfuehrer lf)throws InterruptedException{
+		synchronized(monitorX){
+			if(gleisAnzahl[lf.getGleis()] == null){
+				gleisAnzahl[lf.getGleis()] = lf.getZug();
 				zugAnzahl++;
 			}// END IF
+			else{
+				lf.wait();
+			}
 		}// END SYNCRO
 	}// END METHOD
 	
@@ -77,32 +90,17 @@ public class Rangierbahnhof extends Thread{
 	 * Rangiergleis muss vorhanden und belegt sein
 	 * @param gleisNummer
 	 */
-	public void zugAusfahrenAuf(int gleisNummer){
-		synchronized(gleisAnzahl){
-			if(gleisNummer >= 0 && gleisNummer < gleisAnzahl.length 
-					&& gleisAnzahl[gleisNummer] != null){
-				gleisAnzahl[gleisNummer] = null;
+	public void zugAusfahrenAuf(Lokfuehrer lf) throws InterruptedException{
+		synchronized(monitorX){
+			if(gleisAnzahl[lf.getGleis()] != null){
+				lf.setZug(gleisAnzahl[lf.getGleis()]);
+				gleisAnzahl[lf.getGleis()] = null;
 				zugAnzahl--;
 			}// END IF
+			else{
+				lf.wait();
+			}
 		}// END SYNCRO
 	}// END METHOD
-	
-	
-	public void arbeiten(Lokfuehrer lf) throws InterruptedException{
-		switch(lf.getAufgabe()){
-		case 0: zugEinfahrenAuf(lf.getZug(), lf.getGleis());
-			System.out.println(lf.toString());
-			break;
-		case 1:zugAusfahrenAuf(lf.getGleis());
-			System.out.println(lf.toString());
-			break;
-		default: System.out.println("Error");
-			break;
-		}
-	}
-	
-	@Override
-	public void run(){
-	}
 
 }
