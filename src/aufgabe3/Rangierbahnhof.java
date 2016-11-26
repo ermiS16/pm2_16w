@@ -1,5 +1,7 @@
 package aufgabe3;
 
+
+
 /**
 * Repraesentiert einen Rangierbahnhof 
 * mit beliebig vielen Rangiergleisen
@@ -12,7 +14,7 @@ package aufgabe3;
 * Aufgabenblatt 3 | Aufgabe 1
 */
 
-public class Rangierbahnhof extends Thread{
+public class Rangierbahnhof{
 	
 	private Zug[] gleisAnzahl;
 	private int zugAnzahl = 0;
@@ -36,7 +38,6 @@ public class Rangierbahnhof extends Thread{
 			gleisAnzahl = new Zug[anzahlGleise];
 		}
 	}
-	
 	
 	/*
 	 * Gibt die Anzahl der Rangiergleise zurueck
@@ -100,9 +101,4 @@ public class Rangierbahnhof extends Thread{
 			break;
 		}
 	}
-	
-	@Override
-	public void run(){
-	}
-
 }

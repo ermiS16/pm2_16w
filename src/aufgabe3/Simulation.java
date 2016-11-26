@@ -1,5 +1,15 @@
 package aufgabe3;
 
+import javafx.application.Application;
+import javafx.stage.Stage;
+import javafx.scene.control.Label;
+import javafx.scene.layout.GridPane;
+import javafx.geometry.Pos;
+import javafx.scene.Scene;
+import javafx.scene.control.Button;
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
+
 /**
 * Simulation eines aktiven Rangier-
 * bahnhofes mit Zuegen und
@@ -12,7 +22,7 @@ package aufgabe3;
 * Aufgabenblatt 3 | Aufgabe 3
 */
 
-public class Simulation implements Runnable{
+public class Simulation extends Application implements Runnable{
 	
 	private final int INTERVALL = 500;
 	
@@ -60,7 +70,20 @@ public class Simulation implements Runnable{
 		//tlf4.start();
 		//wait(20);
 		//System.out.println(tbhf.getZugAnzahl());
+		Application.launch();
 		Thread test = new Thread(new Simulation());
 		test.start();
 	}
+	
+	@Override
+	public void start(Stage primaryStage){
+		GridPane root = new GridPane();
+		root.setAlignment(Pos.CENTER);
+		
+		Scene scene = new Scene(root, 600, 600);
+		primaryStage.setTitle("Rangierbahnhof");
+		primaryStage.setScene(scene);
+		primaryStage.show();
+	}
+	
 }
