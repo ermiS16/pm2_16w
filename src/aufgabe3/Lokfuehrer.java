@@ -102,6 +102,7 @@ public class Lokfuehrer extends Thread{
 	public void run(){
 		try{
 			bahnhof.arbeiten(this);
+			System.out.println(toString());
 		}catch(InterruptedException e){
 			e.printStackTrace();
 		}
