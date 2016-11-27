@@ -2,11 +2,12 @@ package aufgabe3;
 
 import javafx.application.Application;
 import javafx.stage.Stage;
-import javafx.scene.control.Label;
+import javafx.scene.control.*;
 import javafx.scene.layout.GridPane;
+import javafx.scene.paint.Color;
+import javafx.scene.shape.Polygon;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 
@@ -23,6 +24,10 @@ import javafx.event.EventHandler;
 */
 
 public class Simulation extends Application implements Runnable{
+	
+	private Button start;
+	private Button stop;
+	private TextField anzahlGleise;
 	
 	private final int INTERVALL = 500;
 	
@@ -70,15 +75,21 @@ public class Simulation extends Application implements Runnable{
 		//wait(20);
 		//System.out.println(tbhf.getZugAnzahl());
 		// ACHTUNG AUSKOMMENTIERT
-		//Application.launch();
-		Thread test = new Thread(new Simulation());
-		test.start();
+		Application.launch();
+		//Thread test = new Thread(new Simulation());
+		//test.start();
 	}
 	
 	@Override
 	public void start(Stage primaryStage){
 		GridPane root = new GridPane();
 		root.setAlignment(Pos.CENTER);
+		
+		Polygon poly = new Polygon();
+		poly.getPoints().addAll(new Double[]{10.0,0.0,40.0,10.0,10.0,20.0});
+		poly.fillProperty().set(Color.BLUE);
+		root.setAlignment(Pos.CENTER);
+		root.add(poly, 0, 0);
 		
 		Scene scene = new Scene(root, 600, 600);
 		primaryStage.setTitle("Rangierbahnhof");
