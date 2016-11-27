@@ -20,7 +20,7 @@ public class Rangierbahnhof{
 	private Zug[] zugAufGleis;
 	private List<Lokfuehrer> lfspeicher;
 	
-	private static Object monitorX = new Object();
+	public Object monitorX = new Object();
 	
 	/*
 	 * Konstruktor
@@ -57,11 +57,18 @@ public class Rangierbahnhof{
 	// TODO: BESSERES ZWISCHENSPEICHERN, RICHTIG ENTFERNEN, RICHTIG PRÜFEN
 	public void arbeiten(Lokfuehrer lf)throws InterruptedException{
 		synchronized(monitorX){
+			//monitorX.notifyAll();
 			switch(lf.getAufgabe()){
-			case 0:zugEinfahrenAuf(lf);
+			
+			case 0: while((zugAufGleis[lf.getGleis()] != null)){
+					monitorX.wait();
+					}
+					zugEinfahrenAuf(lf);
 				break;
+				
 			case 1:zugAusfahrenAuf(lf);
 				break;
+				
 			default: System.out.println("Error");
 				lf.interrupt();
 				break;

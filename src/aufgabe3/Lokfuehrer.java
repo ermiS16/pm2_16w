@@ -41,7 +41,7 @@ public class Lokfuehrer extends Thread{
 			zug = null;
 		}
 		instanzNr++;
-		System.out.println("LF: " + "A" + aufgabe + " G" + gleis);
+		System.out.println("LF"+ instanzNr +": " + "A" + aufgabe + " G" + gleis);
 	}// END METHOD
 	
 	
