@@ -100,6 +100,7 @@ public class Lokfuehrer extends Thread{
 	
 	@Override
 	public void run(){
+		while(!isInterrupted())
 		try{
 			bahnhof.arbeiten(this);
 			System.out.println(toString());
