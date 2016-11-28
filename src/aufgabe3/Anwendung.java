@@ -1,7 +1,7 @@
 package aufgabe3;
 
 /**
-* Repraesentiert die Anwendung
+* Anwendung fuer Aufgabenblatt 3
 * 
 * Praktikum TI-PR2, WS2016/2017
 * Praktikumsgruppe Nr. 4

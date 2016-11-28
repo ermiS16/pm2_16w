@@ -59,10 +59,11 @@ public class Rangierbahnhof extends Observable{
 	 */
 	public synchronized void arbeiten(Lokfuehrer lf) throws InterruptedException{
 		switch(lf.getAufgabe()){
+		
 		case 0: zugEinfahrenAuf(lf.getGleis(),lf.getZug(),lf);
 			break;
 				
-		case 1:zugAusfahrenAuf(lf);
+		case 1:zugAusfahrenAuf(lf.getGleis(),lf);
 			break;
 				
 		default: System.out.println("Error");
@@ -78,6 +79,8 @@ public class Rangierbahnhof extends Observable{
 	 * Rangiergleis muss frei sein,
 	 * sonst wird der Lokfuehrer pausiert
 	 * 
+	 * @param gleis
+	 * @param zug
 	 * @param lf
 	 */
 	public synchronized void zugEinfahrenAuf(int gleis, Zug zug, Lokfuehrer lf){
@@ -90,9 +93,10 @@ public class Rangierbahnhof extends Observable{
 			}
 		}// END WHILE
 		
+		setChanged();
 		zugAufGleis[gleis] = zug;
-		//lf.setKill(1);
 		notifyAll();
+		
 	}// END METHOD
 	
 	
@@ -102,10 +106,11 @@ public class Rangierbahnhof extends Observable{
 	 * Rangiergleis muss belegt sein,
 	 * sonst wird der Lokfuehrer pausiert
 	 * 
+	 * @param gleis
 	 * @param lf
 	 */
-	public synchronized void zugAusfahrenAuf(Lokfuehrer lf){
-		while(zugAufGleis[lf.getGleis()] == null){
+	public synchronized void zugAusfahrenAuf(int gleis, Lokfuehrer lf){
+		while(zugAufGleis[gleis] == null){
 			try{
 				wait();
 			}
@@ -114,10 +119,11 @@ public class Rangierbahnhof extends Observable{
 			}
 		}// END WHILE
 		
-		lf.setZug(zugAufGleis[lf.getGleis()]);
-		zugAufGleis[lf.getGleis()] = null;
-		//lf.setKill(1);
+		setChanged();
+		lf.setZug(zugAufGleis[gleis]);
+		zugAufGleis[gleis] = null;
 		notifyAll();
+		
 	}// END METHOD
 	
 }

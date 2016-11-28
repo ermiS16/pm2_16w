@@ -17,7 +17,7 @@ import javafx.beans.value.ObservableValue;
 * Praktikum TI-PR2, WS2016/2017
 * Praktikumsgruppe Nr. 4
 * @author Eric Misfeld, Simon Felske
-* @version 26.11.2016
+* @version 28.11.2016
 * Aufgabenblatt 3 | Aufgabe 3
 */
 
@@ -25,32 +25,45 @@ public class Simulation extends Observable implements Runnable{
 
 	//Zeitdauer fuer Intervalllaenge
 	private final int INTERVALL = 1000;
-	//private Rangierbahnhof bahnhof;
+	
+	private Rangierbahnhof testBahnhof;
+	
+	
+	/*
+	 * Konstruktor
+	 */
+	//TODO Observer richtig
+	public Simulation(){
+		testBahnhof = new Rangierbahnhof();
+		//testBahnhof.addObserver(arg0);
+	}
 	
 	/*
 	 * Erstellt ein neues Lokfuehrer-Objekt
 	 * Generiert zufaellige Werte fuer Aufgabe und Gleis
 	 * 
 	 * @param bahnhof - Zielbahnhof
+	 * @return neuerLokfuehrer
 	 */
 	public Lokfuehrer erzeugeLokfuehrer(Rangierbahnhof bahnhof){
 		int gleis = (int) (Math.random() * 3);
 		int aufgabe = (int) (Math.random() * 2);
-		//Rangierbahnhof bahnhof = null;
 		Lokfuehrer neuerLokfuehrer = new Lokfuehrer(aufgabe, gleis, bahnhof);
 		return neuerLokfuehrer;
 	}// END METHOD
 
 	@Override
 	public void run(){
-		Rangierbahnhof tbhf = new Rangierbahnhof();
-		int q = 1;
+		
+		//testBahnhof = new Rangierbahnhof();
+		int zeit = 1;
+		
 		while(!Thread.currentThread().isInterrupted()){
 			try {
-				System.out.println("\nZeit: " + q);
-				Lokfuehrer x = erzeugeLokfuehrer(tbhf);
+				System.out.println("\nZeit: " + zeit);
+				Lokfuehrer x = erzeugeLokfuehrer(testBahnhof);
 				x.start();
-				q++;
+				zeit++;
 				Thread.sleep(INTERVALL);	
 			} catch (InterruptedException e) {
 //				System.out.println("Simulation wurde geweckt");

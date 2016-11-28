@@ -80,19 +80,34 @@ public class Gui extends Application implements Observer{
 		
 //		g1.setStyle("-fx-background-color: green; -fx-text-fill: white;");
 		
+		
 		start.setOnAction(new EventHandler<ActionEvent>(){
 			@Override public void handle(ActionEvent e){
-				test = new Thread(new Simulation());
-					if(!isRunning){
-						test.start();
-						System.out.println("Neue Simulation gestartet");
-						isRunning = true;
-					}else{
-						System.out.println("Es laeuft bereits eine Simulation");
-					}
+				if(!isRunning){
+					test = new Thread(new Simulation());
+					test.start();
+					System.out.println("Neue Simulation gestartet");
+					isRunning = true;
+				}else{
+					System.out.println("Es laeuft bereits eine Simulation");
+				}
 			}
-			
 		});
+		
+		
+//		start.setOnAction(new EventHandler<ActionEvent>(){
+//			@Override public void handle(ActionEvent e){
+//				test = new Thread(new Simulation());
+//					if(!isRunning){
+//						test.start();
+//						System.out.println("Neue Simulation gestartet");
+//						isRunning = true;
+//					}else{
+//						System.out.println("Es laeuft bereits eine Simulation");
+//					}
+//			}
+//			
+//		});
 		
 		stop.setOnAction(new EventHandler<ActionEvent>(){
 			@Override public void handle(ActionEvent e){

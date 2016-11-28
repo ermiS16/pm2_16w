@@ -19,13 +19,14 @@ public class Lokfuehrer extends Thread{
 	private Zug zug;
 	private Rangierbahnhof bahnhof;
 	private int IDNR;
-	//private int kill = 0;
 	
+	//Zaehlvariable fuer Instanzen von Lokfuehrer
 	private static int instanzNr = 1;
 	
 	
 	/*
 	 * Erstellt ein neues Lokfuehrer-Objekt
+	 * und ggf. ein neues Zug-Objekt
 	 * 
 	 * @param aufgabe - muss 0 (einfahren) oder 1 (ausfahren) sein
 	 * @param gleis - Zielgleis
@@ -101,11 +102,8 @@ public class Lokfuehrer extends Thread{
 	 */
 	public int getIDNR(){
 		return IDNR;
-	}
-	
-//	public void setKill(int x){
-//		kill = x;
-//	}
+	}// END METHOD
+
 	
 	/*
 	 * Erstellt einen formatierten String
@@ -124,15 +122,15 @@ public class Lokfuehrer extends Thread{
 		return formatiert;
 	}// END METHOD
 	
+	
 	@Override
 	public void run(){
-		//while(kill == 0)
 		try{
 			bahnhof.arbeiten(this);
 			System.out.println(toString());
 		}catch(InterruptedException e){
 			e.printStackTrace();
 		}
-	}
+	}// END METHOD
 
 }
