@@ -19,7 +19,7 @@ public class Lokfuehrer extends Thread{
 	private Zug zug;
 	private Rangierbahnhof bahnhof;
 	private int IDNR;
-	private int kill = 0;
+	//private int kill = 0;
 	
 	private static int instanzNr = 1;
 	
@@ -103,9 +103,9 @@ public class Lokfuehrer extends Thread{
 		return IDNR;
 	}
 	
-	public void setKill(int x){
-		kill = x;
-	}
+//	public void setKill(int x){
+//		kill = x;
+//	}
 	
 	/*
 	 * Erstellt einen formatierten String

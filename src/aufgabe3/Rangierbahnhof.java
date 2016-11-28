@@ -91,7 +91,7 @@ public class Rangierbahnhof extends Observable{
 		}// END WHILE
 		
 		zugAufGleis[gleis] = zug;
-		lf.setKill(1);
+		//lf.setKill(1);
 		notifyAll();
 	}// END METHOD
 	
@@ -116,7 +116,7 @@ public class Rangierbahnhof extends Observable{
 		
 		lf.setZug(zugAufGleis[lf.getGleis()]);
 		zugAufGleis[lf.getGleis()] = null;
-		lf.setKill(1);
+		//lf.setKill(1);
 		notifyAll();
 	}// END METHOD
 	

@@ -48,10 +48,10 @@ public class Gui extends Application implements Observer{
 		
 		System.out.println("Anwendung gestartet");
 		
-		Button start = new Button("Start");
-		Button stop = new Button("Stop");
-		Button beenden = new Button("Beenden");
-		TextField anzahlGleise= new TextField("No function");
+		start = new Button("Start");
+		stop = new Button("Stop");
+		beenden = new Button("Beenden");
+		anzahlGleise= new TextField("No function");
 		
 		Polygon zug = new Polygon();
 		zug.getPoints().addAll(new Double[]{5.0,0.0,20.0,5.0,5.0,10.0});
