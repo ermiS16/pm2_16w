@@ -18,14 +18,12 @@ public class Rangierbahnhof extends Observable{
 	
 	private Zug[] zugAufGleis;
 	
-	
 	/*
 	 * Konstruktor
 	 */
 	Rangierbahnhof(){
 		zugAufGleis = new Zug[3];
 	}
-	
 	
 	/*
 	 * Konstruktor mit Nutzereingabe
@@ -39,7 +37,6 @@ public class Rangierbahnhof extends Observable{
 		}// END IF
 	}// END METHOD
 	
-	
 	/*
 	 * Gibt die Anzahl der Gleise zurueck
 	 * 
@@ -48,8 +45,6 @@ public class Rangierbahnhof extends Observable{
 	public int getGleisAnzahl(){
 		return zugAufGleis.length;
 	}// END METHOD
-	
-	
 	
 	/*
 	 * Nimmt einen Lokfuehrer entgegen,
@@ -72,16 +67,15 @@ public class Rangierbahnhof extends Observable{
 		}// END SWITCH
 	}// END METHOD
 	
-	
 	/*
 	 * Nimmt einen Lokfuehrer entgegen, der
 	 * einen Zug auf ein Rangiergleis einfaehrt.
 	 * Rangiergleis muss frei sein,
 	 * sonst wird der Lokfuehrer pausiert
 	 * 
-	 * @param gleis
-	 * @param zug
-	 * @param lf
+	 * @param gleis - Zielgleis fuer den einfahrenden Zug
+	 * @param zug - einfahrender Zug
+	 * @param lf - Lokfuehrer
 	 */
 	public synchronized void zugEinfahrenAuf(int gleis, Zug zug, Lokfuehrer lf){
 		while(zugAufGleis[gleis] != null){
@@ -100,15 +94,14 @@ public class Rangierbahnhof extends Observable{
 		
 	}// END METHOD
 	
-	
 	/*
 	 * Nimmt einen Lokfuehrer entgegen, der
 	 * einen Zug aus einem Rangiergleis ausfaehrt.
 	 * Rangiergleis muss belegt sein,
 	 * sonst wird der Lokfuehrer pausiert
 	 * 
-	 * @param gleis
-	 * @param lf
+	 * @param gleis - Gleis von dem ein Zug ausgefahren werden soll
+	 * @param lf - Lokfuehrer
 	 */
 	public synchronized void zugAusfahrenAuf(int gleis, Lokfuehrer lf){
 		while(zugAufGleis[gleis] == null){

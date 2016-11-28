@@ -23,7 +23,6 @@ public class Lokfuehrer extends Thread{
 	//Zaehlvariable fuer Instanzen von Lokfuehrer
 	private static int instanzNr = 1;
 	
-	
 	/*
 	 * Erstellt ein neues Lokfuehrer-Objekt
 	 * und ggf. ein neues Zug-Objekt
@@ -52,18 +51,18 @@ public class Lokfuehrer extends Thread{
 		System.out.println("LF"+ IDNR +": " + "A" + aufgabe + " G" + gleis);
 	}// END METHOD
 	
-	
 	/*
 	 * Setter fuer den Zug
 	 * 
-	 * @param abholZug
+	 * @param abholZug - fuegt einen 
+	 * (bestehenden) Zug hinzu,
+	 * sofern keiner vorhanden ist
 	 */
 	public void setZug(Zug abholZug){
 		if( zug == null){
 			zug = abholZug;
 		}// END IF
 	}// END METHOD
-	
 	
 	/*
 	 * Getter fuer den Zug
@@ -74,7 +73,6 @@ public class Lokfuehrer extends Thread{
 		return zug;
 	}// END METHOD
 	
-	
 	/*
 	 * Getter fuer die Aufgabe
 	 * 
@@ -83,7 +81,6 @@ public class Lokfuehrer extends Thread{
 	public int getAufgabe(){
 		return aufgabe;
 	}// END METHOD
-	
 	
 	/*
 	 * Getter fuer das Gleis
@@ -94,7 +91,6 @@ public class Lokfuehrer extends Thread{
 		return gleis;
 	}// END METHOD
 	
-	
 	/*
 	 * Getter fuer IDNR
 	 * 
@@ -104,7 +100,6 @@ public class Lokfuehrer extends Thread{
 		return IDNR;
 	}// END METHOD
 
-	
 	/*
 	 * Erstellt einen formatierten String
 	 * mit allen notwendigen Informationen
@@ -122,7 +117,11 @@ public class Lokfuehrer extends Thread{
 		return formatiert;
 	}// END METHOD
 	
-	
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see java.lang.Thread#run()
+	 */
 	@Override
 	public void run(){
 		try{
