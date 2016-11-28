@@ -70,6 +70,7 @@ public class Gui extends Application implements Observer{
 		start.setOnAction(new EventHandler<ActionEvent>(){
 			@Override public void handle(ActionEvent e){
 				test.start();
+				System.out.println("Anwendung gestartet");
 			}
 			
 		});
@@ -78,19 +79,20 @@ public class Gui extends Application implements Observer{
 			@Override public void handle(ActionEvent e){
 				if(!test.isInterrupted()){
 					test.interrupt();
-				
-					try {
-						test.join();
-					} catch (InterruptedException e1) {
-						e1.printStackTrace();
-						System.err.println("Fehler Gui");
-					}
+					System.out.println("Aktuelle Simulation beendet");
+//					try {
+//						test.join();
+//					} catch (InterruptedException e1) {
+//						e1.printStackTrace();
+//						System.err.println("Fehler Gui");
+//					}
 				}
 			}		
 		});
 		
 		beenden.setOnAction(new EventHandler<ActionEvent>(){
 			@Override public void handle(ActionEvent e){
+				System.out.println("Anwendung beendet");
 				Platform.exit();
 				System.exit(0);
 			}

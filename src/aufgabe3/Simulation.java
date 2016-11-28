@@ -50,11 +50,9 @@ public class Simulation extends Observable implements Runnable{
 				q++;
 				Thread.sleep(INTERVALL);	
 			} catch (InterruptedException e) {
+				System.out.println("Simulation wurde geweckt");
 				Thread.currentThread().interrupt();
-				e.printStackTrace();
-				System.err.println("Fehler Simulation");
 			}
 		}
-		System.out.println("Ende der Simulation");
 	}
 }
