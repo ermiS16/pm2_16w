@@ -11,32 +11,42 @@ import java.util.List;
 * Praktikum TIPR2, WS2016/2017
 * Praktikumsgruppe Nr. 4
 * @author Eric Misfeld, Simon Felske
-* @version 26.11.2016
+* @version 28.11.2016
 * Aufgabenblatt 3 | Aufgabe 1
 */
 
 public class Rangierbahnhof{
 	
 	private Zug[] zugAufGleis;
-	private List<Lokfuehrer> lfspeicher;
+	//private List<Lokfuehrer> lfspeicher;
 	
-	public Object monitorX = new Object();
+	//public Object monitorX = new Object();
 	
 	/*
 	 * Konstruktor
 	 */
 	Rangierbahnhof(){
 		zugAufGleis = new Zug[3];
-		lfspeicher = new ArrayList<Lokfuehrer>();
+		//lfspeicher = new ArrayList<Lokfuehrer>();
 	}
 	
 	/*
-	 * Gibt die Anzahl der Rangiergleise zurueck
-	 * @return gleisAnzahl.length
+	 * Konstruktor mit Nutzereingabe
+	 * @param gleisAnzahl - Anzahl der Gleise
+	 */
+	Rangierbahnhof(int gleisAnzahl){
+		if(gleisAnzahl > 0){
+			zugAufGleis = new Zug[gleisAnzahl];
+		}// END IF
+	}// END METHOD
+	
+	/*
+	 * Gibt die Anzahl der Gleise zurueck
+	 * @return gleisAnzahl.length - Anzahl an Gleisen
 	 */
 	public int getGleisAnzahl(){
 		return zugAufGleis.length;
-	}
+	}// END METHOD
 	
 //	/*
 //	 * Gibt die Anzahl der Zuege im
@@ -55,8 +65,8 @@ public class Rangierbahnhof{
 	 */
 	// TODO: WO NOTIFY VERWENDEN?
 	// TODO: BESSERES ZWISCHENSPEICHERN, RICHTIG ENTFERNEN, RICHTIG PRÜFEN
-	public void arbeiten(Lokfuehrer lf)throws InterruptedException{
-		synchronized(monitorX){
+	public synchronized void arbeiten(Lokfuehrer lf)throws InterruptedException{
+		//synchronized(monitorX){
 			//monitorX.notifyAll();
 			switch(lf.getAufgabe()){
 			
@@ -73,7 +83,7 @@ public class Rangierbahnhof{
 				lf.interrupt();
 				break;
 			}// END SWITCH
-		}// END SYNCRO
+			//}// END SYNCRO
 	}// END METHOD
 	
 	
@@ -84,16 +94,16 @@ public class Rangierbahnhof{
 	 * sonst wird der Lokfuehrer pausiert
 	 * @param lf
 	 */
-	public void zugEinfahrenAuf(Lokfuehrer lf)throws InterruptedException{
-		synchronized(monitorX){
+	public synchronized void zugEinfahrenAuf(Lokfuehrer lf)throws InterruptedException{
+		//synchronized(monitorX){
 			if(zugAufGleis[lf.getGleis()] == null){
 				zugAufGleis[lf.getGleis()] = lf.getZug();
 			}// END IF
 			else{
-				lfspeicher.add(lf);
+				//lfspeicher.add(lf);
 				monitorX.wait();
 			}// END ELSE
-		}// END SYNCRO
+			//}// END SYNCRO
 	}// END METHOD
 	
 	
@@ -104,17 +114,17 @@ public class Rangierbahnhof{
 	 * sonst wird der Lokfuehrer pausiert
 	 * @param lf
 	 */
-	public void zugAusfahrenAuf(Lokfuehrer lf) throws InterruptedException{
-		synchronized(monitorX){
+	public synchronized void zugAusfahrenAuf(Lokfuehrer lf) throws InterruptedException{
+		//synchronized(monitorX){
 			if(zugAufGleis[lf.getGleis()] != null){
 				lf.setZug(zugAufGleis[lf.getGleis()]);
 				zugAufGleis[lf.getGleis()] = null;
 			}// END IF
 			else{
-				lfspeicher.add(lf);
+				//lfspeicher.add(lf);
 				monitorX.wait();
 			}// END ELSE
-		}// END SYNCRO
+			//}// END SYNCRO
 	}// END METHOD
 	
 }
