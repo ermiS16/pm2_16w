@@ -43,12 +43,21 @@ public class Gui extends Application implements Observer{
 	private Label gleis2;
 	private Label gleis3;
 
-	
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see java.util.Observer#update(java.util.Observable, java.lang.Object)
+	 */
 	@Override
 	public void update(Observable observable, Object arg){
 		
 	}
 	
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see javafx.application.Application#start(javafx.stage.Stage)
+	 */
 	@Override
 	public void start(Stage primaryStage){
 		

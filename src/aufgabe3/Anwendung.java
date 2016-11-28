@@ -14,9 +14,13 @@ import javafx.application.Application;
 
 public class Anwendung {
 	
+	/*
+	 * MAIN
+	 */
 	public static void main(String[] args){
 		Application.launch(Gui.class);
 	}
+	
 /*	
 	public static void main(String args[]){
 		//Rangierbahnhof tbhf = new Rangierbahnhof();

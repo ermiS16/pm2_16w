@@ -28,7 +28,6 @@ public class Simulation extends Observable implements Runnable{
 	
 	private Rangierbahnhof testBahnhof;
 	
-	
 	/*
 	 * Konstruktor
 	 */
@@ -36,7 +35,7 @@ public class Simulation extends Observable implements Runnable{
 	public Simulation(){
 		testBahnhof = new Rangierbahnhof();
 		//testBahnhof.addObserver(arg0);
-	}
+	}// END METHOD
 	
 	/*
 	 * Erstellt ein neues Lokfuehrer-Objekt
@@ -52,12 +51,14 @@ public class Simulation extends Observable implements Runnable{
 		return neuerLokfuehrer;
 	}// END METHOD
 
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see java.lang.Runnable#run()
+	 */
 	@Override
 	public void run(){
-		
-		//testBahnhof = new Rangierbahnhof();
 		int zeit = 1;
-		
 		while(!Thread.currentThread().isInterrupted()){
 			try {
 				System.out.println("\nZeit: " + zeit);
@@ -69,6 +70,7 @@ public class Simulation extends Observable implements Runnable{
 //				System.out.println("Simulation wurde geweckt");
 				Thread.currentThread().interrupt();
 			}
-		}
-	}
+		}// END WHILE
+	}// END METHOD
+	
 }
