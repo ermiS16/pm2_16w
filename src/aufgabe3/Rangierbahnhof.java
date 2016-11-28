@@ -57,7 +57,7 @@ public class Rangierbahnhof extends Observable{
 	 * 
 	 * @param lf - Lokfuehrer der seine Arbeit machen moechte
 	 */
-	public synchronized void arbeiten(Lokfuehrer lf)throws InterruptedException{
+	public synchronized void arbeiten(Lokfuehrer lf) throws InterruptedException{
 		switch(lf.getAufgabe()){
 		case 0: zugEinfahrenAuf(lf.getGleis(),lf.getZug(),lf);
 			break;
@@ -80,7 +80,7 @@ public class Rangierbahnhof extends Observable{
 	 * 
 	 * @param lf
 	 */
-	public synchronized void zugEinfahrenAuf(int gleis, Zug zug, Lokfuehrer lf)throws InterruptedException{
+	public synchronized void zugEinfahrenAuf(int gleis, Zug zug, Lokfuehrer lf){
 		while(zugAufGleis[gleis] != null){
 			try{
 				wait();
@@ -104,7 +104,7 @@ public class Rangierbahnhof extends Observable{
 	 * 
 	 * @param lf
 	 */
-	public synchronized void zugAusfahrenAuf(Lokfuehrer lf) throws InterruptedException{
+	public synchronized void zugAusfahrenAuf(Lokfuehrer lf){
 		while(zugAufGleis[lf.getGleis()] == null){
 			try{
 				wait();

@@ -126,7 +126,7 @@ public class Lokfuehrer extends Thread{
 	
 	@Override
 	public void run(){
-		while(kill == 0)
+		//while(kill == 0)
 		try{
 			bahnhof.arbeiten(this);
 			System.out.println(toString());
