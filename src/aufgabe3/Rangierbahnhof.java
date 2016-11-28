@@ -47,6 +47,15 @@ public class Rangierbahnhof extends Observable{
 	}// END METHOD
 	
 	/*
+	 * Gibt das Array zurueck
+	 * 
+	 * @return zugAufGleis
+	 */
+	public Zug[] getZugArray(){
+		return zugAufGleis;
+	}
+	
+	/*
 	 * Nimmt einen Lokfuehrer entgegen,
 	 * der je nach Aufgabe weitergereicht wird
 	 * 

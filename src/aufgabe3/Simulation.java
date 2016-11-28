@@ -27,6 +27,7 @@ public class Simulation extends Observable implements Runnable{
 	private final int INTERVALL = 1000;
 	
 	private Rangierbahnhof testBahnhof;
+	private Zug[] syncZuege;
 	
 	/*
 	 * Konstruktor
@@ -34,6 +35,7 @@ public class Simulation extends Observable implements Runnable{
 	//TODO Observer richtig
 	public Simulation(){
 		testBahnhof = new Rangierbahnhof();
+		syncZuege = new Zug[3];
 		//testBahnhof.addObserver(arg0);
 	}// END METHOD
 	
@@ -65,6 +67,15 @@ public class Simulation extends Observable implements Runnable{
 				Lokfuehrer x = erzeugeLokfuehrer(testBahnhof);
 				x.start();
 				zeit++;
+				
+				//TODO ÄNDERN sodass es funktioniert (tiefe kopie)
+				//setChanged();
+				if(syncZuege != testBahnhof.getZugArray()){
+					//notifyObservers(new Aenderung(gleis, zug));
+					syncZuege = testBahnhof.getZugArray();
+					System.out.println("test");
+				}
+				
 				Thread.sleep(INTERVALL);	
 			} catch (InterruptedException e) {
 //				System.out.println("Simulation wurde geweckt");
