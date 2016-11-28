@@ -19,6 +19,7 @@ import javafx.event.EventHandler;
 
 public class Gui extends Application implements Observer{
 
+	private boolean isRunning;
 	private Thread test;
 	private Button start;
 	private Button stop;
@@ -33,7 +34,8 @@ public class Gui extends Application implements Observer{
 	
 	@Override
 	public void start(Stage primaryStage){
-		test = new Thread(new Simulation());
+		
+		System.out.println("Anwendung gestartet");
 		
 		Button start = new Button("start");
 		Button stop = new Button("stop");
@@ -69,8 +71,14 @@ public class Gui extends Application implements Observer{
 		
 		start.setOnAction(new EventHandler<ActionEvent>(){
 			@Override public void handle(ActionEvent e){
-				test.start();
-				System.out.println("Anwendung gestartet");
+				test = new Thread(new Simulation());
+					if(!isRunning){
+						test.start();
+						System.out.println("Neue Simulation gestartet");
+						isRunning = true;
+					}else{
+						System.out.println("Es laeuft bereits eine Simulation");
+					}
 			}
 			
 		});
@@ -80,6 +88,7 @@ public class Gui extends Application implements Observer{
 				if(!test.isInterrupted()){
 					test.interrupt();
 					System.out.println("Aktuelle Simulation beendet");
+					isRunning = false;
 //					try {
 //						test.join();
 //					} catch (InterruptedException e1) {
