@@ -1,6 +1,7 @@
 package aufgabe3;
 
 import java.util.Observable;
+import java.util.Observer;
 
 /**
 * Repraesentiert einen Rangierbahnhof 
@@ -23,6 +24,7 @@ public class Rangierbahnhof extends Observable{
 	 */
 	Rangierbahnhof(){
 		zugAufGleis = new Zug[3];
+		this.addObserver(new Gui());
 	}
 	
 	/*
@@ -32,8 +34,9 @@ public class Rangierbahnhof extends Observable{
 	 * mindestens 1 Gleis
 	 */
 	Rangierbahnhof(int gleisAnzahl){
-		if(gleisAnzahl > 0){
+			if(gleisAnzahl > 0){
 			zugAufGleis = new Zug[gleisAnzahl];
+			this.addObserver(new Gui());
 		}// END IF
 	}// END METHOD
 	
@@ -97,6 +100,7 @@ public class Rangierbahnhof extends Observable{
 		}// END WHILE
 		
 		setChanged();
+		notifyObservers(zugAufGleis);
 		//notifyObservers(new Aenderung(gleis, zug));
 		zugAufGleis[gleis] = zug;
 		notifyAll();
@@ -123,11 +127,11 @@ public class Rangierbahnhof extends Observable{
 		}// END WHILE
 		
 		setChanged();
-		//notifyObservers(new Aenderung(gleis, zug);
+		notifyObservers(zugAufGleis);
+//		notifyObservers(new Aenderung(gleis, zug);
 		lf.setZug(zugAufGleis[gleis]);
 		zugAufGleis[gleis] = null;
 		notifyAll();
 		
 	}// END METHOD
-	
 }

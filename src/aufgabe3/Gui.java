@@ -19,8 +19,6 @@ import javafx.application.Platform;
 import javafx.stage.Stage;
 import javafx.scene.control.*;
 import javafx.scene.layout.GridPane;
-import javafx.scene.layout.Region;
-import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Polygon;
 import javafx.geometry.Pos;
@@ -36,7 +34,16 @@ public class Gui extends Application implements Observer{
 	private Button stop;
 	private Button beenden;
 	private TextField anzahlGleise;
-
+	private Label status;
+	private Label gleis;
+	private GridPane root;
+	private GridPane base;
+	private GridPane baseFunction;
+	private GridPane baseParameter;
+	private GridPane railwayYard;
+	private Polygon zug;
+	private Polygon[] zuege;
+	
 	/*
 	 * (non-Javadoc)
 	 * 
@@ -44,7 +51,34 @@ public class Gui extends Application implements Observer{
 	 */
 	@Override
 	public void update(Observable observable, Object arg){
-		
+		if(observable instanceof Rangierbahnhof){
+			System.out.println("CLASS observable: " + observable.getClass().toString());
+			System.out.println("CLASS argument: " + arg.getClass().toString());
+			if(arg instanceof Zug[]){
+				System.out.println("Zug is Instanceof");
+				railwayYard = new GridPane();
+				System.out.println("Generate GridPane");
+				Zug[] zugAufGleis = (Zug[]) arg;
+				System.out.println("get Parameter");
+				for(int i=0;i<zugAufGleis.length;i++){
+					final int k = i;
+					if(zugAufGleis[i] != null){
+						System.out.println("Gleis: "+i + " " +zugAufGleis[i].toString());
+						Platform.runLater(new Runnable(){
+							@Override public void run(){
+								System.out.println("set Status");
+								status = new Label("G"+k);
+								status.setStyle("-fx-background-color: red; -fx-text-fill: white;");
+								railwayYard.add(status, 0, k);
+							}
+						});
+					}if(zugAufGleis[i] == null){
+						System.out.println("Gleis: "+i+ " "+zugAufGleis[i]);
+					}
+				}
+			}
+			System.out.println("Rangierbahnhof wird ueberwacht");
+		}
 	}
 	
 	/*
@@ -55,22 +89,28 @@ public class Gui extends Application implements Observer{
 	@Override
 	public void start(Stage primaryStage){
 		
-		System.out.println("Anwendung gestartet");
 		
+		
+		System.out.println("Anwendung gestartet");
+		zuege = new Polygon[3];
 		start = new Button("Start");
 		stop = new Button("Stop");
 		beenden = new Button("Beenden");
 		anzahlGleise= new TextField("No function");
 		
-		Polygon zug = new Polygon();
-		zug.getPoints().addAll(new Double[]{5.0,0.0,20.0,5.0,5.0,10.0});
-		zug.fillProperty().set(Color.BLUE);
+		for(int i=0;i<3;i++){
+			zug = new Polygon();
+			zug.getPoints().addAll(new Double[]{5.0,0.0,20.0,5.0,5.0,10.0});
+			zug.fillProperty().set(Color.BLUE);
+			zuege[i] = zug;
+		}
 		
-		GridPane root = new GridPane();
-		GridPane base = new GridPane();
-		GridPane baseFunction = new GridPane();
-		GridPane baseParameter = new GridPane();
-		GridPane railwayYard = new GridPane();
+		root = new GridPane();
+		base = new GridPane();
+		baseFunction = new GridPane();
+		baseParameter = new GridPane();
+		railwayYard = new GridPane();
+		
 		
 		root.setVgap(10d);
 		
@@ -86,9 +126,14 @@ public class Gui extends Application implements Observer{
 		baseParameter.setAlignment(Pos.TOP_CENTER);
 		baseParameter.add(anzahlGleise, 1, 0);
 		railwayYard.setAlignment(Pos.TOP_LEFT);
+		railwayYard.setHgap(5d);
 		
-//		g1.setStyle("-fx-background-color: green; -fx-text-fill: white;");
-		
+		for(int i=0;i<3;i++){
+			railwayYard.add(status = new Label("G"+i), 0, i);
+			status.setStyle("-fx-background-color: green; -fx-text-fill: white;");
+			railwayYard.add(gleis = new Label("Gleis"+i), 1, i);
+			gleis.setStyle("-fx-background-color: grey; -fx-text-fill: white;");
+		}
 		
 		start.setOnAction(new EventHandler<ActionEvent>(){
 			@Override public void handle(ActionEvent e){
@@ -102,21 +147,6 @@ public class Gui extends Application implements Observer{
 				}
 			}
 		});
-		
-		
-//		start.setOnAction(new EventHandler<ActionEvent>(){
-//			@Override public void handle(ActionEvent e){
-//				test = new Thread(new Simulation());
-//					if(!isRunning){
-//						test.start();
-//						System.out.println("Neue Simulation gestartet");
-//						isRunning = true;
-//					}else{
-//						System.out.println("Es laeuft bereits eine Simulation");
-//					}
-//			}
-//			
-//		});
 		
 		stop.setOnAction(new EventHandler<ActionEvent>(){
 			@Override public void handle(ActionEvent e){
