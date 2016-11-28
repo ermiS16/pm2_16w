@@ -19,8 +19,6 @@ import javafx.application.Platform;
 import javafx.stage.Stage;
 import javafx.scene.control.*;
 import javafx.scene.layout.GridPane;
-import javafx.scene.layout.Region;
-import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Polygon;
 import javafx.geometry.Pos;
@@ -36,13 +34,16 @@ public class Gui extends Application implements Observer{
 	private Button stop;
 	private Button beenden;
 	private TextField anzahlGleise;
-	private Label g1;
-	private Label g2;
-	private Label g3;
-	private Label gleis1;
-	private Label gleis2;
-	private Label gleis3;
-
+	private Label status;
+	private Label gleis;
+	private GridPane root;
+	private GridPane base;
+	private GridPane baseFunction;
+	private GridPane baseParameter;
+	private GridPane railwayYard;
+	private Polygon zug;
+	private Polygon[] zuege;
+	
 	/*
 	 * (non-Javadoc)
 	 * 
@@ -50,7 +51,34 @@ public class Gui extends Application implements Observer{
 	 */
 	@Override
 	public void update(Observable observable, Object arg){
-		
+		if(observable instanceof Rangierbahnhof){
+			System.out.println("CLASS observable: " + observable.getClass().toString());
+			System.out.println("CLASS argument: " + arg.getClass().toString());
+			if(arg instanceof Zug[]){
+				System.out.println("Zug is Instanceof");
+				railwayYard = new GridPane();
+				System.out.println("Generate GridPane");
+				Zug[] zugAufGleis = (Zug[]) arg;
+				System.out.println("get Parameter");
+				for(int i=0;i<zugAufGleis.length;i++){
+					final int k = i;
+					if(zugAufGleis[i] != null){
+						System.out.println("Gleis: "+i + " " +zugAufGleis[i].toString());
+						Platform.runLater(new Runnable(){
+							@Override public void run(){
+								System.out.println("set Status");
+								status = new Label("G"+k);
+								status.setStyle("-fx-background-color: red; -fx-text-fill: white;");
+								railwayYard.add(status, 0, k);
+							}
+						});
+					}if(zugAufGleis[i] == null){
+						System.out.println("Gleis: "+i+ " "+zugAufGleis[i]);
+					}
+				}
+			}
+			System.out.println("Rangierbahnhof wird ueberwacht");
+		}
 	}
 	
 	/*
@@ -61,32 +89,28 @@ public class Gui extends Application implements Observer{
 	@Override
 	public void start(Stage primaryStage){
 		
+		
+		
 		System.out.println("Anwendung gestartet");
-		Polygon[] zuege = new Polygon[3];
+		zuege = new Polygon[3];
 		start = new Button("Start");
 		stop = new Button("Stop");
 		beenden = new Button("Beenden");
 		anzahlGleise= new TextField("No function");
-		g1 = new Label("G1");
-		g2 = new Label("G2");
-		g3 = new Label("G3");
-		gleis1 = new Label("Gleis 1");
-		gleis2 = new Label("Gleis 2");
-		gleis3 = new Label("Gleis 3");
 		
 		for(int i=0;i<3;i++){
-			Polygon zug = new Polygon();
+			zug = new Polygon();
 			zug.getPoints().addAll(new Double[]{5.0,0.0,20.0,5.0,5.0,10.0});
 			zug.fillProperty().set(Color.BLUE);
 			zuege[i] = zug;
 		}
 		
+		root = new GridPane();
+		base = new GridPane();
+		baseFunction = new GridPane();
+		baseParameter = new GridPane();
+		railwayYard = new GridPane();
 		
-		GridPane root = new GridPane();
-		GridPane base = new GridPane();
-		GridPane baseFunction = new GridPane();
-		GridPane baseParameter = new GridPane();
-		GridPane railwayYard = new GridPane();
 		
 		root.setVgap(10d);
 		
@@ -103,19 +127,13 @@ public class Gui extends Application implements Observer{
 		baseParameter.add(anzahlGleise, 1, 0);
 		railwayYard.setAlignment(Pos.TOP_LEFT);
 		railwayYard.setHgap(5d);
-		railwayYard.add(g1, 0, 0);
-		railwayYard.add(g2, 0, 1);
-		railwayYard.add(g3, 0, 2);
-		railwayYard.add(gleis1, 1, 0);
-		railwayYard.add(gleis2, 1, 1);
-		railwayYard.add(gleis3, 1, 2);
 		
-		g1.setStyle("-fx-background-color: green; -fx-text-fill: white;");
-		g2.setStyle("-fx-background-color: green; -fx-text-fill: white;");
-		g3.setStyle("-fx-background-color: green; -fx-text-fill: white;");
-		gleis1.setStyle("-fx-background-color: grey; -fx-text-fill: white;");
-		gleis2.setStyle("-fx-background-color: grey; -fx-text-fill: white;");
-		gleis3.setStyle("-fx-background-color: grey; -fx-text-fill: white;");
+		for(int i=0;i<3;i++){
+			railwayYard.add(status = new Label("G"+i), 0, i);
+			status.setStyle("-fx-background-color: green; -fx-text-fill: white;");
+			railwayYard.add(gleis = new Label("Gleis"+i), 1, i);
+			gleis.setStyle("-fx-background-color: grey; -fx-text-fill: white;");
+		}
 		
 		start.setOnAction(new EventHandler<ActionEvent>(){
 			@Override public void handle(ActionEvent e){

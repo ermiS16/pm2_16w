@@ -10,12 +10,12 @@ package aufgabe3;
 * Aufgabenblatt 3 | Aufgabe 1
 */
 
-public class Zug {
+public class Zug{
 	
 	/*
 	 * Konstruktor
 	 */
-	Zug(){
+	public Zug(){
 		//
 	}
 }

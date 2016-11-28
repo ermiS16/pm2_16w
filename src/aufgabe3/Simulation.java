@@ -2,10 +2,6 @@ package aufgabe3;
 
 import java.util.Observable;
 
-import javafx.beans.InvalidationListener;
-import javafx.beans.property.BooleanProperty;
-import javafx.beans.value.ChangeListener;
-import javafx.beans.value.ObservableValue;
 
 
 
