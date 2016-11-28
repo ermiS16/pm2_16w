@@ -1,6 +1,6 @@
 package aufgabe3;
 
-import java.util.observable;
+import java.util.Observable;
 
 /**
 * Repraesentiert einen Rangierbahnhof 
@@ -14,7 +14,7 @@ import java.util.observable;
 * Aufgabenblatt 3 | Aufgabe 1
 */
 
-public class Rangierbahnhof extemds Observable{
+public class Rangierbahnhof extends Observable{
 	
 	private Zug[] zugAufGleis;
 	
