@@ -5,7 +5,7 @@ package aufgabe3;
 * der Zuege in einen Bahnhof ein- oder
 * ausfaehrt
 * 
-* Praktikum TIPR2, WS2016/2017
+* Praktikum TI-PR2, WS2016/2017
 * Praktikumsgruppe Nr. 4
 * @author Eric Misfeld, Simon Felske
 * @version 28.11.2016

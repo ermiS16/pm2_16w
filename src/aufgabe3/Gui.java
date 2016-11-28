@@ -1,5 +1,16 @@
 package aufgabe3;
 
+/**
+* Repraesentiert das GUI
+* zur Steuerung der Simulation
+* 
+* Praktikum TI-PR2, WS2016/2017
+* Praktikumsgruppe Nr. 4
+* @author Eric Misfeld, Simon Felske
+* @version 28.11.2016
+* Aufgabenblatt 3 | Aufgabe 2
+*/
+
 import java.util.Observable;
 import java.util.Observer;
 
@@ -37,9 +48,9 @@ public class Gui extends Application implements Observer{
 		
 		System.out.println("Anwendung gestartet");
 		
-		Button start = new Button("start");
-		Button stop = new Button("stop");
-		Button beenden = new Button("beenden");
+		Button start = new Button("Start");
+		Button stop = new Button("Stop");
+		Button beenden = new Button("Beenden");
 		TextField anzahlGleise= new TextField("No function");
 		
 		Polygon zug = new Polygon();

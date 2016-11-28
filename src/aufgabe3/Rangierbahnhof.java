@@ -7,7 +7,7 @@ import java.util.Observable;
 * mit beliebig vielen Rangiergleisen
 * fuer Zuege
 * 
-* Praktikum TIPR2, WS2016/2017
+* Praktikum TI-PR2, WS2016/2017
 * Praktikumsgruppe Nr. 4
 * @author Eric Misfeld, Simon Felske
 * @version 28.11.2016

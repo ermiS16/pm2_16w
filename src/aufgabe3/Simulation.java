@@ -14,7 +14,7 @@ import javafx.beans.value.ObservableValue;
 * bahnhofes mit Zuegen und
 * Lokfuehrern
 * 
-* Praktikum TIPR2, WS2016/2017
+* Praktikum TI-PR2, WS2016/2017
 * Praktikumsgruppe Nr. 4
 * @author Eric Misfeld, Simon Felske
 * @version 26.11.2016
