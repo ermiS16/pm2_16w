@@ -114,10 +114,10 @@ public class Lokfuehrer extends Thread{
 	public String toString(){
 		String formatiert = "Lokführer " + IDNR + " ";
 		if(aufgabe == 0){
-			formatiert += "hat einen Zug auf Gleis " + gleis + " eingefahren.";
+			formatiert += "hat einen Zug auf Gleis " + gleis + " eingefahren";
 		}
 		else{
-			formatiert += "hat einen Zug aus Gleis " + gleis + " ausgefahren.";
+			formatiert += "hat einen Zug aus Gleis " + gleis + " ausgefahren";
 		}
 		return formatiert;
 	}// END METHOD

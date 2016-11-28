@@ -111,7 +111,7 @@ public class Gui extends Application implements Observer{
 		
 		stop.setOnAction(new EventHandler<ActionEvent>(){
 			@Override public void handle(ActionEvent e){
-				if(!test.isInterrupted()){
+				if(!test.isInterrupted() && isRunning){
 					test.interrupt();
 					System.out.println("Aktuelle Simulation beendet");
 					isRunning = false;
@@ -121,7 +121,7 @@ public class Gui extends Application implements Observer{
 //						e1.printStackTrace();
 //						System.err.println("Fehler Gui");
 //					}
-				}
+				}// END IF
 			}		
 		});
 		
