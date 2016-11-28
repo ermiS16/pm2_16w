@@ -23,11 +23,14 @@ import javafx.beans.value.ObservableValue;
 
 public class Simulation extends Observable implements Runnable{
 
+	//Zeitdauer fuer Intervalllaenge
 	private final int INTERVALL = 1000;
+	//private Rangierbahnhof bahnhof;
 	
 	/*
 	 * Erstellt ein neues Lokfuehrer-Objekt
 	 * Generiert zufaellige Werte fuer Aufgabe und Gleis
+	 * 
 	 * @param bahnhof - Zielbahnhof
 	 */
 	public Lokfuehrer erzeugeLokfuehrer(Rangierbahnhof bahnhof){

@@ -1,6 +1,6 @@
 package aufgabe3;
 
-//import java.util.observable;
+import java.util.observable;
 
 /**
 * Repraesentiert einen Rangierbahnhof 
@@ -14,7 +14,7 @@ package aufgabe3;
 * Aufgabenblatt 3 | Aufgabe 1
 */
 
-public class Rangierbahnhof{
+public class Rangierbahnhof extemds Observable{
 	
 	private Zug[] zugAufGleis;
 	
@@ -92,13 +92,7 @@ public class Rangierbahnhof{
 		
 		zugAufGleis[gleis] = zug;
 		lf.setKill(1);
-		notify();
-		
-		//if(zugAufGleis[lf.getGleis()] == null){
-			//	zugAufGleis[lf.getGleis()] = lf.getZug();
-		//}// END IF
-		//else{
-			//}// END ELSE
+		notifyAll();
 	}// END METHOD
 	
 	
@@ -119,17 +113,11 @@ public class Rangierbahnhof{
 				e.printStackTrace();
 			}
 		}// END WHILE
+		
 		lf.setZug(zugAufGleis[lf.getGleis()]);
 		zugAufGleis[lf.getGleis()] = null;
 		lf.setKill(1);
-		notify();
-		
-		//if(zugAufGleis[lf.getGleis()] != null){
-			//	lf.setZug(zugAufGleis[lf.getGleis()]);
-			//	zugAufGleis[lf.getGleis()] = null;
-			//}// END IF
-		//else{
-			//}// END ELSE
+		notifyAll();
 	}// END METHOD
 	
 }

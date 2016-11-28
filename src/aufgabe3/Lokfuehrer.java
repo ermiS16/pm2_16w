@@ -41,14 +41,14 @@ public class Lokfuehrer extends Thread{
 		
 		//Zug erzeugen wenn ein Zug eingefahren werden soll
 		if(aufgabe == 0){
-			this.zug = new Zug();
+			zug = new Zug();
 		}// END IF
 		else{
 			zug = null;
 		}// END ELSE
 		
 		instanzNr++;
-		System.out.println("LF"+ instanzNr +": " + "A" + aufgabe + " G" + gleis);
+		System.out.println("LF"+ IDNR +": " + "A" + aufgabe + " G" + gleis);
 	}// END METHOD
 	
 	
@@ -95,7 +95,7 @@ public class Lokfuehrer extends Thread{
 	
 	
 	/*
-	 * Getter für IDNR
+	 * Getter fuer IDNR
 	 * 
 	 * @return IDNR - Instanznummer des Lokfuehrers
 	 */
