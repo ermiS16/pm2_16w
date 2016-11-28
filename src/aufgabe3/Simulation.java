@@ -1,15 +1,13 @@
 package aufgabe3;
 
-import javafx.application.Application;
-import javafx.stage.Stage;
-import javafx.scene.control.*;
-import javafx.scene.layout.GridPane;
-import javafx.scene.paint.Color;
-import javafx.scene.shape.Polygon;
-import javafx.geometry.Pos;
-import javafx.scene.Scene;
-import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
+import java.util.Observable;
+
+import javafx.beans.InvalidationListener;
+import javafx.beans.property.BooleanProperty;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
+
+
 
 /**
 * Simulation eines aktiven Rangier-
@@ -23,13 +21,9 @@ import javafx.event.EventHandler;
 * Aufgabenblatt 3 | Aufgabe 3
 */
 
-public class Simulation extends Application implements Runnable{
-	
-	private Button start;
-	private Button stop;
-	private TextField anzahlGleise;
-	
-	private final int INTERVALL = 500;
+public class Simulation extends Observable implements Runnable{
+
+	private final int INTERVALL = 1000;
 	
 	/*
 	 * Erstellt ein neues Lokfuehrer-Objekt
@@ -48,53 +42,17 @@ public class Simulation extends Application implements Runnable{
 	public void run(){
 		Rangierbahnhof tbhf = new Rangierbahnhof();
 		int q = 1;
-		
-		while(true){
+		while(!Thread.currentThread().isInterrupted()){
 			try {
 				System.out.println("\nZeit: " + q);
 				Lokfuehrer x = erzeugeLokfuehrer(tbhf);
 				x.start();
 				q++;
-				Thread.sleep(INTERVALL);
+				Thread.sleep(INTERVALL);	
 			} catch (InterruptedException e) {
-				e.printStackTrace();
+//				System.out.println("Simulation wurde geweckt");
+				Thread.currentThread().interrupt();
 			}
 		}
 	}
-	public static void main(String args[]){
-		//Rangierbahnhof tbhf = new Rangierbahnhof();
-		//Lokfuehrer tlf = new Lokfuehrer(0,1,tbhf);
-		//Lokfuehrer tlf2 = new Lokfuehrer(0,2,tbhf);
-		//Lokfuehrer tlf3 = new Lokfuehrer(1,2,tbhf);
-		//Lokfuehrer tlf4 = new Lokfuehrer(0,1,tbhf);
-		//tbhf.start();
-		//tlf.start();
-		//tlf2.start();
-		//tlf3.start();
-		//tlf4.start();
-		//wait(20);
-		//System.out.println(tbhf.getZugAnzahl());
-		// ACHTUNG AUSKOMMENTIERT
-		Application.launch();
-		//Thread test = new Thread(new Simulation());
-		//test.start();
-	}
-	
-	@Override
-	public void start(Stage primaryStage){
-		GridPane root = new GridPane();
-		root.setAlignment(Pos.CENTER);
-		
-		Polygon poly = new Polygon();
-		poly.getPoints().addAll(new Double[]{10.0,0.0,40.0,10.0,10.0,20.0});
-		poly.fillProperty().set(Color.BLUE);
-		root.setAlignment(Pos.CENTER);
-		root.add(poly, 0, 0);
-		
-		Scene scene = new Scene(root, 600, 600);
-		primaryStage.setTitle("Rangierbahnhof");
-		primaryStage.setScene(scene);
-		primaryStage.show();
-	}
-	
 }
