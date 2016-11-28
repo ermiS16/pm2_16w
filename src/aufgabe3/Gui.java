@@ -4,6 +4,7 @@ import java.util.Observable;
 import java.util.Observer;
 
 import javafx.application.Application;
+import javafx.application.Platform;
 import javafx.stage.Stage;
 import javafx.scene.control.*;
 import javafx.scene.layout.GridPane;
@@ -77,14 +78,22 @@ public class Gui extends Application implements Observer{
 			@Override public void handle(ActionEvent e){
 				if(!test.isInterrupted()){
 					test.interrupt();
-				}else{
+				
 					try {
 						test.join();
 					} catch (InterruptedException e1) {
 						e1.printStackTrace();
+						System.err.println("Fehler Gui");
 					}
 				}
 			}		
+		});
+		
+		beenden.setOnAction(new EventHandler<ActionEvent>(){
+			@Override public void handle(ActionEvent e){
+				Platform.exit();
+				System.exit(0);
+			}
 		});
 		
 		Scene scene = new Scene(root, 200, 200);

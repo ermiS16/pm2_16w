@@ -23,7 +23,6 @@ import javafx.beans.value.ObservableValue;
 
 public class Simulation extends Observable implements Runnable{
 
-	
 	private final int INTERVALL = 1000;
 	
 	/*
@@ -43,16 +42,19 @@ public class Simulation extends Observable implements Runnable{
 	public void run(){
 		Rangierbahnhof tbhf = new Rangierbahnhof();
 		int q = 1;
-		while(true){
+		while(!Thread.currentThread().isInterrupted()){
 			try {
 				System.out.println("\nZeit: " + q);
 				Lokfuehrer x = erzeugeLokfuehrer(tbhf);
 				x.start();
 				q++;
-				Thread.sleep(INTERVALL);
+				Thread.sleep(INTERVALL);	
 			} catch (InterruptedException e) {
+				Thread.currentThread().interrupt();
 				e.printStackTrace();
+				System.err.println("Fehler Simulation");
 			}
 		}
+		System.out.println("Ende der Simulation");
 	}
 }
