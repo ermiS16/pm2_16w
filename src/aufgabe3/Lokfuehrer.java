@@ -2,13 +2,13 @@ package aufgabe3;
 
 /**
 * Repraesentiert einen Lokfuehrer, 
-* der Zuege in den Bahnhof ein- oder
+* der Zuege in einen Bahnhof ein- oder
 * ausfaehrt
 * 
 * Praktikum TIPR2, WS2016/2017
 * Praktikumsgruppe Nr. 4
 * @author Eric Misfeld, Simon Felske
-* @version 26.11.2016
+* @version 28.11.2016
 * Aufgabenblatt 3 | Aufgabe 2
 */
 
@@ -18,11 +18,15 @@ public class Lokfuehrer extends Thread{
 	private int gleis;
 	private Zug zug;
 	private Rangierbahnhof bahnhof;
-	private static int instanzNr = 0;
+	private int IDNR;
+	private int kill = 0;
+	
+	private static int instanzNr = 1;
 	
 	
 	/*
-	 * Konstruktor
+	 * Erstellt ein neues Lokfuehrer-Objekt
+	 * 
 	 * @param aufgabe - muss 0 (einfahren) oder 1 (ausfahren) sein
 	 * @param gleis - Zielgleis
 	 * @param bahnhof - Zielbahnhof
@@ -32,21 +36,25 @@ public class Lokfuehrer extends Thread{
 			this.aufgabe = aufgabe;
 			this.gleis = gleis;
 			this.bahnhof = bahnhof;
+			IDNR = instanzNr;
 		}// END IF
+		
 		//Zug erzeugen wenn ein Zug eingefahren werden soll
 		if(aufgabe == 0){
 			this.zug = new Zug();
 		}// END IF
 		else{
 			zug = null;
-		}
+		}// END ELSE
+		
 		instanzNr++;
 		System.out.println("LF"+ instanzNr +": " + "A" + aufgabe + " G" + gleis);
 	}// END METHOD
 	
 	
 	/*
-	 * Setter fuer zug
+	 * Setter fuer den Zug
+	 * 
 	 * @param abholZug
 	 */
 	public void setZug(Zug abholZug){
@@ -57,7 +65,8 @@ public class Lokfuehrer extends Thread{
 	
 	
 	/*
-	 * Getter fuer zug
+	 * Getter fuer den Zug
+	 * 
 	 * @return zug
 	 */
 	public Zug getZug(){
@@ -66,7 +75,8 @@ public class Lokfuehrer extends Thread{
 	
 	
 	/*
-	 * Getter fuer aufgabe
+	 * Getter fuer die Aufgabe
+	 * 
 	 * @return aufgabe
 	 */
 	public int getAufgabe(){
@@ -75,7 +85,8 @@ public class Lokfuehrer extends Thread{
 	
 	
 	/*
-	 * Getter fuer gleis
+	 * Getter fuer das Gleis
+	 * 
 	 * @return gleis
 	 */
 	public int getGleis(){
@@ -84,11 +95,26 @@ public class Lokfuehrer extends Thread{
 	
 	
 	/*
+	 * Getter für IDNR
+	 * 
+	 * @return IDNR - Instanznummer des Lokfuehrers
+	 */
+	public int getIDNR(){
+		return IDNR;
+	}
+	
+	public void setKill(int x){
+		kill = x;
+	}
+	
+	/*
 	 * Erstellt einen formatierten String
 	 * mit allen notwendigen Informationen
+	 * 
+	 * @return formatiert - String mit allen Lokfuehrer-Informationen
 	 */
 	public String toString(){
-		String formatiert = "Lokführer " + instanzNr + " ";
+		String formatiert = "Lokführer " + IDNR + " ";
 		if(aufgabe == 0){
 			formatiert += "hat einen Zug auf Gleis " + gleis + " eingefahren.";
 		}
@@ -100,7 +126,7 @@ public class Lokfuehrer extends Thread{
 	
 	@Override
 	public void run(){
-		while(!isInterrupted())
+		while(kill == 0)
 		try{
 			bahnhof.arbeiten(this);
 			System.out.println(toString());

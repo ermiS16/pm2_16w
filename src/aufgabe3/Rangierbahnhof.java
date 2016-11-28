@@ -1,7 +1,6 @@
 package aufgabe3;
 
-import java.util.ArrayList;
-import java.util.List;
+//import java.util.observable;
 
 /**
 * Repraesentiert einen Rangierbahnhof 
@@ -18,21 +17,21 @@ import java.util.List;
 public class Rangierbahnhof{
 	
 	private Zug[] zugAufGleis;
-	//private List<Lokfuehrer> lfspeicher;
 	
-	//public Object monitorX = new Object();
 	
 	/*
 	 * Konstruktor
 	 */
 	Rangierbahnhof(){
 		zugAufGleis = new Zug[3];
-		//lfspeicher = new ArrayList<Lokfuehrer>();
 	}
+	
 	
 	/*
 	 * Konstruktor mit Nutzereingabe
-	 * @param gleisAnzahl - Anzahl der Gleise
+	 * 
+	 * @param gleisAnzahl - Anzahl der Gleise,
+	 * mindestens 1 Gleis
 	 */
 	Rangierbahnhof(int gleisAnzahl){
 		if(gleisAnzahl > 0){
@@ -40,50 +39,36 @@ public class Rangierbahnhof{
 		}// END IF
 	}// END METHOD
 	
+	
 	/*
 	 * Gibt die Anzahl der Gleise zurueck
-	 * @return gleisAnzahl.length - Anzahl an Gleisen
+	 * 
+	 * @return gleisAnzahl.length - Anzahl der Gleise
 	 */
 	public int getGleisAnzahl(){
 		return zugAufGleis.length;
 	}// END METHOD
 	
-//	/*
-//	 * Gibt die Anzahl der Zuege im
-//	 * Bahnhof zurueck
-//	 * @return zugAnzahl
-//	 */
-//	public int getZugAnzahl(){
-//		return zugAnzahl;
-//	}
 	
 	
 	/*
 	 * Nimmt einen Lokfuehrer entgegen,
 	 * der je nach Aufgabe weitergereicht wird
-	 * @param lf
+	 * 
+	 * @param lf - Lokfuehrer der seine Arbeit machen moechte
 	 */
-	// TODO: WO NOTIFY VERWENDEN?
-	// TODO: BESSERES ZWISCHENSPEICHERN, RICHTIG ENTFERNEN, RICHTIG PRÜFEN
 	public synchronized void arbeiten(Lokfuehrer lf)throws InterruptedException{
-		//synchronized(monitorX){
-			//monitorX.notifyAll();
-			switch(lf.getAufgabe()){
-			
-			case 0: while((zugAufGleis[lf.getGleis()] != null)){
-					monitorX.wait();
-					}
-					zugEinfahrenAuf(lf);
-				break;
+		switch(lf.getAufgabe()){
+		case 0: zugEinfahrenAuf(lf.getGleis(),lf.getZug(),lf);
+			break;
 				
-			case 1:zugAusfahrenAuf(lf);
-				break;
+		case 1:zugAusfahrenAuf(lf);
+			break;
 				
-			default: System.out.println("Error");
-				lf.interrupt();
-				break;
-			}// END SWITCH
-			//}// END SYNCRO
+		default: System.out.println("Error");
+			lf.interrupt();
+			break;
+		}// END SWITCH
 	}// END METHOD
 	
 	
@@ -92,18 +77,28 @@ public class Rangierbahnhof{
 	 * einen Zug auf ein Rangiergleis einfaehrt.
 	 * Rangiergleis muss frei sein,
 	 * sonst wird der Lokfuehrer pausiert
+	 * 
 	 * @param lf
 	 */
-	public synchronized void zugEinfahrenAuf(Lokfuehrer lf)throws InterruptedException{
-		//synchronized(monitorX){
-			if(zugAufGleis[lf.getGleis()] == null){
-				zugAufGleis[lf.getGleis()] = lf.getZug();
-			}// END IF
-			else{
-				//lfspeicher.add(lf);
-				monitorX.wait();
-			}// END ELSE
-			//}// END SYNCRO
+	public synchronized void zugEinfahrenAuf(int gleis, Zug zug, Lokfuehrer lf)throws InterruptedException{
+		while(zugAufGleis[gleis] != null){
+			try{
+				wait();
+			}
+			catch(InterruptedException e){
+				e.printStackTrace();
+			}
+		}// END WHILE
+		
+		zugAufGleis[gleis] = zug;
+		lf.setKill(1);
+		notify();
+		
+		//if(zugAufGleis[lf.getGleis()] == null){
+			//	zugAufGleis[lf.getGleis()] = lf.getZug();
+		//}// END IF
+		//else{
+			//}// END ELSE
 	}// END METHOD
 	
 	
@@ -112,19 +107,29 @@ public class Rangierbahnhof{
 	 * einen Zug aus einem Rangiergleis ausfaehrt.
 	 * Rangiergleis muss belegt sein,
 	 * sonst wird der Lokfuehrer pausiert
+	 * 
 	 * @param lf
 	 */
 	public synchronized void zugAusfahrenAuf(Lokfuehrer lf) throws InterruptedException{
-		//synchronized(monitorX){
-			if(zugAufGleis[lf.getGleis()] != null){
-				lf.setZug(zugAufGleis[lf.getGleis()]);
-				zugAufGleis[lf.getGleis()] = null;
-			}// END IF
-			else{
-				//lfspeicher.add(lf);
-				monitorX.wait();
-			}// END ELSE
-			//}// END SYNCRO
+		while(zugAufGleis[lf.getGleis()] == null){
+			try{
+				wait();
+			}
+			catch(InterruptedException e){
+				e.printStackTrace();
+			}
+		}// END WHILE
+		lf.setZug(zugAufGleis[lf.getGleis()]);
+		zugAufGleis[lf.getGleis()] = null;
+		lf.setKill(1);
+		notify();
+		
+		//if(zugAufGleis[lf.getGleis()] != null){
+			//	lf.setZug(zugAufGleis[lf.getGleis()]);
+			//	zugAufGleis[lf.getGleis()] = null;
+			//}// END IF
+		//else{
+			//}// END ELSE
 	}// END METHOD
 	
 }
