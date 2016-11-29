@@ -90,7 +90,6 @@ public class Gui extends Application implements Observer{
 	@Override
 	public void start(Stage primaryStage){
 		
-		
 		System.out.println("Anwendung gestartet");
 		zuege = new Polygon[3];
 		start = new Button("Start");
@@ -135,6 +134,9 @@ public class Gui extends Application implements Observer{
 			gleis.setStyle("-fx-background-color: grey; -fx-text-fill: white;");
 		}// END FOR
 		
+		/*
+		 * Funktionalitaet fuer Button start
+		 */
 		start.setOnAction(new EventHandler<ActionEvent>(){
 			@Override public void handle(ActionEvent e){
 				if(!isRunning){
@@ -148,6 +150,9 @@ public class Gui extends Application implements Observer{
 			}// END handle
 		});
 		
+		/*
+		 * Funktionalitaet fuer Button stop
+		 */
 		stop.setOnAction(new EventHandler<ActionEvent>(){
 			@Override public void handle(ActionEvent e){
 				if(isRunning && !test.isInterrupted()){
@@ -166,6 +171,9 @@ public class Gui extends Application implements Observer{
 			}// END handle
 		});
 		
+		/*
+		 * Funktionalitaet fuer Button beenden
+		 */
 		beenden.setOnAction(new EventHandler<ActionEvent>(){
 			@Override public void handle(ActionEvent e){
 				if(isRunning && !test.isInterrupted()){
