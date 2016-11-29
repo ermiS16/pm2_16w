@@ -107,7 +107,7 @@ public class Lokfuehrer extends Thread{
 	 * @return formatiert - String mit allen Lokfuehrer-Informationen
 	 */
 	public String toString(){
-		String formatiert = "Lokführer " + idNr + " ";
+		String formatiert = "Lokfuehrer " + idNr + " ";
 		if(aufgabe == 0){
 			formatiert += "hat einen Zug auf Gleis " + gleis + " eingefahren";
 		}
