@@ -67,7 +67,8 @@ public class Gui extends Application implements Observer{
 				for(int i = 0; i < zugAufGleis.length; i++){
 					final int k = i;
 					if(zugAufGleis[i] != null){
-						LabelTask newLabels = new LabelTask(st[k], laneBlocked, zuege[k], true);
+						visible = true;
+						LabelTask newLabels = new LabelTask(st[k], laneBlocked, zuege[k], visible);
 						if(!newLabels.isCancelled()){
 							try {
 								newLabels.call();
@@ -80,7 +81,8 @@ public class Gui extends Application implements Observer{
 						
 					}// END IF
 					if(zugAufGleis[i] == null){
-						LabelTask newLabels = new LabelTask(st[k], laneFree, zuege[k], false);
+						visible = false;
+						LabelTask newLabels = new LabelTask(st[k], laneFree, zuege[k], visible);
 						if(!newLabels.isCancelled()){
 							try {
 								newLabels.call();
