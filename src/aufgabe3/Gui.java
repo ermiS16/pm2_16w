@@ -98,7 +98,7 @@ public class Gui extends Application implements Observer{
 		beenden = new Button("Beenden");
 		anzahlGleise= new TextField("No function");
 		
-		for(int i=0;i<3;i++){
+		for(int i = 0; i < 3; i++){
 			zug = new Polygon();
 			zug.getPoints().addAll(new Double[]{5.0,0.0,20.0,5.0,5.0,10.0});
 			zug.fillProperty().set(Color.BLUE);
