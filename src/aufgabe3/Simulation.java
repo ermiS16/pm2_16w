@@ -84,6 +84,6 @@ public class Simulation extends Observable implements Runnable{
 	public static void main(String[] args){
 		Gui newGui = new Gui();
 		Application.launch(newGui.getClass());
-	}
+	}// END METHOD
 	
 }

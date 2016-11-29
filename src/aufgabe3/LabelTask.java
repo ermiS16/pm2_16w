@@ -1,6 +1,8 @@
 package aufgabe3;
 
 /**
+ * Task um die GUI zu aktualisieren
+ * 
 * Praktikum TI-PR2, WS2016/2017
 * Praktikumsgruppe Nr. 4
 * @author Eric Misfeld, Simon Felske
@@ -15,29 +17,50 @@ import javafx.scene.shape.Polygon;
 
 public class LabelTask extends Task<Boolean>{
 
-	private final Label label;
-	private final String styleValue;
-	private final Polygon zug;
-	private final Boolean visible;
+	//Label
+	private final Label LABEL;
 	
+	//indirekter Farbmodifikator
+	private final String STYLEVALUE;
+	
+	//Darstellung des Zuges im GUI
+	private final Polygon ZUG;
+	
+	// Sichtbarkeitsstatus
+	private final Boolean VISIBLE;
+	
+	/*
+	 * Konstruktor
+	 * 
+	 * @param label - spez. Label
+	 * @param styleValue
+	 * @param zug - visuelle Zugdarstellung
+	 * @param visible - Sichtbarkeitsstatus
+	 */
 	public LabelTask(Label label, String styleValue, Polygon zug, Boolean visible){
-		this.label = label;
-		this.styleValue = styleValue;
-		this.zug = zug;
-		this.visible = visible;
+		this.LABEL = label;
+		this.STYLEVALUE = styleValue;
+		this.ZUG = zug;
+		this.VISIBLE = visible;
 	}
 	
+	/*
+	 * (non-Javadoc)
+	 * @see javafx.concurrent.Task#call()
+	 */
 	@Override
 	protected Boolean call() throws Exception {
-		
 		updateLabel();
 		return true;
 	}
 
+	/*
+	 * 
+	 */
 	private void updateLabel(){
 		Platform.runLater(()->{
-			label.setStyle(this.styleValue);
-			zug.setVisible(this.visible);
+			LABEL.setStyle(this.STYLEVALUE);
+			ZUG.setVisible(this.VISIBLE);
 		;});
 	}
 }
