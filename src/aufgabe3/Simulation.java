@@ -13,7 +13,7 @@ import javafx.application.Application;
 * Praktikum TI-PR2, WS2016/2017
 * Praktikumsgruppe Nr. 4
 * @author Eric Misfeld, Simon Felske
-* @version 28.11.2016
+* @version 29.11.2016
 * Aufgabenblatt 3 | Aufgabe 3
 */
 
@@ -37,7 +37,7 @@ public class Simulation extends Observable implements Runnable{
 	
 	/*
 	 * Erstellt ein neues Lokfuehrer-Objekt
-	 * Generiert zufaellige Werte fuer Aufgabe und Gleis
+	 * Generiert zufaellige Werte fuer aufgabe und gleis
 	 * 
 	 * @param bahnhof - Zielbahnhof
 	 * @return neuerLokfuehrer
@@ -60,15 +60,15 @@ public class Simulation extends Observable implements Runnable{
 		while(!Thread.currentThread().isInterrupted()){
 			try {
 				
-				if(!Arrays.equals(syncZuege, testBahnhof.getZugArray())){
-					Zug[] switc = testBahnhof.getZugArray();
-					for(int i = 0; i < testBahnhof.getGleisAnzahl(); i++){
-						syncZuege[i] = switc[i];
-					}// END FOR
-					//setChanged();
-					//notifyObservers(new Aenderung(gleis, zug));
-					System.out.println("test");
-				}// END IF
+//				if(!Arrays.equals(syncZuege, testBahnhof.getZugArray())){
+//					Zug[] switc = testBahnhof.getZugArray();
+//					for(int i = 0; i < testBahnhof.getGleisAnzahl(); i++){
+//						syncZuege[i] = switc[i];
+//					}// END FOR
+//					//setChanged();
+//					//notifyObservers(new Aenderung(gleis, zug));
+//					System.out.println("test");
+//				}// END IF
 				
 				System.out.println("\nZeit: " + zeit);
 				Lokfuehrer neuerLf = erzeugeLokfuehrer(testBahnhof);
