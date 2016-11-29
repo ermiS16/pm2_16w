@@ -57,22 +57,22 @@ public class Simulation extends Observable implements Runnable{
 		int zeit = 1;
 		while(!Thread.currentThread().isInterrupted()){
 			try {
-				System.out.println("\nZeit: " + zeit);
-				Lokfuehrer neuerLf = erzeugeLokfuehrer(testBahnhof);
-				neuerLf.start();
-				zeit++;
 				
-				//TODO ÄNDERN sodass es funktioniert (tiefe kopie)
-				//setChanged();
 				if(!Arrays.equals(syncZuege, testBahnhof.getZugArray())){
 					Zug[] switc = testBahnhof.getZugArray();
 					for(int i = 0; i < testBahnhof.getGleisAnzahl(); i++){
 						syncZuege[i] = switc[i];
-					}
+					}// END FOR
+					//setChanged();
 					//notifyObservers(new Aenderung(gleis, zug));
 					//syncZuege = testBahnhof.getZugArray();
 					System.out.println("test");
-				}
+				}// END IF
+				
+				System.out.println("\nZeit: " + zeit);
+				Lokfuehrer neuerLf = erzeugeLokfuehrer(testBahnhof);
+				neuerLf.start();
+				zeit++;
 				
 				Thread.sleep(INTERVALL);	
 			} catch (InterruptedException e) {
