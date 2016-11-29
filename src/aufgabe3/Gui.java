@@ -144,13 +144,13 @@ public class Gui extends Application implements Observer{
 					isRunning = true;
 				}else{
 					System.out.println("Es laeuft bereits eine Simulation");
-				}
-			}
+				}// END ELSE
+			}// END handle
 		});
 		
 		stop.setOnAction(new EventHandler<ActionEvent>(){
 			@Override public void handle(ActionEvent e){
-				if(!test.isInterrupted() && isRunning){
+				if(isRunning && !test.isInterrupted()){
 					test.interrupt();
 					System.out.println("Aktuelle Simulation beendet");
 					isRunning = false;
@@ -160,8 +160,10 @@ public class Gui extends Application implements Observer{
 //						e1.printStackTrace();
 //						System.err.println("Fehler Gui");
 //					}
-				}// END IF
-			}		
+				}else{
+					System.out.println("Es laeuft keine Simulation");
+				}// END ELSE
+			}// END handle
 		});
 		
 		beenden.setOnAction(new EventHandler<ActionEvent>(){
@@ -174,7 +176,7 @@ public class Gui extends Application implements Observer{
 				System.out.println("Anwendung beendet");
 				Platform.exit();
 				System.exit(0);
-			}
+			}// END handle
 		});
 		
 		Scene scene = new Scene(root, 200, 200);
