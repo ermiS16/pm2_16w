@@ -20,9 +20,11 @@ public class Anwendung {
 	/*
 	 * MAIN
 	 */
+	/*
 	public static void main(String[] args){
 		Application.launch(Gui.class);
 	}
+	*/
 	
 /*	
 	public static void main(String args[]){

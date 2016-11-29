@@ -45,6 +45,9 @@ public class Gui extends Application implements Observer{
 	private GridPane railwayYard;
 	private Polygon zug;
 	private Polygon[] zuege;
+	private Label[] st;
+	private Label[] gl;
+	private Simulation sim;
 	
 	/*
 	 * (non-Javadoc)
@@ -53,58 +56,40 @@ public class Gui extends Application implements Observer{
 	 */
 	@Override
 	public void update(Observable observable, Object arg){
-		if(observable instanceof Rangierbahnhof){
-			//System.out.println("CLASS observable: " + observable.getClass().toString());
-			//System.out.println("CLASS argument: " + arg.getClass().toString());
+		if(observable instanceof Simulation){
+			System.out.println("CLASS observable: " + observable.getClass().toString());
+			System.out.println("CLASS argument: " + arg.getClass().toString());
 			if(arg instanceof Zug[]){
-				//System.out.println("Zug is Instanceof");
-				railwayYard = new GridPane();
-				//System.out.println("Generate GridPane");
+			System.out.println("Zug is Instanceof");
+				//railwayYard = new GridPane();
+			//System.out.println("Generate GridPane");
 				Zug[] zugAufGleis = (Zug[]) arg;
-				//System.out.println("get Parameter");
+				System.out.println("get Parameter");
 				for(int i=0;i<zugAufGleis.length;i++){
-					final int k = i;
+					System.out.println("Zug auf Gleis "+i+": "+zugAufGleis[i]);
 					if(zugAufGleis[i] != null){
-/*
-<<<<<<< HEAD
+						st[i].setStyle("-fx-background-color: red; -fx-text-fill: white;");
 						System.out.println("Gleis: "+ i + " " +zugAufGleis[i].toString());
-=======
-						
-						status.
-						gleis
-						
-						System.out.println("Gleis: "+i + " " +zugAufGleis[i].toString());
->>>>>>> dev
-*/
-						Platform.runLater(new Runnable(){
-							@Override public void run(){
-								//System.out.println("set Status");
-								status = new Label("G" + k);
-								status.setStyle("-fx-background-color: red; -fx-text-fill: white;");
-								railwayYard.add(status, 0, k);
-							}// END RUN
-						});
 					}// END IF
 					if(zugAufGleis[i] == null){
+						st[i].setStyle("-fx-background-color: green; -fx-text-fill: white;");
+//						zuege[i].setVisible(true);
 						System.out.println("Gleis: "+ i + " " + zugAufGleis[i]);
 					}// END IF
 				}// END FOR
 			}// END IF
-			//System.out.println("Rangierbahnhof wird ueberwacht");
+			System.out.println("Rangierbahnhof wird ueberwacht");
 		}// END IF
 	}// END METHOD
 	
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see javafx.application.Application#start(javafx.stage.Stage)
-	 */
 	@Override
-	public void start(Stage primaryStage){
-		
-		
+	public void init(){
+		sim = new Simulation();
+		sim.addObserver(this);
 		System.out.println("Anwendung gestartet");
 		zuege = new Polygon[3];
+		st = new Label[3];
+		gl = new Label[3];
 		start = new Button("Start");
 		stop = new Button("Stop");
 		beenden = new Button("Beenden");
@@ -114,6 +99,7 @@ public class Gui extends Application implements Observer{
 			zug = new Polygon();
 			zug.getPoints().addAll(new Double[]{5.0,0.0,20.0,5.0,5.0,10.0});
 			zug.fillProperty().set(Color.BLUE);
+			zug.setVisible(true);
 			zuege[i] = zug;
 		}// END FOR
 		
@@ -141,16 +127,32 @@ public class Gui extends Application implements Observer{
 		railwayYard.setHgap(5d);
 		
 		for(int i = 0; i < 3; i++){
-			railwayYard.add(status = new Label("G"+i), 0, i);
+			status = new Label("G"+i);
+			gleis = new Label("Gleis"+i);
+			st[i] = status;
+			gl[i] = gleis;
+			railwayYard.add(status, 0, i);
+			railwayYard.add(gleis, 1, i);
+			railwayYard.add(zuege[i], 1, i);
 			status.setStyle("-fx-background-color: green; -fx-text-fill: white;");
-			railwayYard.add(gleis = new Label("Gleis"+i), 1, i);
 			gleis.setStyle("-fx-background-color: grey; -fx-text-fill: white;");
+			
 		}// END FOR
+		
+	}
+	
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see javafx.application.Application#start(javafx.stage.Stage)
+	 */
+	@Override
+	public void start(Stage primaryStage){
 		
 		start.setOnAction(new EventHandler<ActionEvent>(){
 			@Override public void handle(ActionEvent e){
 				if(!isRunning){
-					test = new Thread(new Simulation());
+					test = new Thread(sim);
 					test.start();
 					System.out.println("Neue Simulation gestartet");
 					isRunning = true;

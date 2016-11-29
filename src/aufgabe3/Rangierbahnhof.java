@@ -23,7 +23,7 @@ public class Rangierbahnhof extends Observable{
 	 */
 	Rangierbahnhof(){
 		zugAufGleis = new Zug[3];
-		this.addObserver(new Gui());
+		//this.addObserver(new Gui());
 	}
 	
 	/*
@@ -35,7 +35,7 @@ public class Rangierbahnhof extends Observable{
 	Rangierbahnhof(int gleisAnzahl){
 			if(gleisAnzahl > 0){
 			zugAufGleis = new Zug[gleisAnzahl];
-			this.addObserver(new Gui());
+			//this.addObserver(new Gui());
 		}// END IF
 	}// END METHOD
 	
