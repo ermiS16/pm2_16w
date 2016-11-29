@@ -166,7 +166,7 @@ public class Gui extends Application implements Observer{
 		
 		beenden.setOnAction(new EventHandler<ActionEvent>(){
 			@Override public void handle(ActionEvent e){
-				if(!test.isInterrupted() && isRunning){
+				if(isRunning && !test.isInterrupted()){
 					test.interrupt();
 					System.out.println("Aktuelle Simulation beendet");
 					isRunning = false;
