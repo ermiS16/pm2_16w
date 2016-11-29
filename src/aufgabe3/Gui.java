@@ -26,6 +26,8 @@ import javafx.scene.Scene;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 
+//TODO: Labels in Array packen.
+
 public class Gui extends Application implements Observer{
 
 	private boolean isRunning;
@@ -63,7 +65,17 @@ public class Gui extends Application implements Observer{
 				for(int i=0;i<zugAufGleis.length;i++){
 					final int k = i;
 					if(zugAufGleis[i] != null){
+/*
+<<<<<<< HEAD
 						System.out.println("Gleis: "+ i + " " +zugAufGleis[i].toString());
+=======
+						
+						status.
+						gleis
+						
+						System.out.println("Gleis: "+i + " " +zugAufGleis[i].toString());
+>>>>>>> dev
+*/
 						Platform.runLater(new Runnable(){
 							@Override public void run(){
 								//System.out.println("set Status");
