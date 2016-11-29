@@ -12,6 +12,8 @@ package aufgabe3;
 
 public class Zug{
 	
+	//Leere Klasse gemaess Vorgabe
+	
 	/*
 	 * Konstruktor
 	 */

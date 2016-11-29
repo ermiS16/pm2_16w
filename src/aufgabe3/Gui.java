@@ -7,8 +7,8 @@ package aufgabe3;
 * Praktikum TI-PR2, WS2016/2017
 * Praktikumsgruppe Nr. 4
 * @author Eric Misfeld, Simon Felske
-* @version 28.11.2016
-* Aufgabenblatt 3 | Aufgabe 2
+* @version 29.11.2016
+* Aufgabenblatt 3 | Aufgabe 4
 */
 
 import java.util.Observable;
@@ -52,34 +52,35 @@ public class Gui extends Application implements Observer{
 	@Override
 	public void update(Observable observable, Object arg){
 		if(observable instanceof Rangierbahnhof){
-			System.out.println("CLASS observable: " + observable.getClass().toString());
-			System.out.println("CLASS argument: " + arg.getClass().toString());
+			//System.out.println("CLASS observable: " + observable.getClass().toString());
+			//System.out.println("CLASS argument: " + arg.getClass().toString());
 			if(arg instanceof Zug[]){
-				System.out.println("Zug is Instanceof");
+				//System.out.println("Zug is Instanceof");
 				railwayYard = new GridPane();
-				System.out.println("Generate GridPane");
+				//System.out.println("Generate GridPane");
 				Zug[] zugAufGleis = (Zug[]) arg;
-				System.out.println("get Parameter");
+				//System.out.println("get Parameter");
 				for(int i=0;i<zugAufGleis.length;i++){
 					final int k = i;
 					if(zugAufGleis[i] != null){
-						System.out.println("Gleis: "+i + " " +zugAufGleis[i].toString());
+						System.out.println("Gleis: "+ i + " " +zugAufGleis[i].toString());
 						Platform.runLater(new Runnable(){
 							@Override public void run(){
-								System.out.println("set Status");
-								status = new Label("G"+k);
+								//System.out.println("set Status");
+								status = new Label("G" + k);
 								status.setStyle("-fx-background-color: red; -fx-text-fill: white;");
 								railwayYard.add(status, 0, k);
-							}
+							}// END RUN
 						});
-					}if(zugAufGleis[i] == null){
-						System.out.println("Gleis: "+i+ " "+zugAufGleis[i]);
-					}
-				}
-			}
-			System.out.println("Rangierbahnhof wird ueberwacht");
-		}
-	}
+					}// END IF
+					if(zugAufGleis[i] == null){
+						System.out.println("Gleis: "+ i + " " + zugAufGleis[i]);
+					}// END IF
+				}// END FOR
+			}// END IF
+			//System.out.println("Rangierbahnhof wird ueberwacht");
+		}// END IF
+	}// END METHOD
 	
 	/*
 	 * (non-Javadoc)
@@ -103,7 +104,7 @@ public class Gui extends Application implements Observer{
 			zug.getPoints().addAll(new Double[]{5.0,0.0,20.0,5.0,5.0,10.0});
 			zug.fillProperty().set(Color.BLUE);
 			zuege[i] = zug;
-		}
+		}// END FOR
 		
 		root = new GridPane();
 		base = new GridPane();
@@ -133,7 +134,7 @@ public class Gui extends Application implements Observer{
 			status.setStyle("-fx-background-color: green; -fx-text-fill: white;");
 			railwayYard.add(gleis = new Label("Gleis"+i), 1, i);
 			gleis.setStyle("-fx-background-color: grey; -fx-text-fill: white;");
-		}
+		}// END FOR
 		
 		start.setOnAction(new EventHandler<ActionEvent>(){
 			@Override public void handle(ActionEvent e){

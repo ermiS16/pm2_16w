@@ -8,7 +8,7 @@ package aufgabe3;
 * Praktikum TI-PR2, WS2016/2017
 * Praktikumsgruppe Nr. 4
 * @author Eric Misfeld, Simon Felske
-* @version 28.11.2016
+* @version 29.11.2016
 * Aufgabenblatt 3 | Aufgabe 2
 */
 
@@ -18,7 +18,7 @@ public class Lokfuehrer extends Thread{
 	private int gleis;
 	private Zug zug;
 	private Rangierbahnhof bahnhof;
-	private int IDNR;
+	private int idNr;
 	
 	//Zaehlvariable fuer Instanzen von Lokfuehrer
 	private static int instanzNr = 1;
@@ -36,7 +36,7 @@ public class Lokfuehrer extends Thread{
 			this.aufgabe = aufgabe;
 			this.gleis = gleis;
 			this.bahnhof = bahnhof;
-			IDNR = instanzNr;
+			idNr = instanzNr;
 		}// END IF
 		
 		//Zug erzeugen wenn ein Zug eingefahren werden soll
@@ -48,7 +48,7 @@ public class Lokfuehrer extends Thread{
 		}// END ELSE
 		
 		instanzNr++;
-		System.out.println("LF"+ IDNR +": " + "A" + aufgabe + " G" + gleis);
+		System.out.println("LF"+ idNr +": " + "A" + aufgabe + " G" + gleis);
 	}// END METHOD
 	
 	/*
@@ -92,12 +92,12 @@ public class Lokfuehrer extends Thread{
 	}// END METHOD
 	
 	/*
-	 * Getter fuer IDNR
+	 * Getter fuer idNr
 	 * 
-	 * @return IDNR - Instanznummer des Lokfuehrers
+	 * @return idNr - Instanznummer des Lokfuehrers
 	 */
-	public int getIDNR(){
-		return IDNR;
+	public int getidNr(){
+		return idNr;
 	}// END METHOD
 
 	/*
@@ -107,7 +107,7 @@ public class Lokfuehrer extends Thread{
 	 * @return formatiert - String mit allen Lokfuehrer-Informationen
 	 */
 	public String toString(){
-		String formatiert = "Lokführer " + IDNR + " ";
+		String formatiert = "Lokführer " + idNr + " ";
 		if(aufgabe == 0){
 			formatiert += "hat einen Zug auf Gleis " + gleis + " eingefahren";
 		}

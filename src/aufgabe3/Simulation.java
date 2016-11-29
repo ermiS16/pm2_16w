@@ -1,9 +1,7 @@
 package aufgabe3;
 
+import java.util.Arrays;
 import java.util.Observable;
-
-
-
 
 /**
 * Simulation eines aktiven Rangier-
@@ -31,7 +29,7 @@ public class Simulation extends Observable implements Runnable{
 	//TODO Observer richtig
 	public Simulation(){
 		testBahnhof = new Rangierbahnhof();
-		syncZuege = new Zug[3];
+		syncZuege = new Zug[testBahnhof.getGleisAnzahl()];
 		//testBahnhof.addObserver(arg0);
 	}// END METHOD
 	
@@ -60,15 +58,19 @@ public class Simulation extends Observable implements Runnable{
 		while(!Thread.currentThread().isInterrupted()){
 			try {
 				System.out.println("\nZeit: " + zeit);
-				Lokfuehrer x = erzeugeLokfuehrer(testBahnhof);
-				x.start();
+				Lokfuehrer neuerLf = erzeugeLokfuehrer(testBahnhof);
+				neuerLf.start();
 				zeit++;
 				
 				//TODO ÄNDERN sodass es funktioniert (tiefe kopie)
 				//setChanged();
-				if(syncZuege != testBahnhof.getZugArray()){
+				if(!Arrays.equals(syncZuege, testBahnhof.getZugArray())){
+					Zug[] switc = testBahnhof.getZugArray();
+					for(int i = 0; i < testBahnhof.getGleisAnzahl(); i++){
+						syncZuege[i] = switc[i];
+					}
 					//notifyObservers(new Aenderung(gleis, zug));
-					syncZuege = testBahnhof.getZugArray();
+					//syncZuege = testBahnhof.getZugArray();
 					System.out.println("test");
 				}
 				
