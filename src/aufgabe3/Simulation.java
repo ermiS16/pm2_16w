@@ -3,6 +3,8 @@ package aufgabe3;
 import java.util.Arrays;
 import java.util.Observable;
 
+import javafx.application.Application;
+
 /**
 * Simulation eines aktiven Rangier-
 * bahnhofes mit Zuegen und
@@ -73,12 +75,19 @@ public class Simulation extends Observable implements Runnable{
 				neuerLf.start();
 				zeit++;
 				
-				Thread.sleep(INTERVALL);	
+				Thread.sleep(INTERVALL);
+				setChanged();
+				notifyObservers(syncZuege);
 			} catch (InterruptedException e) {
 //				System.out.println("Simulation wurde geweckt");
 				Thread.currentThread().interrupt();
 			}
 		}// END WHILE
 	}// END METHOD
+	
+	public static void main(String[] args){
+		Gui newGui = new Gui();
+		Application.launch(newGui.getClass());
+	}
 	
 }
