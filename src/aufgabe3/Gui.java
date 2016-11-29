@@ -69,11 +69,12 @@ public class Gui extends Application implements Observer{
 					System.out.println("Zug auf Gleis "+i+": "+zugAufGleis[i]);
 					if(zugAufGleis[i] != null){
 						st[i].setStyle("-fx-background-color: red; -fx-text-fill: white;");
+						zuege[i].setVisible(true);
 						System.out.println("Gleis: "+ i + " " +zugAufGleis[i].toString());
 					}// END IF
 					if(zugAufGleis[i] == null){
 						st[i].setStyle("-fx-background-color: green; -fx-text-fill: white;");
-//						zuege[i].setVisible(true);
+						zuege[i].setVisible(false);
 						System.out.println("Gleis: "+ i + " " + zugAufGleis[i]);
 					}// END IF
 				}// END FOR
@@ -100,7 +101,7 @@ public class Gui extends Application implements Observer{
 			zug = new Polygon();
 			zug.getPoints().addAll(new Double[]{5.0,0.0,20.0,5.0,5.0,10.0});
 			zug.fillProperty().set(Color.BLUE);
-			zug.setVisible(true);
+			zug.setVisible(false);
 			zuege[i] = zug;
 		}// END FOR
 		
@@ -126,17 +127,19 @@ public class Gui extends Application implements Observer{
 		baseParameter.add(anzahlGleise, 1, 0);
 		railwayYard.setAlignment(Pos.TOP_LEFT);
 		railwayYard.setHgap(5d);
+		railwayYard.setVgap(5d);
 		
 		for(int i = 0; i < 3; i++){
 			status = new Label("G"+i);
-			gleis = new Label("Gleis"+i);
+			gleis = new Label();
 			st[i] = status;
 			gl[i] = gleis;
 			railwayYard.add(status, 0, i);
 			railwayYard.add(gleis, 1, i);
 			railwayYard.add(zuege[i], 1, i);
 			status.setStyle("-fx-background-color: green; -fx-text-fill: white;");
-			gleis.setStyle("-fx-background-color: grey; -fx-text-fill: white;");
+			gleis.setMinWidth(100d);
+			gleis.setStyle("-fx-background-color: grey;");
 			
 		}// END FOR
 		
