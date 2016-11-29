@@ -12,6 +12,9 @@ package aufgabe3;
 
 import javafx.application.Application;
 
+// extends javafx und import stage, dann p v start(stage stage){ new gui} ?
+// mit gui imp obs?
+
 public class Anwendung {
 	
 	/*

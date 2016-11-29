@@ -65,7 +65,6 @@ public class Simulation extends Observable implements Runnable{
 					}// END FOR
 					//setChanged();
 					//notifyObservers(new Aenderung(gleis, zug));
-					//syncZuege = testBahnhof.getZugArray();
 					System.out.println("test");
 				}// END IF
 				

@@ -1,7 +1,6 @@
 package aufgabe3;
 
 import java.util.Observable;
-//import java.util.Observer;
 
 /**
 * Repraesentiert einen Rangierbahnhof 
@@ -80,10 +79,10 @@ public class Rangierbahnhof extends Observable{
 	}// END METHOD
 	
 	/*
-	 * Nimmt einen Lokfuehrer entgegen, der
-	 * einen Zug auf ein Rangiergleis einfaehrt.
-	 * Rangiergleis muss frei sein,
-	 * sonst wird der Lokfuehrer pausiert
+	 * Nimmt einen Lokfuehrer, ein Zielgleis und einen Zug
+	 * entgegen. Der Zug soll auf das Rangiergleis einfahren,
+	 * dazu muss das Rangiergleis frei sein,
+	 * Sonst wird die Aktion pausiert
 	 * 
 	 * @param gleis - Zielgleis fuer den einfahrenden Zug
 	 * @param zug - einfahrender Zug
@@ -99,19 +98,20 @@ public class Rangierbahnhof extends Observable{
 			}
 		}// END WHILE
 		
+//		setChanged();
+//		notifyObservers(zugAufGleis);
+		zugAufGleis[gleis] = zug;
 		setChanged();
 		notifyObservers(zugAufGleis);
-		//notifyObservers(new Aenderung(gleis, zug));
-		zugAufGleis[gleis] = zug;
 		notifyAll();
 		
 	}// END METHOD
 	
 	/*
-	 * Nimmt einen Lokfuehrer entgegen, der
-	 * einen Zug aus einem Rangiergleis ausfaehrt.
-	 * Rangiergleis muss belegt sein,
-	 * sonst wird der Lokfuehrer pausiert
+	 * Nimmt einen Lokfuehrer und ein Zielgleis entgegen.
+	 * Der Zug soll aus einem Rangiergleis ausfahren.
+	 * Das Rangiergleis muss belegt sein,
+	 * sonst wird die Aktion pausiert
 	 * 
 	 * @param gleis - Gleis von dem ein Zug ausgefahren werden soll
 	 * @param lf - Lokfuehrer
@@ -128,7 +128,6 @@ public class Rangierbahnhof extends Observable{
 		
 		setChanged();
 		notifyObservers(zugAufGleis);
-//		notifyObservers(new Aenderung(gleis, zug);
 		lf.setZug(zugAufGleis[gleis]);
 		zugAufGleis[gleis] = null;
 		notifyAll();

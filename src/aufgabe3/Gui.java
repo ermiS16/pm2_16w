@@ -91,7 +91,6 @@ public class Gui extends Application implements Observer{
 	public void start(Stage primaryStage){
 		
 		
-		
 		System.out.println("Anwendung gestartet");
 		zuege = new Polygon[3];
 		start = new Button("Start");
@@ -129,7 +128,7 @@ public class Gui extends Application implements Observer{
 		railwayYard.setAlignment(Pos.TOP_LEFT);
 		railwayYard.setHgap(5d);
 		
-		for(int i=0;i<3;i++){
+		for(int i = 0; i < 3; i++){
 			railwayYard.add(status = new Label("G"+i), 0, i);
 			status.setStyle("-fx-background-color: green; -fx-text-fill: white;");
 			railwayYard.add(gleis = new Label("Gleis"+i), 1, i);
@@ -167,6 +166,11 @@ public class Gui extends Application implements Observer{
 		
 		beenden.setOnAction(new EventHandler<ActionEvent>(){
 			@Override public void handle(ActionEvent e){
+				if(!test.isInterrupted() && isRunning){
+					test.interrupt();
+					System.out.println("Aktuelle Simulation beendet");
+					isRunning = false;
+				}
 				System.out.println("Anwendung beendet");
 				Platform.exit();
 				System.exit(0);
