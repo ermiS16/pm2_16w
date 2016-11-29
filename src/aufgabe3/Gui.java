@@ -51,7 +51,9 @@ public class Gui extends Application implements Observer{
 	private String lane;
 	private String laneFree;
 	private String laneBlocked;
+	@SuppressWarnings("unused")
 	private Boolean visible;
+	
 	/*
 	 * (non-Javadoc)
 	 * 
@@ -62,7 +64,7 @@ public class Gui extends Application implements Observer{
 		if(observable instanceof Simulation){
 			if(arg instanceof Zug[]){
 				Zug[] zugAufGleis = (Zug[]) arg;
-				for(int i=0;i<zugAufGleis.length;i++){
+				for(int i = 0; i < zugAufGleis.length; i++){
 					final int k = i;
 					if(zugAufGleis[i] != null){
 						LabelTask newLabels = new LabelTask(st[k], laneBlocked, zuege[k], true);
@@ -94,8 +96,12 @@ public class Gui extends Application implements Observer{
 		}// END IF
 	}// END METHOD
 	
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see javafx.application.Application#init()
+	 */
 	@Override
-
 	public void init(){
 		sim = new Simulation();
 		sim.addObserver(this);
@@ -156,15 +162,8 @@ public class Gui extends Application implements Observer{
 			status.setStyle(laneFree);
 			gleis.setMinWidth(100d);
 			gleis.setStyle(lane);
-			
 		}// END FOR
-		
-
-		/*
-		 * Funktionalitaet fuer Button start
-		 */
-
-	}
+	}// END METHOD (INIT)
 	
 	/*
 	 * (non-Javadoc)
@@ -174,6 +173,9 @@ public class Gui extends Application implements Observer{
 	@Override
 	public void start(Stage primaryStage){
 		
+		/*
+		 * Funktionalitaet fuer Button start
+		 */
 		start.setOnAction(new EventHandler<ActionEvent>(){
 			@Override public void handle(ActionEvent e){
 				if(!isRunning){
@@ -196,12 +198,6 @@ public class Gui extends Application implements Observer{
 					test.interrupt();
 					System.out.println("Aktuelle Simulation beendet");
 					isRunning = false;
-//					try {
-//						test.join();
-//					} catch (InterruptedException e1) {
-//						e1.printStackTrace();
-//						System.err.println("Fehler Gui");
-//					}
 				}else{
 					System.out.println("Es laeuft keine Simulation");
 				}// END ELSE
@@ -228,6 +224,6 @@ public class Gui extends Application implements Observer{
 		primaryStage.setTitle("Rangierbahnhof");
 		primaryStage.setScene(scene);
 		primaryStage.show();
-	}
+	}// END METHOD (START)
 	
 }
