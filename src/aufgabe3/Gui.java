@@ -48,7 +48,10 @@ public class Gui extends Application implements Observer{
 	private Label[] st;
 	private Label[] gl;
 	private Simulation sim;
-	
+	private String lane;
+	private String laneFree;
+	private String laneBlocked;
+	private Boolean visible;
 	/*
 	 * (non-Javadoc)
 	 * 
@@ -57,29 +60,37 @@ public class Gui extends Application implements Observer{
 	@Override
 	public void update(Observable observable, Object arg){
 		if(observable instanceof Simulation){
-			System.out.println("CLASS observable: " + observable.getClass().toString());
-			System.out.println("CLASS argument: " + arg.getClass().toString());
 			if(arg instanceof Zug[]){
-			System.out.println("Zug is Instanceof");
-				//railwayYard = new GridPane();
-			//System.out.println("Generate GridPane");
 				Zug[] zugAufGleis = (Zug[]) arg;
-				System.out.println("get Parameter");
 				for(int i=0;i<zugAufGleis.length;i++){
-					System.out.println("Zug auf Gleis "+i+": "+zugAufGleis[i]);
+					final int k = i;
 					if(zugAufGleis[i] != null){
-						st[i].setStyle("-fx-background-color: red; -fx-text-fill: white;");
-						zuege[i].setVisible(true);
-						System.out.println("Gleis: "+ i + " " +zugAufGleis[i].toString());
+						LabelTask newLabels = new LabelTask(st[k], laneBlocked, zuege[k], true);
+						if(!newLabels.isCancelled()){
+							try {
+								newLabels.call();
+								newLabels.cancel();
+							} catch (Exception e) {
+								newLabels.cancel();
+								e.printStackTrace();
+							}
+						}
+						
 					}// END IF
 					if(zugAufGleis[i] == null){
-						st[i].setStyle("-fx-background-color: green; -fx-text-fill: white;");
-						zuege[i].setVisible(false);
-						System.out.println("Gleis: "+ i + " " + zugAufGleis[i]);
+						LabelTask newLabels = new LabelTask(st[k], laneFree, zuege[k], false);
+						if(!newLabels.isCancelled()){
+							try {
+								newLabels.call();
+								newLabels.cancel();
+							} catch (Exception e) {
+								newLabels.cancel();
+								e.printStackTrace();
+							}
+						}
 					}// END IF
 				}// END FOR
 			}// END IF
-			System.out.println("Rangierbahnhof wird ueberwacht");
 		}// END IF
 	}// END METHOD
 	
@@ -96,6 +107,11 @@ public class Gui extends Application implements Observer{
 		stop = new Button("Stop");
 		beenden = new Button("Beenden");
 		anzahlGleise= new TextField("No function");
+		lane = "-fx-background-color: grey;";
+		laneFree = "-fx-background-color: green; -fx-text-fill: white;";
+		laneBlocked = "-fx-background-color: red; -fx-text-fill: white;";
+		visible = false;
+		
 		
 		for(int i = 0; i < 3; i++){
 			zug = new Polygon();
@@ -137,9 +153,9 @@ public class Gui extends Application implements Observer{
 			railwayYard.add(status, 0, i);
 			railwayYard.add(gleis, 1, i);
 			railwayYard.add(zuege[i], 1, i);
-			status.setStyle("-fx-background-color: green; -fx-text-fill: white;");
+			status.setStyle(laneFree);
 			gleis.setMinWidth(100d);
-			gleis.setStyle("-fx-background-color: grey;");
+			gleis.setStyle(lane);
 			
 		}// END FOR
 		
