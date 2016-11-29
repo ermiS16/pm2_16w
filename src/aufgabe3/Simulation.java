@@ -58,8 +58,9 @@ public class Simulation extends Observable implements Runnable{
 	public void run(){
 		int zeit = 1;
 		while(!Thread.currentThread().isInterrupted()){
+			setChanged();
+			notifyObservers(syncZuege);
 			try {
-				
 				if(!Arrays.equals(syncZuege, testBahnhof.getZugArray())){
 					Zug[] switc = testBahnhof.getZugArray();
 					for(int i = 0; i < testBahnhof.getGleisAnzahl(); i++){
@@ -69,15 +70,16 @@ public class Simulation extends Observable implements Runnable{
 					//notifyObservers(new Aenderung(gleis, zug));
 					System.out.println("test");
 				}// END IF
-				
+				setChanged();
+				notifyObservers(syncZuege);
 				System.out.println("\nZeit: " + zeit);
 				Lokfuehrer neuerLf = erzeugeLokfuehrer(testBahnhof);
 				neuerLf.start();
 				zeit++;
 				
-				Thread.sleep(INTERVALL);
 				setChanged();
 				notifyObservers(syncZuege);
+				Thread.sleep(INTERVALL);
 			} catch (InterruptedException e) {
 //				System.out.println("Simulation wurde geweckt");
 				Thread.currentThread().interrupt();
