@@ -18,6 +18,7 @@ import javafx.application.Application;
 import javafx.application.Platform;
 import javafx.stage.Stage;
 import javafx.scene.control.*;
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.layout.GridPane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Polygon;
@@ -27,7 +28,9 @@ import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 
 public class Gui extends Application implements Observer{
-	
+
+	private int maximum;
+	private int minimum;
 	private int anzahl;
 	private boolean isRunning;
 	private Thread test;
@@ -35,6 +38,7 @@ public class Gui extends Application implements Observer{
 	private Button stop;
 	private Button beenden;
 	private Button ok;
+	private Button info;
 	private TextField anzahlGleise;
 	private Label status;
 	private Label gleis;
@@ -99,13 +103,15 @@ public class Gui extends Application implements Observer{
 	 */
 	@Override
 	public void init(){
-		
+		maximum = 20;
+		minimum = 1;
 		anzahl = 3;
 		System.out.println("Anwendung gestartet");
 		start = new Button("Start");
 		stop = new Button("Stop");
 		beenden = new Button("Beenden");
 		ok = new Button("OK");
+		info = new Button("Info");
 		anzahlGleise= new TextField();
 		anzahlGleise.setPromptText("Anzahl Gleise");
 		lane = "-fx-background-color: grey;";
@@ -129,12 +135,14 @@ public class Gui extends Application implements Observer{
 		baseFunction.add(start, 0, 0);
 		baseFunction.add(stop, 1, 0);
 		baseFunction.add(beenden, 2, 0);
+		baseFunction.add(info, 3, 0);
 		baseParameter.setAlignment(Pos.TOP_CENTER);
 		baseParameter.add(anzahlGleise, 1, 0);
 		baseParameter.add(ok, 2, 0);
 		railwayYard.setAlignment(Pos.TOP_LEFT);
 		railwayYard.setHgap(5d);
 		railwayYard.setVgap(5d);
+
 		
 		//Initialisieren von GUI Objekten mit verschiedener Anzahl
 		setInitObjects(anzahl);
@@ -145,7 +153,6 @@ public class Gui extends Application implements Observer{
 	 */
 	@Override
 	public void start(Stage primaryStage){
-
 		/*
 		 * Funktionalitaet fuer Button start
 		 */
@@ -203,20 +210,57 @@ public class Gui extends Application implements Observer{
 					int anzahl;
 					try{
 						anzahl = Integer.parseInt(ag);
-						if(anzahl < 30){
+						if(anzahl <= maximum && anzahl >= minimum){
 							setInitObjects(anzahl);
 						}else{
-							anzahlGleise.setText("Zu viele Gleise");
+							Alert toManyLanes = new Alert(AlertType.WARNING);
+							toManyLanes.setTitle("Warnung!");
+							if(anzahl <= maximum){
+								toManyLanes.setHeaderText("Zu wenig Gleise");
+							}
+							if(anzahl >= maximum){
+								toManyLanes.setHeaderText("Zu viele Gleise");
+							}
+							toManyLanes.show();
 						}						
 					}catch(NumberFormatException exc){
-						anzahlGleise.setText("Ungueltige Eingabe");
+						Alert invalidInput = new Alert(AlertType.WARNING);
+						invalidInput.setTitle("Warnung!");
+						invalidInput.setHeaderText("Ungueltige Eingabe");
+						invalidInput.show();
 					}					
 				}else{
-					anzahlGleise.setText("Simulation erst Stoppen");
+					Alert setStop = new Alert(AlertType.WARNING);
+					setStop.setTitle("Warnung!");
+					setStop.setHeaderText("Simulation erst Stoppen");
+					setStop.show();
 				}
+			}//END handle
+		});//END ok
+
+		info.setOnAction(new EventHandler<ActionEvent>(){
+			@Override public void handle(ActionEvent e){
+				String contextText="Autoren: Eric Misfeld, Simon Felske\n"
+						+ "Version: 1.0, 30.11.2016\n\n"
+						+"Dieses Programm verwaltet einen Rangierbahnhof.\n"
+						+"Es kann sofort gestartet werden,\n"
+						+ "angefangen wird dann mit 3 Gleisen.\n"
+						+ "Mit \"Start\" wird die Simulation gestartet.\n"
+						+ "Mit \"Stop\" wird die aktuelle Simulation gestopt.\n"
+						+ "Mit \"Beenden\" wird das Programm beendet.\n"
+						+ "Im Textfeld koennen Sie die Anzahl der Gleisen bestimmen.\n"
+						+ "Es koennen maximal "+maximum+" Gleise gebaut werden.\n"
+						+ "Es muessen mindestens "+minimum+" Gleise gebaut werden\n"
+						+ "Um neue Gleise zu bauen, muss die aktuelle Simulation\n"
+						+ "erst gestopt werden.";
+				Alert information = new Alert(AlertType.INFORMATION);
+				information.setTitle("Information");
+				information.setHeaderText("Informationen zum Programm");
+				information.setContentText(contextText);
+				information.showAndWait();
 			}
 		});
-
+		
 		/*
 		 * GUI erzeugen und zeigen
 		 */
@@ -233,15 +277,14 @@ public class Gui extends Application implements Observer{
 	 * sollen.
 	 */
 	private void setInitObjects(int anzahlGleise){
-		//Simulation wird erzeugt und dessen Observer bekannt gegeben.		
-		
+		//Simulation wird erzeugt und dessen Observer bekannt gegeben.	
 		sim = new Simulation(anzahlGleise);
 		sim.addObserver(this);
 		
 		zuege = new Polygon[anzahlGleise];
 		st = new Label[anzahlGleise];
 		gl = new Label[anzahlGleise];
-		
+
 		//Zug Darstellung als Polygon
 		for(int i = 0; i < anzahlGleise; i++){
 			zug = new Polygon();
@@ -253,7 +296,7 @@ public class Gui extends Application implements Observer{
 		
 		//Setzen der Objekte, deren Anzahl nicht fix ist
 		for(int i = 0; i < anzahlGleise; i++){
-			status = new Label("G"+i);
+			status = new Label("G"+(i+1));
 			gleis = new Label();
 			st[i] = status;
 			gl[i] = gleis;
