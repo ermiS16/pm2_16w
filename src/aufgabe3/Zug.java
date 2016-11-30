@@ -14,7 +14,7 @@ public class Zug{
 	
 	//Leere Klasse gemaess Vorgabe
 	
-	/*
+	/**
 	 * Konstruktor
 	 */
 	public Zug(){

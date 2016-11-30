@@ -29,7 +29,7 @@ public class LabelTask extends Task<Boolean>{
 	// Sichtbarkeitsstatus
 	private final Boolean VISIBLE;
 	
-	/*
+	/**
 	 * Konstruktor
 	 * 
 	 * @param label - spez. Label
@@ -44,7 +44,7 @@ public class LabelTask extends Task<Boolean>{
 		this.VISIBLE = visible;
 	}
 	
-	/*
+	/**
 	 * Aufruf des LabelTask
 	 */
 	@Override
@@ -53,7 +53,7 @@ public class LabelTask extends Task<Boolean>{
 		return true;
 	}
 
-	/*
+	/**
 	 * Updated die Label
 	 */
 	private void updateLabel(){

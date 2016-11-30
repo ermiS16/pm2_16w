@@ -23,7 +23,7 @@ public class Lokfuehrer extends Thread{
 	//Zaehlvariable fuer Instanzen von Lokfuehrer
 	private static int instanzNr = 1;
 	
-	/*
+	/**
 	 * Erstellt ein neues Lokfuehrer-Objekt
 	 * und ggf. ein neues Zug-Objekt
 	 * 
@@ -31,7 +31,7 @@ public class Lokfuehrer extends Thread{
 	 * @param gleis - Zielgleis
 	 * @param bahnhof - Zielbahnhof
 	 */
-	Lokfuehrer(int aufgabe, int gleis, Rangierbahnhof bahnhof){
+	public Lokfuehrer(int aufgabe, int gleis, Rangierbahnhof bahnhof){
 		if((aufgabe == 0 || aufgabe == 1) && gleis >= 0){
 			this.aufgabe = aufgabe;
 			this.gleis = gleis;
@@ -51,7 +51,7 @@ public class Lokfuehrer extends Thread{
 		System.out.println("LF"+ idNr +": " + "A" + aufgabe + " G" + gleis);
 	}// END METHOD
 	
-	/*
+	/**
 	 * Setter fuer den Zug
 	 * 
 	 * @param abholZug - fuegt einen 
@@ -64,7 +64,7 @@ public class Lokfuehrer extends Thread{
 		}// END IF
 	}// END METHOD
 	
-	/*
+	/**
 	 * Getter fuer den Zug
 	 * 
 	 * @return zug
@@ -73,7 +73,7 @@ public class Lokfuehrer extends Thread{
 		return zug;
 	}// END METHOD
 	
-	/*
+	/**
 	 * Getter fuer die Aufgabe
 	 * 
 	 * @return aufgabe
@@ -82,7 +82,7 @@ public class Lokfuehrer extends Thread{
 		return aufgabe;
 	}// END METHOD
 	
-	/*
+	/**
 	 * Getter fuer das Gleis
 	 * 
 	 * @return gleis
@@ -91,7 +91,7 @@ public class Lokfuehrer extends Thread{
 		return gleis;
 	}// END METHOD
 	
-	/*
+	/**
 	 * Getter fuer idNr
 	 * 
 	 * @return idNr - Instanznummer des Lokfuehrers
@@ -100,7 +100,7 @@ public class Lokfuehrer extends Thread{
 		return idNr;
 	}// END METHOD
 
-	/*
+	/**
 	 * Erstellt einen formatierten String
 	 * mit allen notwendigen Informationen
 	 * 
@@ -117,7 +117,7 @@ public class Lokfuehrer extends Thread{
 		return formatiert;
 	}// END METHOD
 	
-	/*
+	/**
 	 * (non-Javadoc)
 	 * 
 	 * @see java.lang.Thread#run()

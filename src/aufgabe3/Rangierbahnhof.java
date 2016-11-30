@@ -16,26 +16,26 @@ public class Rangierbahnhof{
 	
 	private Zug[] zugAufGleis;
 	
-	/*
+	/**
 	 * Konstruktor
 	 */
-	Rangierbahnhof(){
+	public Rangierbahnhof(){
 		zugAufGleis = new Zug[3];
 	}
 	
-	/*
+	/**
 	 * Konstruktor mit Nutzereingabe
 	 * 
 	 * @param gleisAnzahl - Anzahl der Gleise,
 	 * mindestens 1 Gleis
 	 */
-	Rangierbahnhof(int gleisAnzahl){
+	public Rangierbahnhof(int gleisAnzahl){
 		if(gleisAnzahl > 0){
 			zugAufGleis = new Zug[gleisAnzahl];
 		}// END IF
 	}// END METHOD
 	
-	/*
+	/**
 	 * Gibt die Anzahl der Gleise zurueck
 	 * 
 	 * @return gleisAnzahl.length - Anzahl der Gleise
@@ -44,7 +44,7 @@ public class Rangierbahnhof{
 		return zugAufGleis.length;
 	}// END METHOD
 	
-	/*
+	/**
 	 * Gibt das Array zurueck
 	 * 
 	 * @return zugAufGleis
@@ -53,7 +53,7 @@ public class Rangierbahnhof{
 		return zugAufGleis;
 	}
 	
-	/*
+	/**
 	 * Nimmt einen Lokfuehrer entgegen,
 	 * der je nach Aufgabe weitergereicht wird
 	 * 
@@ -74,7 +74,7 @@ public class Rangierbahnhof{
 		}// END SWITCH
 	}// END METHOD
 	
-	/*
+	/**
 	 * Nimmt einen Lokfuehrer, ein Zielgleis und einen Zug
 	 * entgegen. Der Zug soll auf das Rangiergleis einfahren,
 	 * dazu muss das Rangiergleis frei sein,
@@ -99,7 +99,7 @@ public class Rangierbahnhof{
 		
 	}// END METHOD
 	
-	/*
+	/**
 	 * Nimmt einen Lokfuehrer und ein Zielgleis entgegen.
 	 * Der Zug soll aus einem Rangiergleis ausfahren.
 	 * Das Rangiergleis muss belegt sein,
