@@ -27,7 +27,7 @@ public class BVSimulation {
   }
 
   /**
-   * Führt einen Simulationsschritt für alle Vehikel durch.
+   * Fuehrt einen Simulationsschritt fuer alle Vehikel durch.
    */
   public void simulationsSchritt() {
     for (BraitenbergVehikel vehikel : this.vehikel) {
@@ -45,7 +45,7 @@ public class BVSimulation {
   }
 
   /**
-   * Berechnet die Signalstärke für einen Sensor durch die Lichtquelle.
+   * Berechnet die Signalstaerke fuer einen Sensor durch die Lichtquelle.
    */
   private double getSignalstaerke(Vektor2 sensorPosition,
       Vektor2 orientierung) {

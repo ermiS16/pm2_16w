@@ -1,7 +1,7 @@
 package aufgabe4.braitenbergvehikel;
 
 /**
- * Ein Braitenberg-Vehikel "fühlt" zwei Sensorwerte und steuert darauf basierend
+ * Ein Braitenberg-Vehikel "fuehlt" zwei Sensorwerte und steuert darauf basierend
  * zwei Motoren an.
  * 
  * @author Philipp Jenke
@@ -9,7 +9,7 @@ package aufgabe4.braitenbergvehikel;
 public class BraitenbergVehikel {
 
   /**
-   * Richtungs-Enum für Motoren und Sensoren.
+   * Richtungs-Enum fuer Motoren und Sensoren.
    * 
    * @author Philipp Jenke
    *
@@ -29,12 +29,12 @@ public class BraitenbergVehikel {
   private Vektor2 position = new Vektor2(0, 0);
 
   /**
-   * Länge (und Breite) des quadratischen Vehikels.
+   * Laenge (und Breite) des quadratischen Vehikels.
    */
   private double seitenlaenge = 50;
 
   /**
-   * Radius der Räder.
+   * Radius der Raeder.
    */
   private double radRadius = 10;
 

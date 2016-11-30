@@ -1,7 +1,7 @@
 package aufgabe4.braitenbergvehikel;
 
 /**
- * Repräsentiert einen Vektor in 2D.
+ * Repraesentiert einen Vektor in 2D.
  * 
  * @author Philipp Jenke
  */
@@ -34,7 +34,7 @@ public class Vektor2 {
 
   /**
    * Rotiere den Vektor um den angegebenen Winkel (Rotation). Liefert das
-   * Ergebnis der Rotation zurück.
+   * Ergebnis der Rotation zurueck.
    */
   public Vektor2 rotiere(double winkelBogenmass) {
     double x = Math.cos(winkelBogenmass) * koordinaten[0]
@@ -45,28 +45,28 @@ public class Vektor2 {
   }
 
   /**
-   * Skaliert den Vektor, liefert Ergebnis zurück.
+   * Skaliert den Vektor, liefert Ergebnis zurueck.
    */
   public Vektor2 skaliere(double s) {
     return new Vektor2(x() * s, y() * s);
   }
 
   /**
-   * Subtrahiert zweiten Vektor, liefert Ergebnis zurück.
+   * Subtrahiert zweiten Vektor, liefert Ergebnis zurueck.
    */
   public Vektor2 subtrahiere(Vektor2 v) {
     return new Vektor2(x() - v.x(), y() - v.y());
   }
 
   /**
-   * Addiert zweiten Vektor, liefert Ergebnis zurück.
+   * Addiert zweiten Vektor, liefert Ergebnis zurueck.
    */
   public Vektor2 addiere(Vektor2 v) {
     return new Vektor2(x() + v.x(), y() + v.y());
   }
 
   /**
-   * Vektor normieren (Länge 1).
+   * Vektor normieren (Laenge 1).
    */
   public void normieren() {
     double norm = getNorm();
@@ -75,7 +75,7 @@ public class Vektor2 {
   }
 
   /**
-   * Liefert die Norm (Länge) des Vektors.
+   * Liefert die Norm (Laenge) des Vektors.
    */
   public double getNorm() {
     return Math.sqrt(x() * x() + y() * y());

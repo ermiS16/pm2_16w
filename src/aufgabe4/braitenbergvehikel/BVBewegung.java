@@ -9,14 +9,14 @@ package aufgabe4.braitenbergvehikel;
 public interface BVBewegung {
 
   /**
-   * Berechnet den Ansteuerungswert für den linken Motor aus [0,1] aus den
+   * Berechnet den Ansteuerungswert fuer den linken Motor aus [0,1] aus den
    * Sensorwerten.
    */
   public double berechneMotorAnsteuerungLinks(double sensorWertLinks,
       double sensorWertRechts);
 
   /**
-   * Berechnet den Ansteuerungswert für den rechten Motor aus [0,1] aus den
+   * Berechnet den Ansteuerungswert fuer den rechten Motor aus [0,1] aus den
    * Sensorwerten.
    */
   public double berechneMotorAnsteuerungRechts(double sensorWertLinks,

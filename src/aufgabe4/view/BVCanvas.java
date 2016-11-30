@@ -15,7 +15,7 @@ import aufgabe4.braitenbergvehikel.BraitenbergVehikel;
 import aufgabe4.braitenbergvehikel.Vektor2;
 
 /**
- * Zeichenfläche für eine Braitenberg-Vehikle-Simulation.
+ * Zeichenflaeche fuer eine Braitenberg-Vehikel-Simulation.
  * 
  * @author Philipp Jenke
  */
