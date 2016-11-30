@@ -203,7 +203,11 @@ public class Gui extends Application implements Observer{
 					int anzahl;
 					try{
 						anzahl = Integer.parseInt(ag);
-						setInitObjects(anzahl);
+						if(anzahl < 30){
+							setInitObjects(anzahl);
+						}else{
+							anzahlGleise.setText("Zu viele Gleise");
+						}						
 					}catch(NumberFormatException exc){
 						anzahlGleise.setText("Ungueltige Eingabe");
 					}					
