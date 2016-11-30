@@ -26,7 +26,7 @@ public class LabelTask extends Task<Boolean>{
 	//Darstellung des Zuges im GUI
 	private final Polygon ZUG;
 	
-	// Sichtbarkeitsstatus
+	//Sichtbarkeitsstatus
 	private final Boolean VISIBLE;
 	
 	/**
