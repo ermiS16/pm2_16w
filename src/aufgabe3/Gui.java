@@ -57,7 +57,7 @@ public class Gui extends Application implements Observer{
 	private String laneBlocked;
 	private Boolean visible;
 	
-	/*
+	/**
 	 * Update the Labels via JavaFX-Tasks
 	 */
 	@Override
@@ -97,7 +97,7 @@ public class Gui extends Application implements Observer{
 		}// END IF
 	}// END METHOD
 	
-	/*
+	/**
 	 * Init der GUI
 	 * Hier werden nur GUI Objekte initialisiert, deren Darstellung sich nicht aendert.
 	 */
@@ -148,7 +148,7 @@ public class Gui extends Application implements Observer{
 		setInitObjects(anzahl);
 	}// END METHOD (INIT)
 	
-	/*
+	/**
 	 * Startmethode fuer die GUI-Applikation
 	 */
 	@Override
@@ -169,7 +169,7 @@ public class Gui extends Application implements Observer{
 			}// END handle
 		});
 		
-		/*
+		/**
 		 * Funktionalitaet fuer Button stop
 		 */
 		stop.setOnAction(new EventHandler<ActionEvent>(){
@@ -184,7 +184,7 @@ public class Gui extends Application implements Observer{
 			}// END handle
 		});
 		
-		/*
+		/**
 		 * Funktionalitaet fuer Button beenden
 		 */
 		beenden.setOnAction(new EventHandler<ActionEvent>(){
@@ -200,7 +200,7 @@ public class Gui extends Application implements Observer{
 			}// END handle
 		});
 		
-		/*
+		/**
 		 * Funktionalitaet fuer Button ok
 		 */
 		ok.setOnAction(new EventHandler<ActionEvent>(){
@@ -270,7 +270,7 @@ public class Gui extends Application implements Observer{
 		primaryStage.show();
 	}// END METHOD (START)
 	
-	/*
+	/**
 	 * Methode zum richtigen initialisieren der GUI-Objekte, deren Darstellung
 	 * einer variablen Anzahl unterliegen.
 	 * @param anzahlGleise Anzahl der Gleise, die fuer die Simulation dargestellt werden

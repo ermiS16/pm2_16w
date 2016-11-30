@@ -30,7 +30,7 @@ public class Simulation extends Observable implements Runnable{
 		syncZuege = new Zug[testBahnhof.getGleisAnzahl()];
 	}
 	
-	/*
+	/**
 	 * Konstruktor
 	 */
 	public Simulation(){
@@ -38,7 +38,7 @@ public class Simulation extends Observable implements Runnable{
 		syncZuege = new Zug[testBahnhof.getGleisAnzahl()];
 	}// END METHOD
 	
-	/*
+	/**
 	 * Erstellt ein neues Lokfuehrer-Objekt
 	 * Generiert zufaellige Werte fuer aufgabe und gleis
 	 * 
@@ -52,7 +52,7 @@ public class Simulation extends Observable implements Runnable{
 		return neuerLokfuehrer;
 	}// END METHOD
 
-	/*
+	/**
 	 * Ausfuehrung des Threads Simulation
 	 */
 	@Override
