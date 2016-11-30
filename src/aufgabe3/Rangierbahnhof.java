@@ -1,7 +1,5 @@
 package aufgabe3;
 
-import java.util.Observable;
-
 /**
 * Repraesentiert einen Rangierbahnhof 
 * mit beliebig vielen Rangiergleisen
@@ -10,11 +8,11 @@ import java.util.Observable;
 * Praktikum TI-PR2, WS2016/2017
 * Praktikumsgruppe Nr. 4
 * @author Eric Misfeld, Simon Felske
-* @version 29.11.2016
+* @version 30.11.2016
 * Aufgabenblatt 3 | Aufgabe 1
 */
 
-public class Rangierbahnhof extends Observable{
+public class Rangierbahnhof{
 	
 	private Zug[] zugAufGleis;
 	
@@ -32,7 +30,7 @@ public class Rangierbahnhof extends Observable{
 	 * mindestens 1 Gleis
 	 */
 	Rangierbahnhof(int gleisAnzahl){
-			if(gleisAnzahl > 0){
+		if(gleisAnzahl > 0){
 			zugAufGleis = new Zug[gleisAnzahl];
 		}// END IF
 	}// END METHOD

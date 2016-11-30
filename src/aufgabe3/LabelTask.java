@@ -6,7 +6,7 @@ package aufgabe3;
 * Praktikum TI-PR2, WS2016/2017
 * Praktikumsgruppe Nr. 4
 * @author Eric Misfeld, Simon Felske
-* @version 29.11.2016
+* @version 30.11.2016
 * Aufgabenblatt 3 | Aufgabe 4
 */
 
@@ -45,8 +45,7 @@ public class LabelTask extends Task<Boolean>{
 	}
 	
 	/*
-	 * (non-Javadoc)
-	 * @see javafx.concurrent.Task#call()
+	 * Aufruf des LabelTask
 	 */
 	@Override
 	protected Boolean call() throws Exception {
@@ -55,7 +54,7 @@ public class LabelTask extends Task<Boolean>{
 	}
 
 	/*
-	 * 
+	 * Updated die Label
 	 */
 	private void updateLabel(){
 		Platform.runLater(()->{

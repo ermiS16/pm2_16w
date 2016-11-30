@@ -13,26 +13,29 @@ import javafx.application.Application;
 * Praktikum TI-PR2, WS2016/2017
 * Praktikumsgruppe Nr. 4
 * @author Eric Misfeld, Simon Felske
-* @version 29.11.2016
+* @version 30.11.2016
 * Aufgabenblatt 3 | Aufgabe 3
 */
 
 public class Simulation extends Observable implements Runnable{
 
 	//Zeitdauer fuer Intervalllaenge
-	private final int INTERVALL = 1000;
+	private final int INTERVALL = 500;
 	
 	private Rangierbahnhof testBahnhof;
 	private Zug[] syncZuege;
 	
+	public Simulation(int anzahlGleise){
+		testBahnhof = new Rangierbahnhof(anzahlGleise);
+		syncZuege = new Zug[testBahnhof.getGleisAnzahl()];
+	}
+	
 	/*
 	 * Konstruktor
 	 */
-	//TODO Observer richtig
 	public Simulation(){
 		testBahnhof = new Rangierbahnhof();
 		syncZuege = new Zug[testBahnhof.getGleisAnzahl()];
-		//testBahnhof.addObserver(arg0);
 	}// END METHOD
 	
 	/*
@@ -43,23 +46,19 @@ public class Simulation extends Observable implements Runnable{
 	 * @return neuerLokfuehrer
 	 */
 	public Lokfuehrer erzeugeLokfuehrer(Rangierbahnhof bahnhof){
-		int gleis = (int) (Math.random() * 3);
+		int gleis = (int) ((Math.random() * bahnhof.getGleisAnzahl()));
 		int aufgabe = (int) (Math.random() * 2);
 		Lokfuehrer neuerLokfuehrer = new Lokfuehrer(aufgabe, gleis, bahnhof);
 		return neuerLokfuehrer;
 	}// END METHOD
 
 	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see java.lang.Runnable#run()
+	 * Ausfuehrung des Threads Simulation
 	 */
 	@Override
 	public void run(){
 		int zeit = 1;
 		while(!Thread.currentThread().isInterrupted()){
-			setChanged();
-			notifyObservers(syncZuege);
 			try {
 				if(!Arrays.equals(syncZuege, testBahnhof.getZugArray())){
 					Zug[] switc = testBahnhof.getZugArray();
@@ -84,8 +83,6 @@ public class Simulation extends Observable implements Runnable{
 	}// END METHOD
 	
 	public static void main(String[] args){
-		Gui newGui = new Gui();
-		Application.launch(newGui.getClass());
+		Application.launch(Gui.class);
 	}// END METHOD
-	
 }
