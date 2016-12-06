@@ -1,6 +1,6 @@
 /**
  * Prof. Philipp Jenke
- * Hochschule für Angewandte Wissenschaften (HAW), Hamburg
+ * Hochschule fuer Angewandte Wissenschaften (HAW), Hamburg
  * Lecture demo program.
  */
 package aufgabe4;
