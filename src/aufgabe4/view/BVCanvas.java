@@ -4,6 +4,7 @@ import java.awt.Point;
 import java.util.Observable;
 import java.util.Observer;
 
+import javafx.scene.control.Alert.AlertType;
 import javafx.application.Platform;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
@@ -13,6 +14,7 @@ import javafx.scene.transform.Rotate;
 import aufgabe4.braitenbergvehikel.BVSimulation;
 import aufgabe4.braitenbergvehikel.BraitenbergVehikel;
 import aufgabe4.braitenbergvehikel.Vektor2;
+
 
 /**
  * Zeichenflaeche fuer eine Braitenberg-Vehikel-Simulation.
