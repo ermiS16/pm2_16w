@@ -21,6 +21,8 @@ import aufgabe4.braitenbergvehikel.Vektor2;
  * 
  * @author Philipp Jenke
  */
+
+@SuppressWarnings("unused")
 public class BVCanvas extends Canvas implements Observer {
 
   /**

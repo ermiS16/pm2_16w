@@ -5,6 +5,7 @@ import java.util.List;
 
 public class Sensor {
 	private List<Messung> listeMessungen;
+	@SuppressWarnings("unused")
 	private Messung messung;
 	private String id;
 	

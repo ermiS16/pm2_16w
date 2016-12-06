@@ -65,7 +65,8 @@ public class Input {
 	    //As long there are ChildElements from Sensor, we will getting it.
 		List<Messung> messListe = new ArrayList<Messung>();;
 	    NodeList nodeList = element.getChildNodes();
-	    int nodeListLength = nodeList.getLength();
+	    @SuppressWarnings("unused")
+		int nodeListLength = nodeList.getLength();
 	    for(int i=0; i<element.getChildNodes().getLength();i++){
 	    	Node childNode = element.getChildNodes().item(i);
 	    	if(childNode instanceof Element){

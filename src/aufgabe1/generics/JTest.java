@@ -8,20 +8,25 @@ public class JTest {
 
 	@Test
 	public void testGetAnzahlElemente(){
+		@SuppressWarnings("rawtypes")
 		ArrayListe testliste = new ArrayListe();
 		assertEquals("Funktioniert getAnzahlElemente?", 0, testliste.getAnzahlElemente());
 	}
 	
+	@SuppressWarnings("unchecked")
 	@Test
 	public void testHinzufuegen1() {
+		@SuppressWarnings("rawtypes")
 		ArrayListe testliste = new ArrayListe();
 		String teststring = new String ("test");
 		testliste.hinzufuegen(teststring);
 		assertEquals("Wurde des Objekt hinzugefuegt?", 1, testliste.getAnzahlElemente());
 	}
 	
+	@SuppressWarnings("unchecked")
 	@Test
 	public void testEntfernenIndex(){
+		@SuppressWarnings("rawtypes")
 		ArrayListe testliste = new ArrayListe();
 		String teststring = new String ("test");
 		testliste.hinzufuegen(teststring);
@@ -46,8 +51,10 @@ public class JTest {
 	
 	
 	
+	@SuppressWarnings("unchecked")
 	@Test
 	public void testGetKleinstesElement(){
+		@SuppressWarnings("rawtypes")
 		ArrayListe testliste = new ArrayListe();
 		Integer testint1 = new Integer(10);
 		Integer testint2 = new Integer(13);
@@ -60,8 +67,10 @@ public class JTest {
 		assertEquals("Kleinstes Objekt gefunden", 9, testliste.getKleinstesElement());
 	}
 	
+	@SuppressWarnings("unchecked")
 	@Test
 	public void testSupport(){
+		@SuppressWarnings("rawtypes")
 		ArrayListe testliste = new ArrayListe();
 		assertEquals("Erstes Objekt eine Nummer?", false, Support.istZahl(testliste));
 		Integer testint1 = new Integer(10);
@@ -73,7 +82,9 @@ public class JTest {
 		testliste.hinzufuegen(testint3);
 		testliste.hinzufuegen(testint4);
 		assertEquals("Erstes Objekt eine Nummer?", true, Support.istZahl(testliste));
+		@SuppressWarnings("rawtypes")
 		ArrayListe testliste2 = new ArrayListe();
+		@SuppressWarnings("unused")
 		String teststring1 = new String ("ABC");
 		assertEquals("Erstes Objekt eine Nummer?", false, Support.istZahl(testliste2));
 	}

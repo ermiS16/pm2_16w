@@ -134,7 +134,7 @@ public class ArrayListe<T> {
 	 * Liefert das kleinste Element im Array zurueck.
 	 * @return kleinstesElement - das kleinste Element im Array 
 	 */
-	@SuppressWarnings("unchecked")
+	@SuppressWarnings({ "unchecked", "hiding" })
 	public <T extends Comparable<T>> T getKleinstesElement(){
 		T kleinstesElement = (T)elemente[0];
 		if(anzahlElemente > 1){
