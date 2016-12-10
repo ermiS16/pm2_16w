@@ -207,10 +207,23 @@ public class Gui extends Application implements Observer{
 			@Override public void handle(ActionEvent e){
 				if(!isRunning){
 					String ag = anzahlGleise.getText();
-					int anzahl;
 					try{
 						anzahl = Integer.parseInt(ag);
 						if(anzahl <= maximum && anzahl >= minimum){
+							Label test;
+							Polygon test2;
+							for(int i = 0; i < st.length; i++){
+								test = st[i];
+								test.setVisible(false);
+							}
+							for(int i = 0; i < gl.length; i++){
+								test = gl[i];
+								test.setVisible(false);
+							}
+							for(int i = 0; i < zuege.length; i++){
+								test2 = zuege[i];
+								test2.setVisible(false);
+							}
 							setInitObjects(anzahl);
 						}else{
 							Alert toManyLanes = new Alert(AlertType.WARNING);
@@ -242,8 +255,8 @@ public class Gui extends Application implements Observer{
 			@Override public void handle(ActionEvent e){
 				String contextText="Autoren: Eric Misfeld, Simon Felske\n"
 						+ "Version: 1.0, 30.11.2016\n\n"
-						+"Dieses Programm verwaltet einen Rangierbahnhof.\n"
-						+"Es kann sofort gestartet werden,\n"
+						+ "Dieses Programm verwaltet einen Rangierbahnhof.\n"
+						+ "Es kann sofort gestartet werden,\n"
 						+ "angefangen wird dann mit 3 Gleisen.\n"
 						+ "Mit \"Start\" wird die Simulation gestartet.\n"
 						+ "Mit \"Stop\" wird die aktuelle Simulation gestopt.\n"
