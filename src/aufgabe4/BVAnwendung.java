@@ -16,6 +16,17 @@ import aufgabe4.braitenbergvehikel.BraitenbergVehikel;
 import aufgabe4.braitenbergvehikel.Vektor2;
 import aufgabe4.view.BVCanvas;
 
+//import javafx.application.Platform;
+import javafx.scene.control.*;
+//import javafx.geometry.*;
+import javafx.scene.layout.GridPane;
+//import javafx.scene.control.Alert.AlertType;
+//import javafx.geometry.Pos;
+//import javafx.scene.Scene;
+//import javafx.event.ActionEvent;
+//import javafx.event.EventHandler;
+import javafx.collections.FXCollections;
+
 /**
  * JavaFX Anwendung zur Darstellung und Interaktion mit einer
  * Braitenberg-Vehikel-Simulation.
@@ -23,6 +34,11 @@ import aufgabe4.view.BVCanvas;
  * @author Philipp Jenke
  */
 public class BVAnwendung extends Application {
+	
+	private Button simuliere = new Button ("Simuliere!");
+	private CheckBox simulieren = new CheckBox ("Simuliere!");
+	private ComboBox<String> box1 = new ComboBox<String>(FXCollections.observableArrayList("ATTRAKTION", "ABSTOSSUNG"));
+	private ComboBox<String> box2 = new ComboBox<String>(FXCollections.observableArrayList("ATTRAKTION", "ABSTOSSUNG"));
 
   @Override
   public void start(Stage primaryStage) {
@@ -38,6 +54,23 @@ public class BVAnwendung extends Application {
     primaryStage.setTitle("Braitenberg-Vehikel!");
     BorderPane wurzel = new BorderPane();
     wurzel.setCenter(canvas);
+    
+    //ListView list = new ListView();
+    //wurzel.setAlignment(list, Pos.TOP_RIGHT);
+    //wurzel.setMargin(list, new Insets(12,12,12,12));
+    
+    //wurzel.setRight(list);
+    
+    GridPane grid = new GridPane();
+    grid.add(simuliere, 0, 0);
+    grid.add(simulieren, 0, 1);
+    grid.add(box1, 0, 3);
+    grid.add(box2, 0, 4);
+    wurzel.setRight(grid);
+    
+    
+    //wurzel.setRight(simuliere);
+    //wurzel.setRight(simulieren);
 
     primaryStage.setScene(new Scene(wurzel, 850, 600));
     primaryStage.show();
