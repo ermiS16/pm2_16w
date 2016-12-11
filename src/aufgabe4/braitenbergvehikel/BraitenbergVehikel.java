@@ -6,6 +6,7 @@ package aufgabe4.braitenbergvehikel;
  * 
  * @author Philipp Jenke
  */
+
 public class BraitenbergVehikel {
 
   /**

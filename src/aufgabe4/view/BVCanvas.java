@@ -30,7 +30,8 @@ public class BVCanvas extends Canvas implements Observer {
    * werden.
    */
   private Image bvImage =
-      new Image("braitenberg/assets/braitenberg_vehikel.png");
+      //new Image("braitenberg/assets/braitenberg_vehikel.png");
+		  new Image("aufgabe4/assets/braitenberg_vehikel.png");
 
   /**
    * Referenz auf die Simulation.
@@ -47,7 +48,7 @@ public class BVCanvas extends Canvas implements Observer {
    */
   public void zeichneSimulation() {
     GraphicsContext gc = getGraphicsContext2D();
-    // Alles löschen
+    // Alles loeschen
     gc.setFill(Color.WHITE);
     gc.fillRect(0, 0, getWidth(), getHeight());
     // Vehikel zeichnen

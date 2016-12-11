@@ -31,7 +31,7 @@ public class BVSimulation {
    */
   public void simulationsSchritt() {
     for (BraitenbergVehikel vehikel : this.vehikel) {
-      // Berechne Sensorstärke
+      // Berechne Sensorstaerke
       vehikel.setSensorwert(Richtung.LINKS,
           getSignalstaerke(vehikel.getSensorPosition(Richtung.LINKS),
               vehikel.getOrientierung()));
@@ -58,7 +58,7 @@ public class BVSimulation {
       return 0;
     }
 
-    // Winkel-basierte Signalstärke
+    // Winkel-basierte Signalstaerke
     return cosWinkel;
   }
 
