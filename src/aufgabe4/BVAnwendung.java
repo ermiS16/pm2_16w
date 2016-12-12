@@ -88,6 +88,7 @@ public class BVAnwendung extends Application {
     
 		wurzel.setRight(grid);
     
+		//
 		simuliere.setOnAction(new EventHandler<ActionEvent>(){
 			@Override public void handle(ActionEvent e){
 				if(!isActive){
@@ -100,13 +101,12 @@ public class BVAnwendung extends Application {
 			}
 		});
     
+		//
 		simulieren.setOnAction(new EventHandler<ActionEvent>(){
 			@Override public void handle(ActionEvent e){
 				if(!isActive){
 					th1 = new BVSThread(sim, canvas);
 					th1.start();
-					//sim.simulationsSchritt();
-					//canvas.zeichneSimulation();
 					isActive = true;
 				}
 				else{
@@ -115,10 +115,6 @@ public class BVAnwendung extends Application {
 				}
 			}
 		});
-    
-    
-		//wurzel.setRight(simuliere);
-		//wurzel.setRight(simulieren);
 
 		primaryStage.setScene(new Scene(wurzel, 850, 600));
 		primaryStage.show();
