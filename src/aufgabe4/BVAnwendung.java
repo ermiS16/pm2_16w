@@ -60,6 +60,9 @@ public class BVAnwendung extends Application {
 	 */
 	@Override
 	public void init(){
+		
+
+		
 		isActive = false;
 		simuliere = new Button ("Simuliere!");
 		simulieren = new CheckBox ("Simuliere!");
@@ -72,6 +75,7 @@ public class BVAnwendung extends Application {
 		setInitObjects(sim);
 		box1 = new ComboBox<String>(FXCollections.observableArrayList("ATTRAKTION", "ABSTOSSUNG"));
 		box2 = new ComboBox<String>(FXCollections.observableArrayList("ATTRAKTION", "ABSTOSSUNG"));
+
 		box1.setValue(sim.getVehikel(0).getBewegung().getId());
 		box2.setValue(sim.getVehikel(1).getBewegung().getId());
 		grid.add(box1, 1, 2);
@@ -99,6 +103,12 @@ public class BVAnwendung extends Application {
 		// Canvas setzen
 		BVCanvas canvas = new BVCanvas(600, 600, sim);
 		sim.addObserver(canvas);
+		
+		BraitenbergVehikel X;
+		X = sim.getVehikel(0);
+		X.addObserver(canvas);
+		X = sim.getVehikel(1);
+		X.addObserver(canvas);
 
 		canvas.zeichneSimulation();
 
