@@ -12,21 +12,17 @@ package aufgabe4;
 */
 
 import aufgabe4.braitenbergvehikel.*;
-import aufgabe4.view.*;
 
 public class BVSThread extends Thread{
 	
 	private BVSimulation sim;
-	private BVCanvas canvas;
 
 	/**
 	 * Konstruktor mit Nutzereingabe
 	 * @param sim
-	 * @param canvas
 	 */
-	BVSThread(BVSimulation sim, BVCanvas canvas){
+	BVSThread(BVSimulation sim){
 		this.sim = sim;
-		this.canvas = canvas;
 	}
 	
 	/**
@@ -36,7 +32,6 @@ public class BVSThread extends Thread{
 		while(!interrupted()){
 			try{
 				sim.simulationsSchritt();
-				//canvas.zeichneSimulation();
 				sleep(200);
 			} catch (InterruptedException e) {
 				Thread.currentThread().interrupt();

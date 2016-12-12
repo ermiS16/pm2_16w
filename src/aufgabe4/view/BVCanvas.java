@@ -118,7 +118,7 @@ public class BVCanvas extends Canvas implements Observer {
   @Override
   public void update(Observable o, Object arg) {
     // Zeichenroutine wird im JavaFX-Thread aufgerufen.
-	  if(o instanceof BraitenbergVehikel){
+	  if(o instanceof BraitenbergVehikel || o instanceof BVSimulation){
 		  Platform.runLater(new Runnable() {
 			  @Override
 			  public void run() {

@@ -89,9 +89,11 @@ public class BVAnwendung extends Application {
 	private void setInitObjects(BVSimulation simul){
 		lb = new Label[simul.getAnzahlVehike()];
 		for(int i = 0; i < simul.getAnzahlVehike(); i++){
+			ComboBox<String> boxX = new ComboBox<String>(FXCollections.observableArrayList("ATTRAKTION", "ABSTOSSUNG"));
 			Label x = new Label((simul.getVehikel(i).getName()));
 			lb[i] = x;
 			grid.add(x, 0, (2+i));
+			grid.add(boxX, 1, (2+i));
 		}
 		//TODO Array für Comboboxen
 	}
@@ -100,15 +102,15 @@ public class BVAnwendung extends Application {
 	public void start(Stage primaryStage) {
 		
 		// Simulation zusammenstellen
+		
 		// Canvas setzen
 		BVCanvas canvas = new BVCanvas(600, 600, sim);
 		sim.addObserver(canvas);
 		
-		BraitenbergVehikel X;
-		X = sim.getVehikel(0);
-		X.addObserver(canvas);
-		X = sim.getVehikel(1);
-		X.addObserver(canvas);
+		for(int i = 0; i < sim.getAnzahlVehike(); i++){
+			BraitenbergVehikel X = sim.getVehikel(i);
+			X.addObserver(canvas);
+		}
 
 		canvas.zeichneSimulation();
 
@@ -123,7 +125,6 @@ public class BVAnwendung extends Application {
 			@Override public void handle(ActionEvent e){
 				if(!isActive){
 					sim.simulationsSchritt();
-					//canvas.zeichneSimulation();
 				}
 				else{
 					System.out.println("Simulation laeuft");
@@ -135,7 +136,7 @@ public class BVAnwendung extends Application {
 		simulieren.setOnAction(new EventHandler<ActionEvent>(){
 			@Override public void handle(ActionEvent e){
 				if(!isActive){
-					simThread = new BVSThread(sim, canvas);
+					simThread = new BVSThread(sim);
 					simThread.start();
 					isActive = true;
 				}
@@ -158,9 +159,12 @@ public class BVAnwendung extends Application {
 				new BraitenbergVehikel("Susi", new BVBewegungAttraktion());
 		BraitenbergVehikel vehikel2 = new BraitenbergVehikel("Mike",
 				new BVBewegungAbstossung(), new Vektor2(-100, 100), new Vektor2(1, 0));
+		BraitenbergVehikel vehikel3 = new BraitenbergVehikel("ABCDe",
+				new BVBewegungAbstossung(), new Vektor2(-125, 45), new Vektor2(1, 0));
 		BVSimulation sim = new BVSimulation();
 		sim.vehikelHinzufuegen(vehikel1);
 		sim.vehikelHinzufuegen(vehikel2);
+		sim.vehikelHinzufuegen(vehikel3);
 		return sim;
 	}
 
