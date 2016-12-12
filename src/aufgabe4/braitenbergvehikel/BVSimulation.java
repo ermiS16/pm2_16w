@@ -2,6 +2,7 @@ package aufgabe4.braitenbergvehikel;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Observable;
 
 import aufgabe4.braitenbergvehikel.BraitenbergVehikel.Richtung;
 
@@ -10,7 +11,7 @@ import aufgabe4.braitenbergvehikel.BraitenbergVehikel.Richtung;
  * 
  * @author Philipp Jenke
  */
-public class BVSimulation {
+public class BVSimulation extends Observable{
 
   /**
    * Position des Signals.
@@ -41,6 +42,8 @@ public class BVSimulation {
 
       // Bewege vehikel
       vehikel.bewege();
+      setChanged();
+      //notifyObservers(object o);
     }
   }
 

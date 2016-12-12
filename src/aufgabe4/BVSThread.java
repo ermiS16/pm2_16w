@@ -20,8 +20,9 @@ public class BVSThread extends Thread{
 	private BVCanvas canvas;
 
 	/**
-	 * 
+	 * Konstruktor mit Nutzereingabe
 	 * @param sim
+	 * @param canvas
 	 */
 	BVSThread(BVSimulation sim, BVCanvas canvas){
 		this.sim = sim;
@@ -29,7 +30,7 @@ public class BVSThread extends Thread{
 	}
 	
 	/**
-	 * 
+	 * run
 	 */
 	public void run(){
 		while(!interrupted()){
@@ -40,6 +41,6 @@ public class BVSThread extends Thread{
 			} catch (InterruptedException e) {
 				Thread.currentThread().interrupt();
 			}
-		}
-	}
+		}//END WHILE
+	}//END METHOD
 }

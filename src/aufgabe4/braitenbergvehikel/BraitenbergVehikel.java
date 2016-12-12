@@ -7,7 +7,9 @@ package aufgabe4.braitenbergvehikel;
  * @author Philipp Jenke
  */
 
-public class BraitenbergVehikel {
+import java.util.Observable;
+
+public class BraitenbergVehikel extends Observable{
 
   /**
    * Richtungs-Enum fuer Motoren und Sensoren.

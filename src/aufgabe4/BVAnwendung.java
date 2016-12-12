@@ -40,12 +40,15 @@ public class BVAnwendung extends Application {
 	private Button simuliere;
 	private CheckBox simulieren;
 	private GridPane grid;
-	private Label label1 = new Label ("T1");
+	private Label lb[];
+	private Label label1 = new Label ("LANGER NAME");
 	private Label label2 = new Label ("T2");
+	private ComboBox<String> ba[];
 	private ComboBox<String> box1 = new ComboBox<String>(FXCollections.observableArrayList("ATTRAKTION", "ABSTOSSUNG"));
 	private ComboBox<String> box2 = new ComboBox<String>(FXCollections.observableArrayList("ATTRAKTION", "ABSTOSSUNG"));
 	private boolean isActive;
-	private BVSThread th1;
+	private BVSThread simThread;
+	private BVSimulation sim;
 	
 	/**
 	 * Init der GUI
@@ -55,6 +58,7 @@ public class BVAnwendung extends Application {
 		simuliere = new Button ("Simuliere!");
 		simulieren = new CheckBox ("Simuliere!");
 		isActive = false;
+		sim = erzeugeSimulationsszene();
 		grid = new GridPane();
 		grid.add(simuliere, 0, 0);
 		grid.add(simulieren, 0, 1);
@@ -65,11 +69,15 @@ public class BVAnwendung extends Application {
 		grid.setHgap(5d);
 		grid.setVgap(5d);
 	}
+	
+	private void setInitObjects(BVSimulation simul){
+		//TODO Arrays für variable Labels und Comboboxen
+	}
 
 	@Override
 	public void start(Stage primaryStage) {
 		// Simulation zusammenstellen
-		BVSimulation sim = erzeugeSimulationsszene();
+		//BVSimulation sim = erzeugeSimulationsszene();
 
 		// Canvas setzen
 		BVCanvas canvas = new BVCanvas(600, 600, sim);
@@ -80,15 +88,9 @@ public class BVAnwendung extends Application {
 		primaryStage.setTitle("Braitenberg-Vehikel!");
 		BorderPane wurzel = new BorderPane();
 		wurzel.setCenter(canvas);
-    
-		//TODO: Label per .getName vom Vehikel belegen, ditto für Zustand
-		//EVENTMANAGER für alles
-		//COMBOBOXEN vorfüllen
-		//OBSERVER KRAM
-    
 		wurzel.setRight(grid);
     
-		//
+		//Button
 		simuliere.setOnAction(new EventHandler<ActionEvent>(){
 			@Override public void handle(ActionEvent e){
 				if(!isActive){
@@ -101,16 +103,16 @@ public class BVAnwendung extends Application {
 			}
 		});
     
-		//
+		//CheckBox
 		simulieren.setOnAction(new EventHandler<ActionEvent>(){
 			@Override public void handle(ActionEvent e){
 				if(!isActive){
-					th1 = new BVSThread(sim, canvas);
-					th1.start();
+					simThread = new BVSThread(sim, canvas);
+					simThread.start();
 					isActive = true;
 				}
 				else{
-					th1.interrupt();
+					simThread.interrupt();
 					isActive = false;
 				}
 			}
