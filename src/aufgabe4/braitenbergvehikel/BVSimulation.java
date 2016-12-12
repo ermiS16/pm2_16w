@@ -42,8 +42,10 @@ public class BVSimulation extends Observable{
 
       // Bewege vehikel
       vehikel.bewege();
+      
+      //TODO
       //setChanged();
-      //notifyObservers(object o);
+      //notifyObservers(vehikel.getPosition());
     }
   }
 

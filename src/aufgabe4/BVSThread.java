@@ -36,7 +36,7 @@ public class BVSThread extends Thread{
 		while(!interrupted()){
 			try{
 				sim.simulationsSchritt();
-				canvas.zeichneSimulation();
+				//canvas.zeichneSimulation();
 				sleep(200);
 			} catch (InterruptedException e) {
 				Thread.currentThread().interrupt();

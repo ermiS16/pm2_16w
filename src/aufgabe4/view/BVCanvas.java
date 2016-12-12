@@ -4,6 +4,7 @@ import java.awt.Point;
 import java.util.Observable;
 import java.util.Observer;
 
+import aufgabe3.Simulation;
 import javafx.scene.control.Alert.AlertType;
 import javafx.application.Platform;
 import javafx.scene.canvas.Canvas;
@@ -117,11 +118,13 @@ public class BVCanvas extends Canvas implements Observer {
   @Override
   public void update(Observable o, Object arg) {
     // Zeichenroutine wird im JavaFX-Thread aufgerufen.
-    Platform.runLater(new Runnable() {
-      @Override
-      public void run() {
-        zeichneSimulation();
-      }
-    });
+	  if(o instanceof BraitenbergVehikel){
+		  Platform.runLater(new Runnable() {
+			  @Override
+			  public void run() {
+				  zeichneSimulation();
+			  }
+		  });
+	  }
   }
 }

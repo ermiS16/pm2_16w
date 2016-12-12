@@ -113,7 +113,7 @@ public class BVAnwendung extends Application {
 			@Override public void handle(ActionEvent e){
 				if(!isActive){
 					sim.simulationsSchritt();
-					canvas.zeichneSimulation();
+					//canvas.zeichneSimulation();
 				}
 				else{
 					System.out.println("Simulation laeuft");
