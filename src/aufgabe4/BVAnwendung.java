@@ -98,6 +98,7 @@ public class BVAnwendung extends Application {
 		// Simulation zusammenstellen
 		// Canvas setzen
 		BVCanvas canvas = new BVCanvas(600, 600, sim);
+		sim.addObserver(canvas);
 
 		canvas.zeichneSimulation();
 
