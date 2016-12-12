@@ -41,8 +41,6 @@ public class BVAnwendung extends Application {
 	private CheckBox simulieren;
 	private GridPane grid;
 	private Label lb[];
-	private Label label1 = new Label ("LANGER NAME");
-	private Label label2 = new Label ("T2");
 	private ComboBox<String> ba[];
 	private ComboBox<String> box1 = new ComboBox<String>(FXCollections.observableArrayList("ATTRAKTION", "ABSTOSSUNG"));
 	private ComboBox<String> box2 = new ComboBox<String>(FXCollections.observableArrayList("ATTRAKTION", "ABSTOSSUNG"));
@@ -62,15 +60,25 @@ public class BVAnwendung extends Application {
 		grid = new GridPane();
 		grid.add(simuliere, 0, 0);
 		grid.add(simulieren, 0, 1);
-		grid.add(label1, 0, 2);
-		grid.add(label2, 0, 3);
+		setInitObjects(sim);
 		grid.add(box1, 1, 2);
 		grid.add(box2, 1, 3);
 		grid.setHgap(5d);
 		grid.setVgap(5d);
 	}
 	
+	/**
+	 * Init anderer GUI Elemente
+	 * @param simul
+	 */
 	private void setInitObjects(BVSimulation simul){
+		lb = new Label[simul.getAnzahlVehike()];
+		for(int i = 0; i < simul.getAnzahlVehike(); i++){
+			Label x = new Label((simul.getVehikel(i).getName()));
+			lb[i] = x;
+			grid.add(x, 0, (2+i));
+		}
+		//ba = new ComboBox<String>[simul.getAnzahlVehike()];
 		//TODO Arrays für variable Labels und Comboboxen
 	}
 
