@@ -88,10 +88,12 @@ public class BraitenbergVehikel extends Observable{
     double motorBewegungRechts =
         umdrehungenRechts * Math.PI * getRadRadius() * 2.0;
     bewege(motorBewegungLinks, motorBewegungRechts);
+    setChanged();
+    notifyObservers(position);
   }
 
   /**
-   * Setzt den Sensorwert des angegebenen Sensors. Die Werte müssen aus [0,1]
+   * Setzt den Sensorwert des angegebenen Sensors. Die Werte muessen aus [0,1]
    * kommen.
    */
   public void setSensorwert(Richtung richtung, double wert) {
