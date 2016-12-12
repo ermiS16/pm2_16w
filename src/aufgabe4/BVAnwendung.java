@@ -73,13 +73,13 @@ public class BVAnwendung extends Application {
 		grid.add(simulieren, 0, 1);
 		sim = erzeugeSimulationsszene();
 		setInitObjects(sim);
-		box1 = new ComboBox<String>(FXCollections.observableArrayList("ATTRAKTION", "ABSTOSSUNG"));
-		box2 = new ComboBox<String>(FXCollections.observableArrayList("ATTRAKTION", "ABSTOSSUNG"));
+		//box1 = new ComboBox<String>(FXCollections.observableArrayList("ATTRAKTION", "ABSTOSSUNG"));
+		//box2 = new ComboBox<String>(FXCollections.observableArrayList("ATTRAKTION", "ABSTOSSUNG"));
 
-		box1.setValue(sim.getVehikel(0).getBewegung().getId());
-		box2.setValue(sim.getVehikel(1).getBewegung().getId());
-		grid.add(box1, 1, 2);
-		grid.add(box2, 1, 3);
+		//box1.setValue(sim.getVehikel(0).getBewegung().getId());
+		//box2.setValue(sim.getVehikel(1).getBewegung().getId());
+		//grid.add(box1, 1, 2);
+		//grid.add(box2, 1, 3);
 	}
 	
 	/**
@@ -90,6 +90,7 @@ public class BVAnwendung extends Application {
 		lb = new Label[simul.getAnzahlVehike()];
 		for(int i = 0; i < simul.getAnzahlVehike(); i++){
 			ComboBox<String> boxX = new ComboBox<String>(FXCollections.observableArrayList("ATTRAKTION", "ABSTOSSUNG"));
+			boxX.setValue(simul.getVehikel(i).getBewegung().getId());
 			Label x = new Label((simul.getVehikel(i).getName()));
 			lb[i] = x;
 			grid.add(x, 0, (2+i));
@@ -164,7 +165,7 @@ public class BVAnwendung extends Application {
 		BVSimulation sim = new BVSimulation();
 		sim.vehikelHinzufuegen(vehikel1);
 		sim.vehikelHinzufuegen(vehikel2);
-		sim.vehikelHinzufuegen(vehikel3);
+		//sim.vehikelHinzufuegen(vehikel3);
 		return sim;
 	}
 
