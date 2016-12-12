@@ -39,11 +39,13 @@ public class BVAnwendung extends Application {
 	
 	private Button simuliere;
 	private CheckBox simulieren;
+	private GridPane grid;
 	private Label label1 = new Label ("T1");
 	private Label label2 = new Label ("T2");
 	private ComboBox<String> box1 = new ComboBox<String>(FXCollections.observableArrayList("ATTRAKTION", "ABSTOSSUNG"));
 	private ComboBox<String> box2 = new ComboBox<String>(FXCollections.observableArrayList("ATTRAKTION", "ABSTOSSUNG"));
 	private boolean isActive;
+	private BVSThread th1;
 	
 	/**
 	 * Init der GUI
@@ -53,6 +55,15 @@ public class BVAnwendung extends Application {
 		simuliere = new Button ("Simuliere!");
 		simulieren = new CheckBox ("Simuliere!");
 		isActive = false;
+		grid = new GridPane();
+		grid.add(simuliere, 0, 0);
+		grid.add(simulieren, 0, 1);
+		grid.add(label1, 0, 2);
+		grid.add(label2, 0, 3);
+		grid.add(box1, 1, 2);
+		grid.add(box2, 1, 3);
+		grid.setHgap(5d);
+		grid.setVgap(5d);
 	}
 
 	@Override
@@ -68,30 +79,13 @@ public class BVAnwendung extends Application {
 		// Szenengraph aufbauen
 		primaryStage.setTitle("Braitenberg-Vehikel!");
 		BorderPane wurzel = new BorderPane();
-		//wurzel.setMargin(child, value);
 		wurzel.setCenter(canvas);
-    
-		//ListView list = new ListView();
-		//wurzel.setAlignment(list, Pos.TOP_RIGHT);
-		//wurzel.setMargin(list, new Insets(12,12,12,12));
-    
-		//wurzel.setRight(list);
     
 		//TODO: Label per .getName vom Vehikel belegen, ditto für Zustand
 		//EVENTMANAGER für alles
 		//COMBOBOXEN vorfüllen
 		//OBSERVER KRAM
     
-    
-		GridPane grid = new GridPane();
-		grid.add(simuliere, 0, 0);
-		grid.add(simulieren, 0, 1);
-		grid.add(label1, 0, 2);
-		grid.add(label2, 0, 3);
-		grid.add(box1, 1, 2);
-		grid.add(box2, 1, 3);
-		grid.setHgap(5d);
-		grid.setVgap(5d);
 		wurzel.setRight(grid);
     
 		simuliere.setOnAction(new EventHandler<ActionEvent>(){
@@ -108,9 +102,17 @@ public class BVAnwendung extends Application {
     
 		simulieren.setOnAction(new EventHandler<ActionEvent>(){
 			@Override public void handle(ActionEvent e){
-				sim.simulationsSchritt();
-				canvas.zeichneSimulation();
-				isActive = true;
+				if(!isActive){
+					th1 = new BVSThread(sim, canvas);
+					th1.start();
+					//sim.simulationsSchritt();
+					//canvas.zeichneSimulation();
+					isActive = true;
+				}
+				else{
+					th1.interrupt();
+					isActive = false;
+				}
 			}
 		});
     
