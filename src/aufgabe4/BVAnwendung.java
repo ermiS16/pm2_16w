@@ -26,6 +26,8 @@ import javafx.scene.layout.GridPane;
 //import javafx.event.ActionEvent;
 //import javafx.event.EventHandler;
 import javafx.collections.FXCollections;
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 
 /**
  * JavaFX Anwendung zur Darstellung und Interaktion mit einer
@@ -35,62 +37,106 @@ import javafx.collections.FXCollections;
  */
 public class BVAnwendung extends Application {
 	
-	private Button simuliere = new Button ("Simuliere!");
-	private CheckBox simulieren = new CheckBox ("Simuliere!");
+	private Button simuliere;
+	private CheckBox simulieren;
+	private Label label1 = new Label ("T1");
+	private Label label2 = new Label ("T2");
 	private ComboBox<String> box1 = new ComboBox<String>(FXCollections.observableArrayList("ATTRAKTION", "ABSTOSSUNG"));
 	private ComboBox<String> box2 = new ComboBox<String>(FXCollections.observableArrayList("ATTRAKTION", "ABSTOSSUNG"));
+	private boolean isActive;
+	
+	/**
+	 * Init der GUI
+	 */
+	@Override
+	public void init(){
+		simuliere = new Button ("Simuliere!");
+		simulieren = new CheckBox ("Simuliere!");
+		isActive = false;
+	}
 
-  @Override
-  public void start(Stage primaryStage) {
-    // Simulation zusammenstellen
-    BVSimulation sim = erzeugeSimulationsszene();
+	@Override
+	public void start(Stage primaryStage) {
+		// Simulation zusammenstellen
+		BVSimulation sim = erzeugeSimulationsszene();
 
-    // Canvas setzen
-    BVCanvas canvas = new BVCanvas(600, 600, sim);
+		// Canvas setzen
+		BVCanvas canvas = new BVCanvas(600, 600, sim);
 
-    canvas.zeichneSimulation();
+		canvas.zeichneSimulation();
 
-    // Szenengraph aufbauen
-    primaryStage.setTitle("Braitenberg-Vehikel!");
-    BorderPane wurzel = new BorderPane();
-    wurzel.setCenter(canvas);
+		// Szenengraph aufbauen
+		primaryStage.setTitle("Braitenberg-Vehikel!");
+		BorderPane wurzel = new BorderPane();
+		//wurzel.setMargin(child, value);
+		wurzel.setCenter(canvas);
     
-    //ListView list = new ListView();
-    //wurzel.setAlignment(list, Pos.TOP_RIGHT);
-    //wurzel.setMargin(list, new Insets(12,12,12,12));
+		//ListView list = new ListView();
+		//wurzel.setAlignment(list, Pos.TOP_RIGHT);
+		//wurzel.setMargin(list, new Insets(12,12,12,12));
     
-    //wurzel.setRight(list);
+		//wurzel.setRight(list);
     
-    GridPane grid = new GridPane();
-    grid.add(simuliere, 0, 0);
-    grid.add(simulieren, 0, 1);
-    grid.add(box1, 0, 3);
-    grid.add(box2, 0, 4);
-    wurzel.setRight(grid);
+		//TODO: Label per .getName vom Vehikel belegen, ditto für Zustand
+		//EVENTMANAGER für alles
+		//COMBOBOXEN vorfüllen
+		//OBSERVER KRAM
     
     
-    //wurzel.setRight(simuliere);
-    //wurzel.setRight(simulieren);
+		GridPane grid = new GridPane();
+		grid.add(simuliere, 0, 0);
+		grid.add(simulieren, 0, 1);
+		grid.add(label1, 0, 2);
+		grid.add(label2, 0, 3);
+		grid.add(box1, 1, 2);
+		grid.add(box2, 1, 3);
+		grid.setHgap(5d);
+		grid.setVgap(5d);
+		wurzel.setRight(grid);
+    
+		simuliere.setOnAction(new EventHandler<ActionEvent>(){
+			@Override public void handle(ActionEvent e){
+				if(!isActive){
+					sim.simulationsSchritt();
+					canvas.zeichneSimulation();
+				}
+				else{
+					System.out.println("Simulation laeuft");
+				}
+			}
+		});
+    
+		simulieren.setOnAction(new EventHandler<ActionEvent>(){
+			@Override public void handle(ActionEvent e){
+				sim.simulationsSchritt();
+				canvas.zeichneSimulation();
+				isActive = true;
+			}
+		});
+    
+    
+		//wurzel.setRight(simuliere);
+		//wurzel.setRight(simulieren);
 
-    primaryStage.setScene(new Scene(wurzel, 850, 600));
-    primaryStage.show();
-  }
+		primaryStage.setScene(new Scene(wurzel, 850, 600));
+		primaryStage.show();
+	}
 
-  /**
-   * Erzeugt eine Simulationsszene zum Testen.
-   */
-  public BVSimulation erzeugeSimulationsszene() {
-    BraitenbergVehikel vehikel1 =
-        new BraitenbergVehikel("Susi", new BVBewegungAttraktion());
-    BraitenbergVehikel vehikel2 = new BraitenbergVehikel("Mike",
-        new BVBewegungAbstossung(), new Vektor2(-100, 100), new Vektor2(1, 0));
-    BVSimulation sim = new BVSimulation();
-    sim.vehikelHinzufuegen(vehikel1);
-    sim.vehikelHinzufuegen(vehikel2);
-    return sim;
-  }
+	/**
+	 * Erzeugt eine Simulationsszene zum Testen.
+	 */
+	public BVSimulation erzeugeSimulationsszene() {
+		BraitenbergVehikel vehikel1 =
+				new BraitenbergVehikel("Susi", new BVBewegungAttraktion());
+		BraitenbergVehikel vehikel2 = new BraitenbergVehikel("Mike",
+				new BVBewegungAbstossung(), new Vektor2(-100, 100), new Vektor2(1, 0));
+		BVSimulation sim = new BVSimulation();
+		sim.vehikelHinzufuegen(vehikel1);
+		sim.vehikelHinzufuegen(vehikel2);
+		return sim;
+	}
 
-  public static void main(String[] args) {
-    launch(args);
-  }
+	public static void main(String[] args) {
+		launch(args);
+	}
 }
