@@ -34,6 +34,8 @@ import javafx.scene.control.ComboBox;
 import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
 
+import java.util.*;
+
 
 /**
  * JavaFX Anwendung zur Darstellung und Interaktion mit einer
@@ -48,12 +50,13 @@ public class BVAnwendung extends Application {
 	private GridPane grid;
 	private Label lb[];
 	//private ComboBox<String> ba[];
-	private ComboBox<String> box1;
-	private ComboBox<String> box2;
+	//private ComboBox<String> box1;
+	//private ComboBox<String> box2;
 	private boolean isActive;
 	private BVSThread simThread;
 	private BVSimulation sim;
 
+	private List<ComboBox<String>> t;
 	
 	/**
 	 * Init der GUI
@@ -62,7 +65,7 @@ public class BVAnwendung extends Application {
 	public void init(){
 		
 
-		
+		t = new ArrayList();
 		isActive = false;
 		simuliere = new Button ("Simuliere!");
 		simulieren = new CheckBox ("Simuliere!");
@@ -88,6 +91,7 @@ public class BVAnwendung extends Application {
 	 */
 	private void setInitObjects(BVSimulation simul){
 		lb = new Label[simul.getAnzahlVehike()];
+		//t = new ArrayList[simul.getAnzahlVehike()];
 		for(int i = 0; i < simul.getAnzahlVehike(); i++){
 			ComboBox<String> boxX = new ComboBox<String>(FXCollections.observableArrayList("ATTRAKTION", "ABSTOSSUNG"));
 			boxX.setValue(simul.getVehikel(i).getBewegung().getId());
