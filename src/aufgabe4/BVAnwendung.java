@@ -3,6 +3,14 @@
  * Hochschule fuer Angewandte Wissenschaften (HAW), Hamburg
  * Lecture demo program.
  */
+
+/**
+* Praktikum TI-PR2, WS2016/2017
+* Praktikumsgruppe Nr. 4
+* @author Eric Misfeld, Simon Felske
+* @version 12.12.2016
+* Aufgabenblatt 4
+ */
 package aufgabe4;
 
 import javafx.application.Application;
@@ -16,18 +24,16 @@ import aufgabe4.braitenbergvehikel.BraitenbergVehikel;
 import aufgabe4.braitenbergvehikel.Vektor2;
 import aufgabe4.view.BVCanvas;
 
-//import javafx.application.Platform;
+
 import javafx.scene.control.*;
-//import javafx.geometry.*;
 import javafx.scene.layout.GridPane;
-//import javafx.scene.control.Alert.AlertType;
-//import javafx.geometry.Pos;
-//import javafx.scene.Scene;
-//import javafx.event.ActionEvent;
-//import javafx.event.EventHandler;
 import javafx.collections.FXCollections;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
+import javafx.scene.control.ComboBox;
+import javafx.scene.control.Button;
+import javafx.scene.control.CheckBox;
+
 
 /**
  * JavaFX Anwendung zur Darstellung und Interaktion mit einer
@@ -41,30 +47,35 @@ public class BVAnwendung extends Application {
 	private CheckBox simulieren;
 	private GridPane grid;
 	private Label lb[];
-	private ComboBox<String> ba[];
-	private ComboBox<String> box1 = new ComboBox<String>(FXCollections.observableArrayList("ATTRAKTION", "ABSTOSSUNG"));
-	private ComboBox<String> box2 = new ComboBox<String>(FXCollections.observableArrayList("ATTRAKTION", "ABSTOSSUNG"));
+	//private ComboBox<String> ba[];
+	private ComboBox<String> box1;
+	private ComboBox<String> box2;
 	private boolean isActive;
 	private BVSThread simThread;
 	private BVSimulation sim;
+
 	
 	/**
 	 * Init der GUI
 	 */
 	@Override
 	public void init(){
+		isActive = false;
 		simuliere = new Button ("Simuliere!");
 		simulieren = new CheckBox ("Simuliere!");
-		isActive = false;
-		sim = erzeugeSimulationsszene();
 		grid = new GridPane();
-		grid.add(simuliere, 0, 0);
-		grid.add(simulieren, 0, 1);
-		setInitObjects(sim);
-		grid.add(box1, 1, 2);
-		grid.add(box2, 1, 3);
 		grid.setHgap(5d);
 		grid.setVgap(5d);
+		grid.add(simuliere, 0, 0);
+		grid.add(simulieren, 0, 1);
+		sim = erzeugeSimulationsszene();
+		setInitObjects(sim);
+		box1 = new ComboBox<String>(FXCollections.observableArrayList("ATTRAKTION", "ABSTOSSUNG"));
+		box2 = new ComboBox<String>(FXCollections.observableArrayList("ATTRAKTION", "ABSTOSSUNG"));
+		box1.setValue(sim.getVehikel(0).getBewegung().getId());
+		box2.setValue(sim.getVehikel(1).getBewegung().getId());
+		grid.add(box1, 1, 2);
+		grid.add(box2, 1, 3);
 	}
 	
 	/**
@@ -78,15 +89,13 @@ public class BVAnwendung extends Application {
 			lb[i] = x;
 			grid.add(x, 0, (2+i));
 		}
-		//ba = new ComboBox<String>[simul.getAnzahlVehike()];
-		//TODO Arrays für variable Labels und Comboboxen
+		//TODO Array für Comboboxen
 	}
 
 	@Override
 	public void start(Stage primaryStage) {
+		
 		// Simulation zusammenstellen
-		//BVSimulation sim = erzeugeSimulationsszene();
-
 		// Canvas setzen
 		BVCanvas canvas = new BVCanvas(600, 600, sim);
 
