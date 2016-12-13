@@ -25,9 +25,9 @@ import aufgabe4.braitenbergvehikel.BraitenbergVehikel;
 import aufgabe4.braitenbergvehikel.Vektor2;
 import aufgabe4.view.BVCanvas;
 
-
 import javafx.scene.control.*;
 import javafx.scene.control.Alert.AlertType;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.GridPane;
 import javafx.collections.FXCollections;
 import javafx.event.ActionEvent;
@@ -115,8 +115,7 @@ public class BVAnwendung extends Application {
 		}
 
 		canvas.zeichneSimulation();
-		
-		canvas.setOnMouseClicked(null);
+		canvas.addEventHandler(MouseEvent.MOUSE_CLICKED, new MouseEventHandler(sim));
 
 		// Szenengraph aufbauen
 		primaryStage.setTitle("Braitenberg-Vehikel!");
@@ -152,7 +151,7 @@ public class BVAnwendung extends Application {
 				else{
 					simThread.interrupt();
 					isActive = false;
-					System.out.println("Simulation beendet");
+					System.out.println("Simulation unterbrochen");
 				}
 			}//END handle
 		});
