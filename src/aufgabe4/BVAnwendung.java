@@ -8,7 +8,7 @@
 * Praktikum TI-PR2, WS2016/2017
 * Praktikumsgruppe Nr. 4
 * @author Eric Misfeld, Simon Felske
-* @version 12.12.2016
+* @version 13.12.2016
 * Aufgabenblatt 4
  */
 package aufgabe4;
@@ -27,13 +27,11 @@ import aufgabe4.view.BVCanvas;
 
 
 import javafx.scene.control.*;
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.layout.GridPane;
 import javafx.collections.FXCollections;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
-import javafx.scene.control.ComboBox;
-import javafx.scene.control.Button;
-import javafx.scene.control.CheckBox;
 
 //CHECKEN
 //import java.awt.event.MouseListener;
@@ -46,14 +44,14 @@ import javafx.scene.control.CheckBox;
  * @author Philipp Jenke
  */
 
-@SuppressWarnings("unchecked")
 public class BVAnwendung extends Application {
 	
 	private Button beenden;
+	private Button info;
 	private Button simuliere;
 	private CheckBox simulieren;
 	private GridPane grid;
-	private Label lb[];
+	private Label[] lb;
 	private Object[] tab;
 	private boolean isActive;
 	private BVSThread simThread;
@@ -68,17 +66,18 @@ public class BVAnwendung extends Application {
 		
 		isActive = false;
 		beenden = new Button ("Beenden!");
+		info = new Button ("Info!");
 		simuliere = new Button ("Simuliere!");
 		simulieren = new CheckBox ("Simuliere!");
 		grid = new GridPane();
 		grid.setHgap(5d);
 		grid.setVgap(5d);
 		grid.add(beenden, 1, 0);
+		grid.add(info, 1, 1);
 		grid.add(simuliere, 0, 0);
 		grid.add(simulieren, 0, 1);
 		sim = erzeugeSimulationsszene();
 		setInitObjects(sim);
-
 	}
 	
 	/**
@@ -106,8 +105,6 @@ public class BVAnwendung extends Application {
 	@Override
 	public void start(Stage primaryStage) {
 		
-		// Simulation zusammenstellen
-		
 		// Canvas setzen
 		BVCanvas canvas = new BVCanvas(600, 600, sim);
 		sim.addObserver(canvas);
@@ -120,18 +117,6 @@ public class BVAnwendung extends Application {
 		canvas.zeichneSimulation();
 		
 		canvas.setOnMouseClicked(null);
-		
-//		canvas.setOnMouseClicked(new MouseEvent(){
-//			
-//		});
-		
-		//canvas.addEventHandler(eventType, eventHandler);
-//		canvas.addMouseListener(new MouseListener(){
-//			@Override
-//			public void mousePressed(MouseEvent e){
-//				
-//			}
-//		});
 
 		// Szenengraph aufbauen
 		primaryStage.setTitle("Braitenberg-Vehikel!");
@@ -139,7 +124,6 @@ public class BVAnwendung extends Application {
 		wurzel.setCenter(canvas);
 		wurzel.setRight(grid);
     
-		
 		/**
 		 * Funktionalitaet fuer Button simuliere
 		 */
@@ -189,11 +173,29 @@ public class BVAnwendung extends Application {
 		});
 		
 		/**
+		 * Funktionalitaet fuer Button info
+		 */
+		info.setOnAction(new EventHandler<ActionEvent>(){
+			@Override public void handle(ActionEvent e){
+				String contextText="Autoren: Eric Misfeld, Simon Felske\n"
+						+ "Version: 0.8, 13.12.2016\n\n"
+						+ "Dieses Programm simuliert eine beliebige Anzahl\n"
+						+ "von Braitenberg-Vehikeln. Ihr Verhalten kann\n"
+						+ "vom Anwender geändert werden.\n";
+				Alert information = new Alert(AlertType.INFORMATION);
+				information.setTitle("Information");
+				information.setHeaderText("Informationen zum Programm");
+				information.setContentText(contextText);
+				information.showAndWait();
+			}//END handle
+		});
+		
+		/**
 		 * Funktionalitaet fuer ComboBoxen in tab[]
 		 */
 		for(int i = 0; i < tab.length; i++){
 			@SuppressWarnings("rawtypes")
-			ComboBox verhalten = (ComboBox) tab[i];
+			ComboBox<?> verhalten = (ComboBox) tab[i];
 			final int z = i;
 			verhalten.setOnAction(new EventHandler<ActionEvent>(){
 			      @Override
@@ -206,14 +208,14 @@ public class BVAnwendung extends Application {
 			    		  sim.getVehikel(z).setBewegung(new BVBewegungAbstossung());
 			    		  System.out.println("ABST geht");
 			    	  }
-			    	  if(verhalten.getValue().toString() != "ATTRAKTION" && verhalten.getValue().toString() != "ABSTOSSUNG"){
+			    	  if(verhalten.getValue().toString() != "ATTRAKTION" &&
+			    			  verhalten.getValue().toString() != "ABSTOSSUNG"){
 			    		  System.out.println("Fehler");
 			    	  }
 			      }//END handle
 			});//END setOnAction
 		}//END FOR
 		
-
 		primaryStage.setScene(new Scene(wurzel, 850, 600));
 		primaryStage.show();
 	}

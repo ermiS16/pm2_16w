@@ -1,13 +1,13 @@
 package aufgabe4;
 
 /**
-* BLA BLA
-*TODO
+* Die Klasse repraesentiert einen
+* Thread fuer automatisches simulieren
 * 
 * Praktikum TI-PR2, WS2016/2017
 * Praktikumsgruppe Nr. 4
 * @author Eric Misfeld, Simon Felske
-* @version 12.12.2016
+* @version 13.12.2016
 * Aufgabenblatt 4 | Aufgabe 2
 */
 

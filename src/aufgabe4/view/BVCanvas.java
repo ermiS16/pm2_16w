@@ -25,6 +25,14 @@ import java.awt.event.MouseEvent;
  * @author Philipp Jenke
  */
 
+/**
+* Praktikum TI-PR2, WS2016/2017
+* Praktikumsgruppe Nr. 4
+* Eric Misfeld, Simon Felske
+* @version 13.12.2016
+* Aufgabenblatt 4
+ */
+
 @SuppressWarnings("unused")
 public class BVCanvas extends Canvas implements Observer, MouseListener{
 
