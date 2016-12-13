@@ -35,8 +35,8 @@ import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
 
 //CHECKEN
-import java.awt.event.MouseListener;
-import java.awt.event.MouseEvent;
+//import java.awt.event.MouseListener;
+//import java.awt.event.MouseEvent;
 
 /**
  * JavaFX Anwendung zur Darstellung und Interaktion mit einer
@@ -44,6 +44,8 @@ import java.awt.event.MouseEvent;
  * 
  * @author Philipp Jenke
  */
+
+@SuppressWarnings("unchecked")
 public class BVAnwendung extends Application {
 	
 	private Button simuliere;
@@ -113,6 +115,13 @@ public class BVAnwendung extends Application {
 		}
 
 		canvas.zeichneSimulation();
+		
+		canvas.setOnMouseClicked(null);
+		
+//		canvas.setOnMouseClicked(new MouseEvent(){
+//			
+//		});
+		
 		//canvas.addEventHandler(eventType, eventHandler);
 //		canvas.addMouseListener(new MouseListener(){
 //			@Override
@@ -155,6 +164,46 @@ public class BVAnwendung extends Application {
 				}
 			}
 		});
+		
+		for(int i = 0; i < tab.length; i++){
+			@SuppressWarnings("rawtypes")
+			ComboBox XY = (ComboBox) tab[i];
+			final int z = i;
+			XY.setOnAction(new EventHandler<ActionEvent>() {
+			      @Override
+			      public void handle(ActionEvent arg0) {
+			    	  if(XY.getValue().toString() == "ATTRAKTION"){
+//			    		  if(isActive){
+//			    			  try{
+//				    			  simThread.wait();
+//					    		  System.out.println("Zwangspause");
+//				    			  } catch (InterruptedException e) {
+//				    				  Thread.currentThread().interrupt();
+//				    			  }
+//			    		  }
+			    		  sim.getVehikel(z).setBewegung(new BVBewegungAttraktion());
+			    		  System.out.println("ATT geht");
+			    		  //notifyAll();
+			    	  }
+			    	  if(XY.getValue().toString() == "ABSTOSSUNG"){
+//			    		  if(isActive){
+//			    			  try{
+//				    			  simThread.wait();
+//					    		  System.out.println("Zwangspause2");
+//				    			  } catch (InterruptedException e) {
+//				    				  Thread.currentThread().interrupt();
+//				    			  }
+//			    		  }
+			    		  sim.getVehikel(z).setBewegung(new BVBewegungAbstossung());
+			    		  System.out.println("ABST geht");
+			    		  //notifyAll();
+			    	  }
+			    	  if(XY.getValue().toString() != "ATTRAKTION" && XY.getValue().toString() != "ABSTOSSUNG"){
+			    		  System.out.println("Fehler");
+			    	  }
+			      }//END handle
+			});
+		}//END FOR
 		
 
 		primaryStage.setScene(new Scene(wurzel, 850, 600));
