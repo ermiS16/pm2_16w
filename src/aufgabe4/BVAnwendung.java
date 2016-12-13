@@ -34,8 +34,9 @@ import javafx.scene.control.ComboBox;
 import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
 
-import java.util.*;
-
+//CHECKEN
+import java.awt.event.MouseListener;
+import java.awt.event.MouseEvent;
 
 /**
  * JavaFX Anwendung zur Darstellung und Interaktion mit einer
@@ -49,14 +50,10 @@ public class BVAnwendung extends Application {
 	private CheckBox simulieren;
 	private GridPane grid;
 	private Label lb[];
-	//private ComboBox<String> ba[];
-	//private ComboBox<String> box1;
-	//private ComboBox<String> box2;
+	private Object[] tab;
 	private boolean isActive;
 	private BVSThread simThread;
 	private BVSimulation sim;
-
-	private List<ComboBox<String>> t;
 	
 	/**
 	 * Init der GUI
@@ -64,8 +61,6 @@ public class BVAnwendung extends Application {
 	@Override
 	public void init(){
 		
-
-		t = new ArrayList();
 		isActive = false;
 		simuliere = new Button ("Simuliere!");
 		simulieren = new CheckBox ("Simuliere!");
@@ -91,16 +86,16 @@ public class BVAnwendung extends Application {
 	 */
 	private void setInitObjects(BVSimulation simul){
 		lb = new Label[simul.getAnzahlVehike()];
-		//t = new ArrayList[simul.getAnzahlVehike()];
+		tab = new Object[simul.getAnzahlVehike()];
 		for(int i = 0; i < simul.getAnzahlVehike(); i++){
 			ComboBox<String> boxX = new ComboBox<String>(FXCollections.observableArrayList("ATTRAKTION", "ABSTOSSUNG"));
 			boxX.setValue(simul.getVehikel(i).getBewegung().getId());
 			Label x = new Label((simul.getVehikel(i).getName()));
 			lb[i] = x;
+			tab[i] = boxX;
 			grid.add(x, 0, (2+i));
 			grid.add(boxX, 1, (2+i));
 		}
-		//TODO Array für Comboboxen
 	}
 
 	@Override
@@ -118,6 +113,13 @@ public class BVAnwendung extends Application {
 		}
 
 		canvas.zeichneSimulation();
+		//canvas.addEventHandler(eventType, eventHandler);
+//		canvas.addMouseListener(new MouseListener(){
+//			@Override
+//			public void mousePressed(MouseEvent e){
+//				
+//			}
+//		});
 
 		// Szenengraph aufbauen
 		primaryStage.setTitle("Braitenberg-Vehikel!");
@@ -132,7 +134,7 @@ public class BVAnwendung extends Application {
 					sim.simulationsSchritt();
 				}
 				else{
-					System.out.println("Simulation laeuft");
+					System.out.println("Nicht moeglich");
 				}
 			}
 		});
@@ -144,13 +146,16 @@ public class BVAnwendung extends Application {
 					simThread = new BVSThread(sim);
 					simThread.start();
 					isActive = true;
+					System.out.println("Simulation gestartet");
 				}
 				else{
 					simThread.interrupt();
 					isActive = false;
+					System.out.println("Simulation beendet");
 				}
 			}
 		});
+		
 
 		primaryStage.setScene(new Scene(wurzel, 850, 600));
 		primaryStage.show();
@@ -169,7 +174,7 @@ public class BVAnwendung extends Application {
 		BVSimulation sim = new BVSimulation();
 		sim.vehikelHinzufuegen(vehikel1);
 		sim.vehikelHinzufuegen(vehikel2);
-		//sim.vehikelHinzufuegen(vehikel3);
+		sim.vehikelHinzufuegen(vehikel3);
 		return sim;
 	}
 

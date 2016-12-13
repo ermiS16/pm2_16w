@@ -4,7 +4,6 @@ import java.awt.Point;
 import java.util.Observable;
 import java.util.Observer;
 
-import aufgabe3.Simulation;
 import javafx.scene.control.Alert.AlertType;
 import javafx.application.Platform;
 import javafx.scene.canvas.Canvas;
@@ -16,6 +15,9 @@ import aufgabe4.braitenbergvehikel.BVSimulation;
 import aufgabe4.braitenbergvehikel.BraitenbergVehikel;
 import aufgabe4.braitenbergvehikel.Vektor2;
 
+//TODO Prüfen
+import java.awt.event.MouseListener;
+import java.awt.event.MouseEvent;
 
 /**
  * Zeichenflaeche fuer eine Braitenberg-Vehikel-Simulation.
@@ -24,7 +26,7 @@ import aufgabe4.braitenbergvehikel.Vektor2;
  */
 
 @SuppressWarnings("unused")
-public class BVCanvas extends Canvas implements Observer {
+public class BVCanvas extends Canvas implements Observer, MouseListener{
 
   /**
    * Bild eines Vehikels. Achtung: Package mit dem Bild muss korrekt angegeben
@@ -127,4 +129,25 @@ public class BVCanvas extends Canvas implements Observer {
 		  });
 	  }
   }
+  
+  public void mousePressed(MouseEvent e) {
+  }
+  
+  public void mouseReleased(MouseEvent e) {
+  }
+  
+  public void mouseEntered(MouseEvent e) {
+  }
+  
+  public void mouseExited(MouseEvent e) {
+  }
+  
+  @Override
+  public void mouseClicked(MouseEvent e) {
+	  int x = e.getX();
+	  int y = e.getY();
+	  //sim.setSignal(x, y);
+	  sim.setSignal(-10, 10);
+  }
+  
 }
