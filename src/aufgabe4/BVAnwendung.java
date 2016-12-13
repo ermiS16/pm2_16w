@@ -63,7 +63,6 @@ public class BVAnwendung extends Application {
 	 */
 	@Override
 	public void init(){
-		
 		isActive = false;
 		beenden = new Button ("Beenden!");
 		info = new Button ("Info!");
@@ -78,7 +77,7 @@ public class BVAnwendung extends Application {
 		grid.add(simulieren, 0, 1);
 		sim = erzeugeSimulationsszene();
 		setInitObjects(sim);
-	}
+	}//END init
 	
 	/**
 	 * Init anderer GUI Elemente
@@ -217,7 +216,7 @@ public class BVAnwendung extends Application {
 		
 		primaryStage.setScene(new Scene(wurzel, 850, 600));
 		primaryStage.show();
-	}
+	}//END Start
 
 	/**
 	 * Erzeugt eine Simulationsszene zum Testen.
