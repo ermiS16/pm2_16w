@@ -14,6 +14,7 @@
 package aufgabe4;
 
 import javafx.application.Application;
+import javafx.application.Platform;
 import javafx.scene.Scene;
 import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
@@ -48,6 +49,7 @@ import javafx.scene.control.CheckBox;
 @SuppressWarnings("unchecked")
 public class BVAnwendung extends Application {
 	
+	private Button beenden;
 	private Button simuliere;
 	private CheckBox simulieren;
 	private GridPane grid;
@@ -59,27 +61,24 @@ public class BVAnwendung extends Application {
 	
 	/**
 	 * Init der GUI
+	 * Nur fixe GUI-Elemente werden initialisiert
 	 */
 	@Override
 	public void init(){
 		
 		isActive = false;
+		beenden = new Button ("Beenden!");
 		simuliere = new Button ("Simuliere!");
 		simulieren = new CheckBox ("Simuliere!");
 		grid = new GridPane();
 		grid.setHgap(5d);
 		grid.setVgap(5d);
+		grid.add(beenden, 1, 0);
 		grid.add(simuliere, 0, 0);
 		grid.add(simulieren, 0, 1);
 		sim = erzeugeSimulationsszene();
 		setInitObjects(sim);
-		//box1 = new ComboBox<String>(FXCollections.observableArrayList("ATTRAKTION", "ABSTOSSUNG"));
-		//box2 = new ComboBox<String>(FXCollections.observableArrayList("ATTRAKTION", "ABSTOSSUNG"));
 
-		//box1.setValue(sim.getVehikel(0).getBewegung().getId());
-		//box2.setValue(sim.getVehikel(1).getBewegung().getId());
-		//grid.add(box1, 1, 2);
-		//grid.add(box2, 1, 3);
 	}
 	
 	/**
@@ -89,16 +88,20 @@ public class BVAnwendung extends Application {
 	private void setInitObjects(BVSimulation simul){
 		lb = new Label[simul.getAnzahlVehike()];
 		tab = new Object[simul.getAnzahlVehike()];
+		
+		//Erstellt Namenslabel und Verhaltensauswahl
+		//fuer alle BV in der Simulation
 		for(int i = 0; i < simul.getAnzahlVehike(); i++){
-			ComboBox<String> boxX = new ComboBox<String>(FXCollections.observableArrayList("ATTRAKTION", "ABSTOSSUNG"));
-			boxX.setValue(simul.getVehikel(i).getBewegung().getId());
-			Label x = new Label((simul.getVehikel(i).getName()));
-			lb[i] = x;
-			tab[i] = boxX;
-			grid.add(x, 0, (2+i));
-			grid.add(boxX, 1, (2+i));
-		}
-	}
+			ComboBox<String> box = new ComboBox<String>
+				(FXCollections.observableArrayList("ATTRAKTION", "ABSTOSSUNG"));
+			box.setValue(simul.getVehikel(i).getBewegung().getId());
+			Label namenLabel = new Label((simul.getVehikel(i).getName()));
+			lb[i] = namenLabel;
+			tab[i] = box;
+			grid.add(namenLabel, 0, (2+i));
+			grid.add(box, 1, (2+i));
+		}//END for
+	}//END setInitObjects
 
 	@Override
 	public void start(Stage primaryStage) {
@@ -110,8 +113,8 @@ public class BVAnwendung extends Application {
 		sim.addObserver(canvas);
 		
 		for(int i = 0; i < sim.getAnzahlVehike(); i++){
-			BraitenbergVehikel X = sim.getVehikel(i);
-			X.addObserver(canvas);
+			BraitenbergVehikel bv = sim.getVehikel(i);
+			bv.addObserver(canvas);
 		}
 
 		canvas.zeichneSimulation();
@@ -136,7 +139,10 @@ public class BVAnwendung extends Application {
 		wurzel.setCenter(canvas);
 		wurzel.setRight(grid);
     
-		//Button
+		
+		/**
+		 * Funktionalitaet fuer Button simuliere
+		 */
 		simuliere.setOnAction(new EventHandler<ActionEvent>(){
 			@Override public void handle(ActionEvent e){
 				if(!isActive){
@@ -145,10 +151,12 @@ public class BVAnwendung extends Application {
 				else{
 					System.out.println("Nicht moeglich");
 				}
-			}
+			}//END handle
 		});
     
-		//CheckBox
+		/**
+		 * Funktionalitaet fuer CheckBox simulieren
+		 */
 		simulieren.setOnAction(new EventHandler<ActionEvent>(){
 			@Override public void handle(ActionEvent e){
 				if(!isActive){
@@ -162,47 +170,47 @@ public class BVAnwendung extends Application {
 					isActive = false;
 					System.out.println("Simulation beendet");
 				}
-			}
+			}//END handle
 		});
 		
+		/**
+		 * Funktionalitaet fuer Button beenden
+		 */
+		beenden.setOnAction(new EventHandler<ActionEvent>(){
+			@Override public void handle(ActionEvent e){
+				if(isActive){
+					simThread.interrupt();
+					System.out.println("Simulation beendet");
+				}
+				System.out.println("Anwendung beendet");
+				Platform.exit();
+				System.exit(0);
+			}// END handle
+		});
+		
+		/**
+		 * Funktionalitaet fuer ComboBoxen in tab[]
+		 */
 		for(int i = 0; i < tab.length; i++){
 			@SuppressWarnings("rawtypes")
-			ComboBox XY = (ComboBox) tab[i];
+			ComboBox verhalten = (ComboBox) tab[i];
 			final int z = i;
-			XY.setOnAction(new EventHandler<ActionEvent>() {
+			verhalten.setOnAction(new EventHandler<ActionEvent>(){
 			      @Override
 			      public void handle(ActionEvent arg0) {
-			    	  if(XY.getValue().toString() == "ATTRAKTION"){
-//			    		  if(isActive){
-//			    			  try{
-//				    			  simThread.wait();
-//					    		  System.out.println("Zwangspause");
-//				    			  } catch (InterruptedException e) {
-//				    				  Thread.currentThread().interrupt();
-//				    			  }
-//			    		  }
+			    	  if(verhalten.getValue().toString() == "ATTRAKTION"){
 			    		  sim.getVehikel(z).setBewegung(new BVBewegungAttraktion());
 			    		  System.out.println("ATT geht");
-			    		  //notifyAll();
 			    	  }
-			    	  if(XY.getValue().toString() == "ABSTOSSUNG"){
-//			    		  if(isActive){
-//			    			  try{
-//				    			  simThread.wait();
-//					    		  System.out.println("Zwangspause2");
-//				    			  } catch (InterruptedException e) {
-//				    				  Thread.currentThread().interrupt();
-//				    			  }
-//			    		  }
+			    	  if(verhalten.getValue().toString() == "ABSTOSSUNG"){
 			    		  sim.getVehikel(z).setBewegung(new BVBewegungAbstossung());
 			    		  System.out.println("ABST geht");
-			    		  //notifyAll();
 			    	  }
-			    	  if(XY.getValue().toString() != "ATTRAKTION" && XY.getValue().toString() != "ABSTOSSUNG"){
+			    	  if(verhalten.getValue().toString() != "ATTRAKTION" && verhalten.getValue().toString() != "ABSTOSSUNG"){
 			    		  System.out.println("Fehler");
 			    	  }
 			      }//END handle
-			});
+			});//END setOnAction
 		}//END FOR
 		
 
