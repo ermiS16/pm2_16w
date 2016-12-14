@@ -74,7 +74,6 @@ public class BraitenbergVehikel extends Observable{
     this.bewegung = bewegung;
     this.position = position;
     this.orientierung = orientierung;
-    System.out.println(bewegung);
     this.setbvbImage();
   }
 
@@ -272,15 +271,15 @@ public class BraitenbergVehikel extends Observable{
    * Setzt bvbImage
    */
   public void setbvbImage(){
-	    if(bewegung.toString() == "ATTRAKTION"){
-	    	bvbImage = new Image("aufgabe4/assets/icon_attraktion.png");
-	    	System.out.println("ATT_ICON_geht");
-	    }
-	    if(bewegung.toString() == "ABSTOSSUNG"){
-	    	bvbImage = new Image("aufgabe4/assets/icon_abstossung.png");
-	    	System.out.println("ABST_ICON_geht");
-	    }
-  }
+	  if(bewegung instanceof BVBewegungAttraktion){
+		  bvbImage = new Image("aufgabe4/assets/icon_attraktion.png");
+		  System.out.println("ATT_ICON_geht");
+	  }
+	  if(bewegung instanceof BVBewegungAbstossung){
+		  bvbImage = new Image("aufgabe4/assets/icon_abstossung.png");
+		  System.out.println("ABST_ICON_geht");
+	  }
+  }//END method
   
   /**
    * Gibt bvbImage zurueck
