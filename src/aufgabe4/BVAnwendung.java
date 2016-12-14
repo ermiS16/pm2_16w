@@ -33,10 +33,6 @@ import javafx.collections.FXCollections;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 
-//CHECKEN
-//import java.awt.event.MouseListener;
-//import java.awt.event.MouseEvent;
-
 /**
  * JavaFX Anwendung zur Darstellung und Interaktion mit einer
  * Braitenberg-Vehikel-Simulation.
