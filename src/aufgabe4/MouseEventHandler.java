@@ -39,19 +39,19 @@ public class MouseEventHandler implements EventHandler<MouseEvent>{
 		double x = event.getX();
 		double y = event.getY();
 		System.out.println("X: " + x + " Y: " + y);
-		sim.setSignal(x-300d, y-300d);
-		System.out.println(sim.getSignal());
-		if(y < 300){
+		if(y == 0){
+			y = 300d;
+		}
+		if(y > 0 && y <= 300){
 			y -= 300d;
+			y *= (-1);
 		}
-		if(x <= 300){
-			x -= 300d;
+		if(y > 300){
+			y -= 300;
+			y *= (-1);
 		}
-		else{
-			x += 300d;
-		}
-		//sim.setSignal(x-300d, y-300d);
-		//sim.setSignal(0d, 0d);
-		//sim.setSignal(x, y);
+		x -= 300d;
+		sim.setSignal(x, y);
+		System.out.println(sim.getSignal());
 	}
 }
