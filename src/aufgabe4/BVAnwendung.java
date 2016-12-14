@@ -228,7 +228,6 @@ public class BVAnwendung extends Application {
 		sim.vehikelHinzufuegen(vehikel1);
 		sim.vehikelHinzufuegen(vehikel2);
 		sim.vehikelHinzufuegen(vehikel3);
-		System.out.println(vehikel3.getbvbImage());
 		return sim;
 	}
 

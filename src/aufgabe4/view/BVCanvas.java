@@ -98,11 +98,13 @@ public class BVCanvas extends Canvas implements Observer{
    * Zeichnet ein Braitenberg-Vehikel.
    */
   protected void zeichneVehikel(GraphicsContext gc, BraitenbergVehikel bv) {
+	Image bvbimg = bv.getbvbImage();
     Point p = welt2BildKoordinaten(bv.getPosition());
     double winkelInGrad = bv.getRotationGradImUhrzeigersinn();
     int x = (int) (p.x - bv.getSeitenlaenge() / 2);
     int y = (int) (p.y - bv.getSeitenlaenge() / 2);
     zeichneGedrehtesBild(gc, bvImage, winkelInGrad, x, y);
+    zeichneGedrehtesBild(gc, bvbimg, winkelInGrad, x-10d, y);
   }
 
   /**
