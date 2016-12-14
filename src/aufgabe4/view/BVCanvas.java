@@ -104,7 +104,8 @@ public class BVCanvas extends Canvas implements Observer{
     int x = (int) (p.x - bv.getSeitenlaenge() / 2);
     int y = (int) (p.y - bv.getSeitenlaenge() / 2);
     zeichneGedrehtesBild(gc, bvImage, winkelInGrad, x, y);
-    zeichneGedrehtesBild(gc, bvbimg, winkelInGrad, x-10d, y);
+    zeichneGedrehtesBild(gc, bvbimg, winkelInGrad, x + 45d, y);
+    //TODO fix positioning in relation to vehikle
   }
 
   /**
