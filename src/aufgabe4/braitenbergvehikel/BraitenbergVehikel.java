@@ -9,6 +9,8 @@ package aufgabe4.braitenbergvehikel;
 
 import java.util.Observable;
 
+import javafx.scene.image.Image;
+
 public class BraitenbergVehikel extends Observable{
 
   /**
@@ -60,6 +62,11 @@ public class BraitenbergVehikel extends Observable{
    * Name des Vehikels zur Identifikation.
    */
   private final String name;
+  
+  /**
+   * BVBewegungsImage
+   */
+  private Image bvbImage;
 
   public BraitenbergVehikel(String name, BVBewegung bewegung, Vektor2 position,
       Vektor2 orientierung) {
@@ -67,6 +74,8 @@ public class BraitenbergVehikel extends Observable{
     this.bewegung = bewegung;
     this.position = position;
     this.orientierung = orientierung;
+    System.out.println(bewegung);
+    this.setbvbImage();
   }
 
   public BraitenbergVehikel(String name, BVBewegung bewegung) {
@@ -201,12 +210,21 @@ public class BraitenbergVehikel extends Observable{
     return maxMotorUmdrehungenProSek;
   }
 
+  /**
+   * 
+   * @return
+   */
   public BVBewegung getBewegung() {
     return bewegung;
   }
 
+  /**
+   * 
+   * @param bewegung
+   */
   public void setBewegung(BVBewegung bewegung) {
     this.bewegung = bewegung;
+    this.setbvbImage();
     setChanged();
     notifyObservers(bewegung);
   }
@@ -215,21 +233,61 @@ public class BraitenbergVehikel extends Observable{
     return name;
   }
 
+  /**
+   * Gibt Position zurueck
+   * @return position
+   */
   public Vektor2 getPosition() {
     return position;
   }
 
+  /**
+   * Gibt Orientierung zurueck
+   * @return orientierung
+   */
   public Vektor2 getOrientierung() {
     return orientierung;
   }
 
+  /**
+   * Gibt SensorWert zurueck
+   * @param richtung
+   * @return sensorWert
+   */
   public double getSensorWert(Richtung richtung) {
     return sensorWert[richtung.ordinal()];
   }
 
+  /**
+   * Gibt formatierten String zurueck
+   * @return
+   */
   @Override
   public String toString() {
     return "Braitenberg-Vehikel " + getName() + " (p: " + position + ", o: "
         + orientierung + ")";
   }
+  
+  /**
+   * Setzt bvbImage
+   */
+  public void setbvbImage(){
+	    if(bewegung.toString() == "ATTRAKTION"){
+	    	bvbImage = new Image("aufgabe4/assets/icon_attraktion.png");
+	    	System.out.println("ATT_ICON_geht");
+	    }
+	    if(bewegung.toString() == "ABSTOSSUNG"){
+	    	bvbImage = new Image("aufgabe4/assets/icon_abstossung.png");
+	    	System.out.println("ABST_ICON_geht");
+	    }
+  }
+  
+  /**
+   * Gibt bvbImage zurueck
+   * @return bvbImage
+   */
+  public Image getbvbImage(){
+	  return bvbImage;
+  }
+  
 }

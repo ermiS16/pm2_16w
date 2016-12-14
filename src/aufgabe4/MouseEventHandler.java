@@ -39,12 +39,8 @@ public class MouseEventHandler implements EventHandler<MouseEvent>{
 		double x = event.getX();
 		double y = event.getY();
 		System.out.println("X: " + x + " Y: " + y);
-		if(y == 0){
-			y = 300d;
-		}
-		if(y > 0 && y <= 300){
-			y -= 300d;
-			y *= (-1);
+		if(y >= 0 && y <= 300){
+			y = (Math.abs(y - 300d));
 		}
 		if(y > 300){
 			y -= 300;
