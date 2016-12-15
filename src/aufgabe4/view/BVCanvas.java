@@ -122,7 +122,7 @@ public class BVCanvas extends Canvas implements Observer{
     zeichneGedrehtesBild(gc, bvImage, winkelInGrad, x, y);
     zeichneGedrehtesBild(gc, bvbimg, winkelInGrad, x + 45d, y);
     gc.setFill(Color.BLACK);
-    gc.fillText(bv.getName(), x - 40d, y);
+    gc.fillText(bv.getName(), x, y + 60d );
   }
 
   /**
