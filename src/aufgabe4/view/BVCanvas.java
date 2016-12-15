@@ -14,10 +14,6 @@ import aufgabe4.braitenbergvehikel.BVSimulation;
 import aufgabe4.braitenbergvehikel.BraitenbergVehikel;
 import aufgabe4.braitenbergvehikel.Vektor2;
 
-import java.awt.Font;
-//import java.awt.FontMetrics;
-//import java.awt.Graphics;
-
 /**
  * Zeichenflaeche fuer eine Braitenberg-Vehikel-Simulation.
  * 
@@ -64,6 +60,7 @@ public class BVCanvas extends Canvas implements Observer{
    */
   public void zeichneSimulation() {
     GraphicsContext gc = getGraphicsContext2D();
+    
     // Alles loeschen
     gc.setFill(Color.WHITE);
     gc.fillRect(0, 0, getWidth(), getHeight());
@@ -72,8 +69,10 @@ public class BVCanvas extends Canvas implements Observer{
     for (int i = 0; i < sim.getAnzahlVehike(); i++) {
       zeichneVehikel(gc, sim.getVehikel(i));
     }
+    
     // Signal zeichnen
     zeichneSignal(gc, sim.getSignal());
+    
   }
 
   /**
@@ -93,9 +92,6 @@ public class BVCanvas extends Canvas implements Observer{
     gc.setTransform(r.getMxx(), r.getMyx(), r.getMxy(), r.getMyy(), r.getTx(),
         r.getTy());
   }
-
-  public static Font textFont = new Font("Monospaced", Font.PLAIN, 12);
-  public Font f = textFont;
   
   /**
    * Zeichnet ein Bild gedreht.
@@ -125,7 +121,8 @@ public class BVCanvas extends Canvas implements Observer{
     int y = (int) (p.y - bv.getSeitenlaenge() / 2);
     zeichneGedrehtesBild(gc, bvImage, winkelInGrad, x, y);
     zeichneGedrehtesBild(gc, bvbimg, winkelInGrad, x + 45d, y);
-    //TODO fix positioning in relation to vehikle
+    gc.setFill(Color.BLACK);
+    gc.fillText(bv.getName(), x - 40d, y);
   }
 
   /**
@@ -141,14 +138,6 @@ public class BVCanvas extends Canvas implements Observer{
     gc.setFill(Color.YELLOW);
     gc.fillOval(p.x - breite / 2, p.y - breite / 2, breite, breite);
   }
-  
-//  private void zeichneText(Graphics g){
-//	  g.setFont(textFont);
-//	  FontMetrics fm = g.getFontMetrics();
-//	  int w = fm.stringWidth("testTXT");
-//	  int h = fm.getAscent();
-//	  g.drawString("testTXT", 0 - (w / 1), 0 + (h / 1));
-//  }
 
   /**
    * 

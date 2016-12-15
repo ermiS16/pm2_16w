@@ -104,6 +104,7 @@ public class BVAnwendung extends Application {
 		BVCanvas canvas = new BVCanvas(600, 600, sim);
 		sim.addObserver(canvas);
 		
+		
 		for(int i = 0; i < sim.getAnzahlVehike(); i++){
 			BraitenbergVehikel bv = sim.getVehikel(i);
 			bv.addObserver(canvas);
