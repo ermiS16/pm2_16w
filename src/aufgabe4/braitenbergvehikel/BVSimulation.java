@@ -72,14 +72,28 @@ public class BVSimulation extends Observable{
     return vehikel.size();
   }
 
+  /**
+   * 
+   * @param index
+   * @return
+   */
   public BraitenbergVehikel getVehikel(int index) {
     return vehikel.get(index);
   }
 
+  /**
+   * 
+   * @return
+   */
   public Vektor2 getSignal() {
     return signal;
   }
 
+  /**
+   * 
+   * @param x
+   * @param y
+   */
   public void setSignal(double x, double y) {
     signal = new Vektor2(x, y);
     setChanged();

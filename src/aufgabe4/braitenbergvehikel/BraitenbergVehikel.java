@@ -7,6 +7,14 @@ package aufgabe4.braitenbergvehikel;
  * @author Philipp Jenke
  */
 
+/**
+* Praktikum TI-PR2, WS2016/2017
+* Praktikumsgruppe Nr. 4
+* Eric Misfeld, Simon Felske
+* @version 15.12.2016
+* Aufgabenblatt 4
+ */
+
 import java.util.Observable;
 
 import javafx.scene.image.Image;
@@ -61,22 +69,39 @@ public class BraitenbergVehikel extends Observable{
   /**
    * Name des Vehikels zur Identifikation.
    */
-  private final String name;
+  private String name;
   
   /**
    * BVBewegungsImage
    */
   private Image bvbImage;
-
+  
+  /**
+   * Konstruktor
+   * @param name - nicht null, nicht ""
+   * @param bewegung - nicht null
+   * @param position
+   * @param orientierung
+   */
   public BraitenbergVehikel(String name, BVBewegung bewegung, Vektor2 position,
       Vektor2 orientierung) {
-    this.name = name;
+	if(name != null && name.length() > 0){
+		this.name = name;
+	}
+	else{
+		name = "Error";
+	}
     this.bewegung = bewegung;
     this.position = position;
     this.orientierung = orientierung;
     this.setbvbImage();
   }
 
+  /**
+   * Konstruktor
+   * @param name
+   * @param bewegung
+   */
   public BraitenbergVehikel(String name, BVBewegung bewegung) {
     this(name, bewegung, new Vektor2(0, 0), new Vektor2(0, 1));
   }

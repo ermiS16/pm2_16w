@@ -24,7 +24,7 @@ import aufgabe4.braitenbergvehikel.Vektor2;
 * Praktikum TI-PR2, WS2016/2017
 * Praktikumsgruppe Nr. 4
 * Eric Misfeld, Simon Felske
-* @version 13.12.2016
+* @version 15.12.2016
 * Aufgabenblatt 4
  */
 
@@ -41,10 +41,18 @@ public class BVCanvas extends Canvas implements Observer{
    * Referenz auf die Simulation.
    */
   private final BVSimulation sim;
+  
+  /**
+   * Referenz auf Canvasflaeche
+   */
+  private final int BVCbreite;
+  private final int BVChoehe;
 
   public BVCanvas(int breite, int hoehe, BVSimulation sim) {
     super(breite, hoehe);
     this.sim = sim;
+	BVCbreite = breite;
+	BVChoehe = hoehe;
   }
 
   /**
@@ -95,7 +103,11 @@ public class BVCanvas extends Canvas implements Observer{
   }
 
   /**
-   * Zeichnet ein Braitenberg-Vehikel.
+   * Zeichnet ein Braitenberg-Vehikel,
+   * und zugehoerigen Status-Pfeil
+   * 
+   * @param gc
+   * @param bv
    */
   protected void zeichneVehikel(GraphicsContext gc, BraitenbergVehikel bv) {
 	Image bvbimg = bv.getbvbImage();
@@ -122,6 +134,9 @@ public class BVCanvas extends Canvas implements Observer{
     gc.fillOval(p.x - breite / 2, p.y - breite / 2, breite, breite);
   }
 
+  /**
+   * 
+   */
   @Override
   public void update(Observable o, Object arg) {
     // Zeichenroutine wird im JavaFX-Thread aufgerufen.
@@ -132,6 +147,23 @@ public class BVCanvas extends Canvas implements Observer{
 				  zeichneSimulation();
 			  }
 		  });
-	  }
+	  }//END if
+  }//END method
+  
+  /**
+   * Getter fuer Canvasbreite
+   * @return BVCbreite
+   */
+  public int getBVCbreite(){
+	  return BVCbreite;
   }
+  
+  /**
+   * Getter fuer Canvashoehe
+   * @return BVChoehe
+   */
+  public int getBVChoehe(){
+	  return BVChoehe;
+  }
+  
 }

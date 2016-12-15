@@ -110,7 +110,7 @@ public class BVAnwendung extends Application {
 		}
 
 		canvas.zeichneSimulation();
-		canvas.addEventHandler(MouseEvent.MOUSE_CLICKED, new MouseEventHandler(sim));
+		canvas.addEventHandler(MouseEvent.MOUSE_CLICKED, new MouseEventHandler(sim, canvas));
 
 		// Szenengraph aufbauen
 		primaryStage.setTitle("Braitenberg-Vehikel!");

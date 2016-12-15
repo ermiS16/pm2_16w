@@ -9,7 +9,7 @@ package aufgabe4;
 * Praktikum TI-PR2, WS2016/2017
 * Praktikumsgruppe Nr. 4
 * @author Eric Misfeld, Simon Felske
-* @version 13.12.2016
+* @version 15.12.2016
 * Aufgabenblatt 4 | Aufgabe 4
 */
 
@@ -17,17 +17,21 @@ import javafx.event.EventHandler;
 import javafx.scene.input.MouseEvent;
 
 import aufgabe4.braitenbergvehikel.*;
+import aufgabe4.view.*;
 
 public class MouseEventHandler implements EventHandler<MouseEvent>{
 	
 	private BVSimulation sim;
+	private BVCanvas can;
 	
 	/**
 	 * Konstruktor mit Nutzereingabe
 	 * @param sim
+	 * @param can
 	 */
-	public MouseEventHandler(BVSimulation sim){
+	public MouseEventHandler(BVSimulation sim, BVCanvas can){
 		this.sim = sim;
+		this.can = can;
 	}
 	
 	/**
@@ -39,14 +43,16 @@ public class MouseEventHandler implements EventHandler<MouseEvent>{
 		double x = event.getX();
 		double y = event.getY();
 		System.out.println("X: " + x + " Y: " + y);
-		if(y >= 0 && y <= 300){
-			y = (Math.abs(y - 300d));
+		System.out.println(can.getBVCbreite());
+		System.out.println(can.getBVChoehe());
+		if(y >= 0 && y <= (can.getBVChoehe() * 0.5)){
+			y = (Math.abs(y - ((double) (can.getBVChoehe() * 0.5))));
 		}
-		if(y > 300){
-			y -= 300;
+		if(y > (can.getBVChoehe() * 0.5)){
+			y -= (double) (can.getBVChoehe() * 0.5);
 			y *= (-1);
 		}
-		x -= 300d;
+		x -= (double) (can.getBVCbreite() * 0.5);
 		sim.setSignal(x, y);
 		System.out.println(sim.getSignal());
 	}
