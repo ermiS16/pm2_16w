@@ -235,15 +235,15 @@ public class BraitenbergVehikel extends Observable{
   }
 
   /**
-   * 
-   * @return
+   * Getter fuer Bewegung
+   * @return bewegung
    */
   public BVBewegung getBewegung() {
     return bewegung;
   }
 
   /**
-   * 
+   * Setter fuer Bewegung
    * @param bewegung
    */
   public void setBewegung(BVBewegung bewegung) {
@@ -253,6 +253,10 @@ public class BraitenbergVehikel extends Observable{
     notifyObservers(bewegung);
   }
 
+  /**
+   * Getter fuer Name
+   * @return name
+   */
   public String getName() {
     return name;
   }
@@ -298,11 +302,11 @@ public class BraitenbergVehikel extends Observable{
   public void setbvbImage(){
 	  if(bewegung instanceof BVBewegungAttraktion){
 		  bvbImage = new Image("aufgabe4/assets/icon_attraktion.png");
-		  System.out.println("ATT_ICON_geht");
+		  //System.out.println("ATT_ICON_geht");
 	  }
 	  if(bewegung instanceof BVBewegungAbstossung){
 		  bvbImage = new Image("aufgabe4/assets/icon_abstossung.png");
-		  System.out.println("ABST_ICON_geht");
+		  //System.out.println("ABST_ICON_geht");
 	  }
   }//END method
   

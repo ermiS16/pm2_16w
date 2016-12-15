@@ -14,6 +14,10 @@ import aufgabe4.braitenbergvehikel.BVSimulation;
 import aufgabe4.braitenbergvehikel.BraitenbergVehikel;
 import aufgabe4.braitenbergvehikel.Vektor2;
 
+import java.awt.Font;
+//import java.awt.FontMetrics;
+//import java.awt.Graphics;
+
 /**
  * Zeichenflaeche fuer eine Braitenberg-Vehikel-Simulation.
  * 
@@ -63,6 +67,7 @@ public class BVCanvas extends Canvas implements Observer{
     // Alles loeschen
     gc.setFill(Color.WHITE);
     gc.fillRect(0, 0, getWidth(), getHeight());
+    
     // Vehikel zeichnen
     for (int i = 0; i < sim.getAnzahlVehike(); i++) {
       zeichneVehikel(gc, sim.getVehikel(i));
@@ -89,6 +94,9 @@ public class BVCanvas extends Canvas implements Observer{
         r.getTy());
   }
 
+  public static Font textFont = new Font("Monospaced", Font.PLAIN, 12);
+  public Font f = textFont;
+  
   /**
    * Zeichnet ein Bild gedreht.
    */
@@ -133,6 +141,14 @@ public class BVCanvas extends Canvas implements Observer{
     gc.setFill(Color.YELLOW);
     gc.fillOval(p.x - breite / 2, p.y - breite / 2, breite, breite);
   }
+  
+//  private void zeichneText(Graphics g){
+//	  g.setFont(textFont);
+//	  FontMetrics fm = g.getFontMetrics();
+//	  int w = fm.stringWidth("testTXT");
+//	  int h = fm.getAscent();
+//	  g.drawString("testTXT", 0 - (w / 1), 0 + (h / 1));
+//  }
 
   /**
    * 

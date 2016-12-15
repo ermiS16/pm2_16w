@@ -42,9 +42,6 @@ public class MouseEventHandler implements EventHandler<MouseEvent>{
 	public void handle(MouseEvent event){
 		double x = event.getX();
 		double y = event.getY();
-		System.out.println("X: " + x + " Y: " + y);
-		System.out.println(can.getBVCbreite());
-		System.out.println(can.getBVChoehe());
 		if(y >= 0 && y <= (can.getBVChoehe() * 0.5)){
 			y = (Math.abs(y - ((double) (can.getBVChoehe() * 0.5))));
 		}
@@ -54,6 +51,5 @@ public class MouseEventHandler implements EventHandler<MouseEvent>{
 		}
 		x -= (double) (can.getBVCbreite() * 0.5);
 		sim.setSignal(x, y);
-		System.out.println(sim.getSignal());
 	}
 }

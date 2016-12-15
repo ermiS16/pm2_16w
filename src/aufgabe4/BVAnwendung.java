@@ -196,15 +196,19 @@ public class BVAnwendung extends Application {
 			      public void handle(ActionEvent arg0) {
 			    	  if(verhalten.getValue().toString() == "ATTRAKTION"){
 			    		  sim.getVehikel(z).setBewegung(new BVBewegungAttraktion());
-			    		  System.out.println("ATT geht");
+			    		  //System.out.println("ATT geht");
 			    	  }
 			    	  if(verhalten.getValue().toString() == "ABSTOSSUNG"){
 			    		  sim.getVehikel(z).setBewegung(new BVBewegungAbstossung());
-			    		  System.out.println("ABST geht");
+			    		  //System.out.println("ABST geht");
 			    	  }
 			    	  if(verhalten.getValue().toString() != "ATTRAKTION" &&
 			    			  verhalten.getValue().toString() != "ABSTOSSUNG"){
 			    		  System.out.println("Fehler");
+			    		  if(isActive){
+			    			  simThread.interrupt();
+			    			  System.out.println("Kritischer Fehler: Simulation beendet");
+			    		  }
 			    	  }
 			      }//END handle
 			});//END setOnAction

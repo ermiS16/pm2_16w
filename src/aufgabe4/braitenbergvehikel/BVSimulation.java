@@ -73,16 +73,16 @@ public class BVSimulation extends Observable{
   }
 
   /**
-   * 
+   * Getter fuer BV an Index
    * @param index
-   * @return
+   * @return vehikel@index
    */
   public BraitenbergVehikel getVehikel(int index) {
     return vehikel.get(index);
   }
 
   /**
-   * 
+   * Getter fuer Signal
    * @return
    */
   public Vektor2 getSignal() {
@@ -90,7 +90,7 @@ public class BVSimulation extends Observable{
   }
 
   /**
-   * 
+   * Setter fuer Signal
    * @param x
    * @param y
    */
