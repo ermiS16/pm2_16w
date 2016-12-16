@@ -23,7 +23,7 @@ import aufgabe4.braitenbergvehikel.Vektor2;
 /**
 * Praktikum TI-PR2, WS2016/2017
 * Praktikumsgruppe Nr. 4
-* Eric Misfeld, Simon Felske
+* Simon Felske, Eric Misfeld
 * @version 16.12.2016
 * Aufgabenblatt 4
  */

@@ -323,6 +323,10 @@ public class BraitenbergVehikel extends Observable{
 		  bvbImage = new Image("aufgabe4/assets/icon_abstossung.png");
 		  //System.out.println("ABST_ICON_geht");
 	  }
+	  if(bewegung instanceof BVBewegungAbstand){
+		  bvbImage = new Image("aufgabe4/assets/icon_im_abstand.png");
+		  //System.out.println("ABSTAND_ICON_geht");
+	  }
   }//END method
   
   /**

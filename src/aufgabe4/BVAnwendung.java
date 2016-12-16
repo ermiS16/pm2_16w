@@ -20,6 +20,7 @@ import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
 import aufgabe4.braitenbergvehikel.BVBewegungAbstossung;
 import aufgabe4.braitenbergvehikel.BVBewegungAttraktion;
+import aufgabe4.braitenbergvehikel.BVBewegungAbstand;
 import aufgabe4.braitenbergvehikel.BVSimulation;
 import aufgabe4.braitenbergvehikel.BraitenbergVehikel;
 import aufgabe4.braitenbergvehikel.Vektor2;
@@ -98,7 +99,7 @@ public class BVAnwendung extends Application {
 		//Fuegt EV hinzu, sofern notwendig.
 		for(int i = 0; i < simul.getAnzahlVehike(); i++){
 			ComboBox<String> box = new ComboBox<String>
-				(FXCollections.observableArrayList("ATTRAKTION", "ABSTOSSUNG"));
+				(FXCollections.observableArrayList("ATTRAKTION", "ABSTOSSUNG", "ABSTAND"));
 			box.setValue(simul.getVehikel(i).getBewegung().getId());
 			Label namenLabel = new Label((simul.getVehikel(i).getName()));
 			
@@ -223,9 +224,15 @@ public class BVAnwendung extends Application {
 			    		  //System.out.println("ABST geht");
 			    	  }
 			    	  
+			    	  if(verhalten.getValue().toString() == "ABSTAND"){
+			    		  sim.getVehikel(z).setBewegung(new BVBewegungAbstand());
+			    		  //System.out.println("ABSTAND geht");
+			    	  }
+			    	  
 			    	  //Fehlerbehandlung
 			    	  if(verhalten.getValue().toString() != "ATTRAKTION" &&
-			    			  verhalten.getValue().toString() != "ABSTOSSUNG"){
+			    			  verhalten.getValue().toString() != "ABSTOSSUNG" &&
+			    			  verhalten.getValue().toString() != "ABSTAND"){
 			    		  System.out.println("Fehler");
 			    		  if(isActive){
 			    			  simThread.interrupt();
@@ -251,7 +258,7 @@ public class BVAnwendung extends Application {
 		BraitenbergVehikel vehikel3 = new BraitenbergVehikel("Stanley",
 				new BVBewegungAbstossung(), new Vektor2(-125, 45), new Vektor2(1, 0));
 		BraitenbergVehikel vehikel4 = new BraitenbergVehikel("Tango",
-				new BVBewegungAttraktion(), new Vektor2(20, 145), new Vektor2(1, 0));
+				new BVBewegungAbstand(), new Vektor2(20, 145), new Vektor2(1, 0));
 		BVSimulation sim = new BVSimulation();
 		sim.vehikelHinzufuegen(vehikel1);
 		sim.vehikelHinzufuegen(vehikel2);
