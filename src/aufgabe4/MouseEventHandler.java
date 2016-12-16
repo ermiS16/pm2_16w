@@ -9,7 +9,7 @@ package aufgabe4;
 * Praktikum TI-PR2, WS2016/2017
 * Praktikumsgruppe Nr. 4
 * @author Eric Misfeld, Simon Felske
-* @version 15.12.2016
+* @version 16.12.2016
 * Aufgabenblatt 4 | Aufgabe 4
 */
 
@@ -21,7 +21,10 @@ import aufgabe4.view.*;
 
 public class MouseEventHandler implements EventHandler<MouseEvent>{
 	
+	//Simulation
 	private BVSimulation sim;
+	
+	//Ueberwachter Canvas
 	private BVCanvas can;
 	
 	/**
@@ -51,5 +54,5 @@ public class MouseEventHandler implements EventHandler<MouseEvent>{
 		}
 		x -= (double) (can.getBVCbreite() * 0.5);
 		sim.setSignal(x, y);
-	}
+	}//END handle
 }

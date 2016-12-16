@@ -7,7 +7,7 @@ package aufgabe4;
 * Praktikum TI-PR2, WS2016/2017
 * Praktikumsgruppe Nr. 4
 * @author Eric Misfeld, Simon Felske
-* @version 13.12.2016
+* @version 16.12.2016
 * Aufgabenblatt 4 | Aufgabe 2
 */
 
@@ -15,6 +15,7 @@ import aufgabe4.braitenbergvehikel.*;
 
 public class BVSThread extends Thread{
 	
+	//Simulationszielobjekt
 	private BVSimulation sim;
 
 	/**

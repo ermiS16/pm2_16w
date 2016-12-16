@@ -8,7 +8,7 @@
 * Praktikum TI-PR2, WS2016/2017
 * Praktikumsgruppe Nr. 4
 * @author Eric Misfeld, Simon Felske
-* @version 13.12.2016
+* @version 16.12.2016
 * Aufgabenblatt 4
  */
 package aufgabe4;
@@ -42,13 +42,20 @@ import javafx.event.EventHandler;
 
 public class BVAnwendung extends Application {
 	
+	//Feste GUI Bedienelemente
 	private Button beenden;
 	private Button info;
 	private Button simuliere;
 	private CheckBox simulieren;
+	
+	//Layoutbasis fuer Bedienelemente
 	private GridPane grid;
+	
+	//Speicher fuer nicht-feste GUI Bedienelemente
 	private Label[] lb;
 	private Object[] tab;
+	
+	//Notwendiges
 	private boolean isActive;
 	private BVSThread simThread;
 	private BVSimulation sim;
@@ -64,6 +71,8 @@ public class BVAnwendung extends Application {
 		info = new Button ("Info!");
 		simuliere = new Button ("Simuliere!");
 		simulieren = new CheckBox ("Simuliere!");
+		
+		//Setup feste GUI Bedienelemente
 		grid = new GridPane();
 		grid.setHgap(5d);
 		grid.setVgap(5d);
@@ -71,6 +80,7 @@ public class BVAnwendung extends Application {
 		grid.add(info, 1, 1);
 		grid.add(simuliere, 0, 0);
 		grid.add(simulieren, 0, 1);
+		
 		sim = erzeugeSimulationsszene();
 		setInitObjects(sim);
 	}//END init
@@ -84,14 +94,23 @@ public class BVAnwendung extends Application {
 		tab = new Object[simul.getAnzahlVehike()];
 		
 		//Erstellt Namenslabel und Verhaltensauswahl
-		//fuer alle BV in der Simulation
+		//fuer alle BV in der Simulation.
+		//Fuegt EV hinzu, sofern notwendig.
 		for(int i = 0; i < simul.getAnzahlVehike(); i++){
 			ComboBox<String> box = new ComboBox<String>
 				(FXCollections.observableArrayList("ATTRAKTION", "ABSTOSSUNG"));
 			box.setValue(simul.getVehikel(i).getBewegung().getId());
 			Label namenLabel = new Label((simul.getVehikel(i).getName()));
+			
+			//Fehlerbehandlung
+			if(namenLabel.getText() == null || namenLabel.getText() == ""){
+				//System.out.println("fault detected");
+				namenLabel = new Label("NameError");
+			}
+			
 			lb[i] = namenLabel;
 			tab[i] = box;
+			
 			grid.add(namenLabel, 0, (2+i));
 			grid.add(box, 1, (2+i));
 		}//END for
@@ -104,12 +123,12 @@ public class BVAnwendung extends Application {
 		BVCanvas canvas = new BVCanvas(600, 600, sim);
 		sim.addObserver(canvas);
 		
-		
 		for(int i = 0; i < sim.getAnzahlVehike(); i++){
 			BraitenbergVehikel bv = sim.getVehikel(i);
 			bv.addObserver(canvas);
 		}
 
+		//Canvas bereitstellen
 		canvas.zeichneSimulation();
 		canvas.addEventHandler(MouseEvent.MOUSE_CLICKED, new MouseEventHandler(sim, canvas));
 
@@ -173,7 +192,7 @@ public class BVAnwendung extends Application {
 		info.setOnAction(new EventHandler<ActionEvent>(){
 			@Override public void handle(ActionEvent e){
 				String contextText="Autoren: Eric Misfeld, Simon Felske\n"
-						+ "Version: 0.8, 13.12.2016\n\n"
+						+ "Version: 1.0, 16.12.2016\n\n"
 						+ "Dieses Programm simuliert eine beliebige Anzahl\n"
 						+ "von Braitenberg-Vehikeln. Ihr Verhalten kann\n"
 						+ "vom Anwender geändert werden.\n";
@@ -189,8 +208,7 @@ public class BVAnwendung extends Application {
 		 * Funktionalitaet fuer ComboBoxen in tab[]
 		 */
 		for(int i = 0; i < tab.length; i++){
-			@SuppressWarnings("rawtypes")
-			ComboBox<?> verhalten = (ComboBox) tab[i];
+			ComboBox<?> verhalten = (ComboBox<?>) tab[i];
 			final int z = i;
 			verhalten.setOnAction(new EventHandler<ActionEvent>(){
 			      @Override
@@ -199,10 +217,13 @@ public class BVAnwendung extends Application {
 			    		  sim.getVehikel(z).setBewegung(new BVBewegungAttraktion());
 			    		  //System.out.println("ATT geht");
 			    	  }
+			    	  
 			    	  if(verhalten.getValue().toString() == "ABSTOSSUNG"){
 			    		  sim.getVehikel(z).setBewegung(new BVBewegungAbstossung());
 			    		  //System.out.println("ABST geht");
 			    	  }
+			    	  
+			    	  //Fehlerbehandlung
 			    	  if(verhalten.getValue().toString() != "ATTRAKTION" &&
 			    			  verhalten.getValue().toString() != "ABSTOSSUNG"){
 			    		  System.out.println("Fehler");
@@ -227,15 +248,22 @@ public class BVAnwendung extends Application {
 				new BraitenbergVehikel("Susi", new BVBewegungAttraktion());
 		BraitenbergVehikel vehikel2 = new BraitenbergVehikel("Mike",
 				new BVBewegungAbstossung(), new Vektor2(-100, 100), new Vektor2(1, 0));
-		BraitenbergVehikel vehikel3 = new BraitenbergVehikel("ABCDe",
+		BraitenbergVehikel vehikel3 = new BraitenbergVehikel("Stanley",
 				new BVBewegungAbstossung(), new Vektor2(-125, 45), new Vektor2(1, 0));
+		BraitenbergVehikel vehikel4 = new BraitenbergVehikel("Tango",
+				new BVBewegungAttraktion(), new Vektor2(20, 145), new Vektor2(1, 0));
 		BVSimulation sim = new BVSimulation();
 		sim.vehikelHinzufuegen(vehikel1);
 		sim.vehikelHinzufuegen(vehikel2);
 		sim.vehikelHinzufuegen(vehikel3);
+		sim.vehikelHinzufuegen(vehikel4);
 		return sim;
 	}
 
+	/**
+	 * Main
+	 * @param args
+	 */
 	public static void main(String[] args) {
 		launch(args);
 	}

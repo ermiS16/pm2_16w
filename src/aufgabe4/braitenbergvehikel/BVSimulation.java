@@ -1,5 +1,13 @@
 package aufgabe4.braitenbergvehikel;
 
+/**
+* Praktikum TI-PR2, WS2016/2017
+* Praktikumsgruppe Nr. 4
+* Eric Misfeld, Simon Felske
+* @version 16.12.2016
+* Aufgabenblatt 4
+ */
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Observable;
@@ -42,7 +50,6 @@ public class BVSimulation extends Observable{
 
       // Bewege vehikel
       vehikel.bewege();
-
     }
   }
 

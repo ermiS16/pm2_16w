@@ -11,7 +11,7 @@ package aufgabe4.braitenbergvehikel;
 * Praktikum TI-PR2, WS2016/2017
 * Praktikumsgruppe Nr. 4
 * Eric Misfeld, Simon Felske
-* @version 15.12.2016
+* @version 16.12.2016
 * Aufgabenblatt 4
  */
 
@@ -69,7 +69,7 @@ public class BraitenbergVehikel extends Observable{
   /**
    * Name des Vehikels zur Identifikation.
    */
-  private String name;
+  private final String name;
   
   /**
    * BVBewegungsImage
@@ -85,12 +85,7 @@ public class BraitenbergVehikel extends Observable{
    */
   public BraitenbergVehikel(String name, BVBewegung bewegung, Vektor2 position,
       Vektor2 orientierung) {
-	if(name != null && name.length() > 0){
-		this.name = name;
-	}
-	else{
-		name = "Error";
-	}
+	this.name = name;
     this.bewegung = bewegung;
     this.position = position;
     this.orientierung = orientierung;
@@ -99,8 +94,8 @@ public class BraitenbergVehikel extends Observable{
 
   /**
    * Konstruktor
-   * @param name
-   * @param bewegung
+   * @param name - nicht null, nicht ""
+   * @param bewegung - nicht null
    */
   public BraitenbergVehikel(String name, BVBewegung bewegung) {
     this(name, bewegung, new Vektor2(0, 0), new Vektor2(0, 1));
@@ -156,7 +151,7 @@ public class BraitenbergVehikel extends Observable{
   }
 
   /**
-   * Bewegt das Vehikel basierend auf der Laufdistanz der beiden Räder.
+   * Bewegt das Vehikel basierend auf der Laufdistanz der beiden Raeder.
    */
   protected void bewege(double streckeLinks, double streckeRechts) {
     if (Math.abs(streckeLinks - streckeRechts) < 1e-5) {
@@ -214,22 +209,42 @@ public class BraitenbergVehikel extends Observable{
     return orientierung.rotiere(Math.PI / 2.0);
   }
 
+  /**
+   * Getter fuer Seitenlaenge
+   * @return seitenlaenge
+   */
   public double getSeitenlaenge() {
     return seitenlaenge;
   }
 
+  /**
+   * Getter fuer RadRadius
+   * @return radRadius
+   */
   public double getRadRadius() {
     return radRadius;
   }
 
+  /**
+   * Setter fuer Position
+   * @param position
+   */
   public void setPosition(Vektor2 position) {
     this.position = position;
   }
 
+  /**
+   * Setter fuer Orientierung
+   * @param orientierung
+   */
   public void setOrientierung(Vektor2 orientierung) {
     this.orientierung = orientierung;
   }
 
+  /**
+   * Getter fuer max U/Sek
+   * @return maxMotorUmdrehungenProSek
+   */
   public double getMaxUmdrehungenProSek() {
     return maxMotorUmdrehungenProSek;
   }
@@ -288,7 +303,7 @@ public class BraitenbergVehikel extends Observable{
 
   /**
    * Gibt formatierten String zurueck
-   * @return
+   * @return 'einen String'
    */
   @Override
   public String toString() {

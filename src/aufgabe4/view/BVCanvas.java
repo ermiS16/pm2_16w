@@ -24,7 +24,7 @@ import aufgabe4.braitenbergvehikel.Vektor2;
 * Praktikum TI-PR2, WS2016/2017
 * Praktikumsgruppe Nr. 4
 * Eric Misfeld, Simon Felske
-* @version 15.12.2016
+* @version 16.12.2016
 * Aufgabenblatt 4
  */
 
@@ -48,6 +48,13 @@ public class BVCanvas extends Canvas implements Observer{
   private final int BVCbreite;
   private final int BVChoehe;
 
+  /**
+   * Konstruktor
+   * 
+   * @param breite
+   * @param hoehe
+   * @param sim
+   */
   public BVCanvas(int breite, int hoehe, BVSimulation sim) {
     super(breite, hoehe);
     this.sim = sim;
@@ -95,6 +102,12 @@ public class BVCanvas extends Canvas implements Observer{
   
   /**
    * Zeichnet ein Bild gedreht.
+   * 
+   * @param gc
+   * @param image
+   * @param winkel
+   * @param x
+   * @param y
    */
   private void zeichneGedrehtesBild(GraphicsContext gc, Image image,
       double winkel, double x, double y) {
@@ -102,31 +115,90 @@ public class BVCanvas extends Canvas implements Observer{
     gc.save();
     rotieren(gc, winkel, x + image.getWidth() / 2, y + image.getHeight() / 2);
     gc.drawImage(image, x, y);
+    
     // Zustand wiederherstellen
     gc.restore();
   }
 
   /**
+   * Zeichnet einen Text gedreht.
+   * 
+   * @param gc
+   * @param image
+   * @param name
+   * @param winkel
+   * @param x
+   * @param y
+   */
+  private void zeichneGedrehtenText(GraphicsContext gc, Image image, String name,
+      double winkel, double x, double y) {
+    // Zustand auf dem Stack sichern
+    gc.save();
+    rotieren(gc, winkel, x + image.getWidth() / 2, y + image.getHeight() / 2);
+    
+    gc.setFill(Color.BLACK);
+    gc.fillText(name, x, y + 60d);
+    
+    // Zustand wiederherstellen
+    gc.restore();
+  }
+  
+  /**
+   * Zeichnet einen Pfeil gedreht.
+   * 
+   * @param gc
+   * @param image
+   * @param image2
+   * @param winkel
+   * @param x
+   * @param y
+   */
+  private void zeichneGedrehtenPfeil(GraphicsContext gc, Image image, Image image2,
+      double winkel, double x, double y) {
+    // Zustand auf dem Stack sichern
+    gc.save();
+    rotieren(gc, winkel, x + image.getWidth() / 2, y + image.getHeight() / 2);
+    
+    gc.drawImage(image2, x + 40d, y);
+    
+    // Zustand wiederherstellen
+    gc.restore();
+  }
+  
+  /**
    * Zeichnet ein Braitenberg-Vehikel,
-   * und zugehoerigen Status-Pfeil
+   * zugehoerigen Status-Pfeil und Namen.
    * 
    * @param gc
    * @param bv
    */
   protected void zeichneVehikel(GraphicsContext gc, BraitenbergVehikel bv) {
+	String checkName = bv.getName();
 	Image bvbimg = bv.getbvbImage();
     Point p = welt2BildKoordinaten(bv.getPosition());
     double winkelInGrad = bv.getRotationGradImUhrzeigersinn();
+    
     int x = (int) (p.x - bv.getSeitenlaenge() / 2);
     int y = (int) (p.y - bv.getSeitenlaenge() / 2);
     zeichneGedrehtesBild(gc, bvImage, winkelInGrad, x, y);
-    zeichneGedrehtesBild(gc, bvbimg, winkelInGrad, x + 45d, y);
-    gc.setFill(Color.BLACK);
-    gc.fillText(bv.getName(), x, y + 60d );
+    
+    //Status-Pfeil
+    zeichneGedrehtenPfeil(gc, bvImage, bvbimg, winkelInGrad, x, y);
+    
+    //Name mit Fehlerbehandlung
+    if(checkName == null || checkName == ""){
+    	checkName = "NameError";
+    	//System.out.println("fault detected");
+    }
+    zeichneGedrehtenText(gc, bvImage, checkName, winkelInGrad, x, y);
+    
   }
 
   /**
    * Zeichnet das Signal.
+   * 
+   * @param gc
+   * @param signal
    */
   private void zeichneSignal(GraphicsContext gc, Vektor2 signal) {
     int breite = 10;
@@ -140,7 +212,10 @@ public class BVCanvas extends Canvas implements Observer{
   }
 
   /**
+   * Update
    * 
+   * @param o
+   * @param arg
    */
   @Override
   public void update(Observable o, Object arg) {
