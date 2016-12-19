@@ -36,6 +36,8 @@ public class BVCanvas extends Canvas implements Observer{
    */
   private Image bvImage =
 		  new Image("aufgabe4/assets/braitenberg_vehikel.png");
+  private Image bvImage2 = 
+		  new Image("aufgabe4/assets/braitenberg_vehikel_b.png");
 
   /**
    * Referenz auf die Simulation.
@@ -180,7 +182,13 @@ public class BVCanvas extends Canvas implements Observer{
     
     int x = (int) (p.x - bv.getSeitenlaenge() / 2);
     int y = (int) (p.y - bv.getSeitenlaenge() / 2);
-    zeichneGedrehtesBild(gc, bvImage, winkelInGrad, x, y);
+    
+    if(bv.getBewegung().getId() == "ABSTOSSUNG"){
+        zeichneGedrehtesBild(gc, bvImage2, winkelInGrad, x, y);
+    }
+    else{
+        zeichneGedrehtesBild(gc, bvImage, winkelInGrad, x, y);
+    }
     
     //Status-Pfeil
     zeichneGedrehtenPfeil(gc, bvImage, bvbimg, winkelInGrad, x, y);
