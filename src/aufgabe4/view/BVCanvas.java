@@ -7,6 +7,7 @@ import java.util.Observer;
 import javafx.application.Platform;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
+import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.paint.Color;
 import javafx.scene.transform.Rotate;
@@ -137,7 +138,7 @@ public class BVCanvas extends Canvas implements Observer{
     rotieren(gc, winkel, x + image.getWidth() / 2, y + image.getHeight() / 2);
     
     gc.setFill(Color.BLACK);
-    gc.fillText(name, x, y + 60d);
+    gc.fillText(name, x, y + 62d);
     
     // Zustand wiederherstellen
     gc.restore();
@@ -190,6 +191,13 @@ public class BVCanvas extends Canvas implements Observer{
     	checkName = "NameError";
     	//System.out.println("fault detected");
     }
+    
+    //Name mit Laengenbehandlung
+    if(checkName.length() > 8){
+    	checkName = checkName.substring(0, 8) + "\n" 
+				+ checkName.substring(8, checkName.length());
+	}
+    
     zeichneGedrehtenText(gc, bvImage, checkName, winkelInGrad, x, y);
     
   }
