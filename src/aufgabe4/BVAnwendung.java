@@ -53,7 +53,7 @@ public class BVAnwendung extends Application {
 	private GridPane grid;
 	
 	//Speicher fuer nicht-feste GUI Bedienelemente
-	private Label[] lb;
+	private Label[] labels;
 	private Object[] tab;
 	
 	//Notwendiges
@@ -91,7 +91,7 @@ public class BVAnwendung extends Application {
 	 * @param simul
 	 */
 	private void setInitObjects(BVSimulation simul){
-		lb = new Label[simul.getAnzahlVehike()];
+		labels = new Label[simul.getAnzahlVehike()];
 		tab = new Object[simul.getAnzahlVehike()];
 		
 		//Erstellt Namenslabel und Verhaltensauswahl
@@ -126,7 +126,7 @@ public class BVAnwendung extends Application {
 				namenLabel = new Label(format);
 			}
 			
-			lb[i] = namenLabel;
+			labels[i] = namenLabel;
 			tab[i] = box;
 			
 			grid.add(namenLabel, 0, (2+i));
