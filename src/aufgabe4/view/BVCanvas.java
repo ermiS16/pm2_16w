@@ -35,9 +35,9 @@ public class BVCanvas extends Canvas implements Observer{
    * werden.
    */
   private Image bvImage =
-		  new Image("aufgabe4/assets/braitenberg_vehikel.png");
+		  new Image("aufgabe4/assets/braitenberg_vehikel_a1.png");
   private Image bvImage2 = 
-		  new Image("aufgabe4/assets/braitenberg_vehikel_b.png");
+		  new Image("aufgabe4/assets/braitenberg_vehikel_b1.png");
 
   /**
    * Referenz auf die Simulation.
